@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/moveup"
+        android:icon="@drawable/ic_baseline_keyboard_arrow_up_24"
+        android:title=""
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/movedown"
+        android:icon="@drawable/ic_baseline_keyboard_arrow_down_24"
+        android:title=""
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/delete"
+        android:icon="@drawable/ic_baseline_delete_24"
+        android:title=""
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/showimage"
+        android:icon="@drawable/ic_outline_image_24"
+        android:title=""
+        app:showAsAction="always" />
+
+</menu>
