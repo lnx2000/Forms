@@ -1,154 +1,568 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="10dp"
-    android:background="@drawable/simple_border"
-    android:orientation="vertical"
     tools:context=".fragments.FormSettingsFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="0dp"
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="Need Login"
-            android:textColor="@color/secondaryTextColor"
-            android:textSize="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/view"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-            android:id="@+id/view"
-            android:layout_width="2dp"
-            android:layout_height="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@color/secondaryDarkColor"
-            app:layout_constraintBottom_toBottomOf="@+id/textView"
-            app:layout_constraintEnd_toStartOf="@+id/ismandatory"
-            app:layout_constraintTop_toTopOf="@+id/textView" />
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/ismandatory"
-            style="@style/Widget.App.Switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:checked="false"
-            app:layout_constraintBottom_toBottomOf="@+id/textView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginHorizontal="20dp"
-        android:background="@color/secondaryDarkColor" />
+            android:background="@drawable/simple_border"
+            android:orientation="vertical">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="Allow Mutiple Responses"
-            android:textColor="@color/secondaryTextColor"
-            android:textSize="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/view2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:text="Accepting responses"
+                    android:textColor="@color/secondaryTextColor"
+                    android:textSize="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/view"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <View
-            android:id="@+id/view2"
-            android:layout_width="2dp"
-            android:layout_height="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@color/secondaryDarkColor"
-            app:layout_constraintBottom_toBottomOf="@+id/textView2"
-            app:layout_constraintEnd_toStartOf="@+id/ismandatory2"
-            app:layout_constraintTop_toTopOf="@+id/textView2" />
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="2dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/secondaryDarkColor"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView"
+                    app:layout_constraintEnd_toStartOf="@+id/acceptingresponses"
+                    app:layout_constraintTop_toTopOf="@+id/textView" />
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/ismandatory2"
-            style="@style/Widget.App.Switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:checked="false"
-            app:layout_constraintBottom_toBottomOf="@+id/textView2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView2" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/acceptingresponses"
+                    style="@style/Widget.App.Switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="5dp"
+                    android:checked="false"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginHorizontal="20dp"
-        android:background="@color/secondaryDarkColor" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="Allow Edit Response"
-            android:textColor="@color/secondaryTextColor"
-            android:textSize="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/view3"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-            android:id="@+id/view3"
-            android:layout_width="2dp"
-            android:layout_height="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@color/secondaryDarkColor"
-            app:layout_constraintBottom_toBottomOf="@+id/textView3"
-            app:layout_constraintEnd_toStartOf="@+id/ismandator3"
-            app:layout_constraintTop_toTopOf="@+id/textView3" />
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/ismandator3"
-            style="@style/Widget.App.Switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:checked="false"
-            app:layout_constraintBottom_toBottomOf="@+id/textView3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView3" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginHorizontal="20dp"
-        android:background="@color/secondaryDarkColor" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="@color/secondaryDarkColor" />
 
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:text="Login to submit"
+                    android:textColor="@color/secondaryTextColor"
+                    android:textSize="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/view1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="2dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/secondaryDarkColor"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView1"
+                    app:layout_constraintEnd_toStartOf="@+id/logintosubmit"
+                    app:layout_constraintTop_toTopOf="@+id/textView1" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/logintosubmit"
+                    style="@style/Widget.App.Switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="5dp"
+                    android:checked="false"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView1" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="@color/secondaryDarkColor" />
 
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:text="Allow mutiple responses"
+                    android:textColor="@color/secondaryTextColor"
+                    android:textSize="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/view2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="2dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/secondaryDarkColor"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView2"
+                    app:layout_constraintEnd_toStartOf="@+id/allowmultiple"
+                    app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/allowmultiple"
+                    style="@style/Widget.App.Switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="5dp"
+                    android:checked="false"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView2" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="@color/secondaryDarkColor" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:text="Allow edit response"
+                    android:textColor="@color/secondaryTextColor"
+                    android:textSize="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/view3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="2dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/secondaryDarkColor"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView3"
+                    app:layout_constraintEnd_toStartOf="@+id/allowedit"
+                    app:layout_constraintTop_toTopOf="@+id/textView3" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/allowedit"
+                    style="@style/Widget.App.Switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="5dp"
+                    android:checked="false"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView3" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="@color/secondaryDarkColor" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:text="Record email"
+                    android:textColor="@color/secondaryTextColor"
+                    android:textSize="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/view13"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/view13"
+                    android:layout_width="2dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/secondaryDarkColor"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView13"
+                    app:layout_constraintEnd_toStartOf="@+id/recordemail"
+                    app:layout_constraintTop_toTopOf="@+id/textView13" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/recordemail"
+                    style="@style/Widget.App.Switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="5dp"
+                    android:checked="false"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView13"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView13" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="@color/secondaryDarkColor" />
 
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-</LinearLayout>
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:text="Shuffle"
+                    android:textColor="@color/secondaryTextColor"
+                    android:textSize="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/view14"
+                    app:layout_constraintHorizontal_bias="0.4"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/view14"
+                    android:layout_width="2dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/secondaryDarkColor"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView14"
+                    app:layout_constraintEnd_toStartOf="@+id/shuffle"
+                    app:layout_constraintTop_toTopOf="@+id/textView14" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/shuffle"
+                    style="@style/Widget.App.Switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="5dp"
+                    android:checked="false"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView14"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView14" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="@color/secondaryDarkColor" />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:text="Send response copy"
+                    android:textColor="@color/secondaryTextColor"
+                    android:textSize="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/view15"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/view15"
+                    android:layout_width="2dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/secondaryDarkColor"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView15"
+                    app:layout_constraintEnd_toStartOf="@+id/sendResponse"
+                    app:layout_constraintTop_toTopOf="@+id/textView15" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/sendResponse"
+                    style="@style/Widget.App.Switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="5dp"
+                    android:checked="false"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView15"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView15" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="@color/secondaryDarkColor" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:text="Publish"
+                    android:textColor="@color/secondaryTextColor"
+                    android:textSize="20dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/publish"
+                    app:layout_constraintEnd_toStartOf="@+id/view4"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/publish" />
+
+                <View
+                    android:id="@+id/view4"
+                    android:layout_width="2dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/secondaryDarkColor"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView9"
+                    app:layout_constraintEnd_toStartOf="@+id/publish"
+                    app:layout_constraintTop_toTopOf="@+id/textView9" />
+
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/publish"
+                    style="@style/Widget.App.Switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/publishdate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@drawable/colored_simple_border"
+                    android:padding="10dp"
+                    android:text="Choose Date"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="20dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toStartOf="@+id/chosepublishdate"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/publish" />
+
+                <ImageView
+                    android:id="@+id/chosepublishdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/coloured_rounded_corners"
+                    android:padding="3dp"
+                    android:src="@drawable/ic_baseline_date_range_24"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/publishdate"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/publish"
+                    app:tint="@color/primaryTextColor" />
+
+                <TextView
+                    android:id="@+id/publishtime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginVertical="10dp"
+                    android:background="@drawable/colored_simple_border"
+                    android:padding="10dp"
+                    android:text="Choose Time"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="20dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/chosepublishtime"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/publishdate" />
+
+                <ImageView
+                    android:id="@+id/chosepublishtime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/coloured_rounded_corners"
+                    android:padding="3dp"
+                    android:src="@drawable/ic_baseline_timer_24"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/publishtime"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/publishtime"
+                    app:tint="@color/primaryTextColor" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="@color/secondaryDarkColor" />
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:text="Unpublish"
+                    android:textColor="@color/secondaryTextColor"
+                    android:textSize="20dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/unpublish"
+                    app:layout_constraintEnd_toStartOf="@+id/view5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/unpublish" />
+
+                <View
+                    android:id="@+id/view5"
+                    android:layout_width="2dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/secondaryDarkColor"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView10"
+                    app:layout_constraintEnd_toStartOf="@+id/unpublish"
+                    app:layout_constraintTop_toTopOf="@+id/textView10" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/unpublish"
+                    style="@style/Widget.App.Switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/unpublistdate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@drawable/colored_simple_border"
+                    android:padding="10dp"
+                    android:text="Choose Date"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="20dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toStartOf="@+id/choseunpublishdate"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/unpublish" />
+
+                <ImageView
+                    android:id="@+id/choseunpublishdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/coloured_rounded_corners"
+                    android:padding="3dp"
+                    android:src="@drawable/ic_baseline_date_range_24"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/unpublistdate"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/unpublish"
+                    app:tint="@color/primaryTextColor" />
+
+                <TextView
+                    android:id="@+id/unpublishtime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginVertical="10dp"
+                    android:background="@drawable/colored_simple_border"
+                    android:padding="10dp"
+                    android:text="Choose Time"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="20dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/choseunpublishtime"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/unpublistdate" />
+
+                <ImageView
+                    android:id="@+id/choseunpublishtime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/coloured_rounded_corners"
+                    android:padding="3dp"
+                    android:src="@drawable/ic_baseline_timer_24"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/unpublishtime"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/unpublishtime"
+                    app:tint="@color/primaryTextColor" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

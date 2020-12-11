@@ -1,85 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/maincardview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clipToPadding="false"
-    android:paddingHorizontal="10dp"
-    android:paddingTop="5dp"
-    android:paddingBottom="10dp">
+    android:layout_margin="10dp"
+    android:clickable="false"
+    app:cardCornerRadius="20dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.0"
+    app:strokeColor="@color/secondaryDarkColor"
+    app:strokeWidth="1dp">
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|top"
-        android:layout_margin="10dp"
-        android:layout_marginBottom="20dp"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="10dp"
-        android:animateLayoutChanges="true"
-        android:id="@+id/maincardview">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="false">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="10dp"
+            android:maxLength="22"
+            android:text="Form Title"
+            android:textColor="@color/secondaryTextColor"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:layout_width="130dp"
-                android:layout_height="200dp"
-                android:layout_margin="15dp"
-                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
-                app:srcCompat="@drawable/clip" />
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Created on: 20/20/2020 08.00PM"
+            android:textColor="@color/secondaryDarkColor"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toTopOf="@+id/toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:layout_constraintVertical_bias="0.0" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginBottom="15dp"
-                android:text="Form Title"
-                android:textSize="14sp" />
 
-            <LinearLayout
-                android:id="@+id/item_menu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:animateLayoutChanges="true"
-                android:orientation="vertical">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/simple_border"
+            android:visibility="visible"
+            app:contentInsetStart="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/form_item_menu" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginHorizontal="15dp"
-                    android:background="@color/secondaryDarkColor" />
+        <ImageView
+            android:id="@+id/darrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/coloured_rounded_corners"
+            android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+            app:layout_constraintBottom_toTopOf="@+id/toolbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/primaryTextColor" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp">
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:src="@drawable/ic_baseline_edit_24" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:src="@drawable/ic_baseline_bar_chart_24" />
+</com.google.android.material.card.MaterialCardView>
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:src="@drawable/ic_baseline_settings_24" />
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+

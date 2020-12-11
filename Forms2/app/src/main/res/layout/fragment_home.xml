@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.HomeFragment">
 
     <com.google.android.material.card.MaterialCardView
@@ -25,22 +25,24 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
-            android:text="MY FORMS"
             android:background="@android:color/transparent"
-            android:textColor="@color/secondaryTextColor"
-            android:textCursorDrawable="@drawable/color_cursor"
-            android:imeOptions="actionSearch"
-            android:textSize="20dp"
             android:focusableInTouchMode="false"
+            android:imeOptions="actionSearch"
+            android:maxWidth="200dp"
+            android:maxLength="15"
             android:maxLines="1"
-            android:maxLength="10"/>
+            android:text="MY FORMS"
+            android:textColor="@color/secondaryTextColor"
+            android:textSize="20dp" />
+
         <com.google.android.material.card.MaterialCardView
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center_vertical|end"
             android:layout_margin="15dp"
-            app:cardBackgroundColor="@color/primaryColor"
+            app:cardBackgroundColor="?attr/colorPrimary"
             app:cardElevation="30dp">
+
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -54,31 +56,32 @@
             android:layout_height="30dp"
             android:layout_gravity="center_vertical|end"
             android:layout_marginRight="60dp"
-            app:cardBackgroundColor="@color/primaryColor"
+            app:cardBackgroundColor="?attr/colorPrimary"
             app:cardElevation="30dp">
+
             <ImageView
                 android:id="@+id/search"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_baseline_search_24"
-                app:tint="@color/primaryTextColor"/>
+                app:tint="@color/primaryTextColor" />
         </com.google.android.material.card.MaterialCardView>
 
     </com.google.android.material.card.MaterialCardView>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:id="@+id/rv"
+        android:layout_marginTop="8dp"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingBottom="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialCardView"
-        android:layout_marginTop="8dp"
-        android:paddingBottom="100dp"
-        android:clipToPadding="false"
-        android:overScrollMode="never"/>
+        app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/cordinatorBottom"
@@ -87,8 +90,7 @@
         android:layout_gravity="bottom"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        app:layout_constraintStart_toStartOf="parent"></androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

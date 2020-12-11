@@ -4,32 +4,31 @@
         <item
             android:id="@+id/textfield"
             android:icon="@drawable/ic_baseline_text_fields_24"
-            android:title="Text Field"/>
+            android:title="Text Field" />
 
         <item
             android:id="@+id/radiofield"
             android:icon="@drawable/ic_baseline_radio_button_checked_24"
-            android:title="Single Check"/>
+            android:title="Single Check" />
         <item
             android:id="@+id/checkfield"
             android:icon="@drawable/ic_baseline_check_box_24"
-            android:title="Multiple Check"/>
+            android:title="Multiple Check" />
         <item
             android:id="@+id/pollfield"
             android:icon="@drawable/ic_baseline_poll_24"
-            android:title="Poll"/>
+            android:title="Poll" />
         <item
             android:id="@+id/ratingfield"
             android:icon="@drawable/ic_baseline_star_rate_24"
-            android:title="Rating"/>
+            android:title="Rating" />
         <item
             android:id="@+id/uploadfield"
             android:icon="@drawable/ic_baseline_cloud_upload_24"
-            android:title="File Upload"
-            />
+            android:title="File Upload" />
         <item
-            android:title=""
-            android:enabled="false"/>
+            android:enabled="false"
+            android:title="" />
 
     </group>
 </menu>

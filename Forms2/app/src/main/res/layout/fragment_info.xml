@@ -29,22 +29,21 @@
                 android:id="@+id/shapeableImageView"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:layout_marginBottom="10dp"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
                 app:srcCompat="@drawable/ic_forms_document_svgrepo_com"
-                tools:ignore="VectorDrawableCompat"
-                />
+                tools:ignore="VectorDrawableCompat" />
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:gravity="center_horizontal"
                 android:text="@string/boldappname"
                 android:textAlignment="center"
                 android:textColor="@color/defaultTint"
-                android:textSize="50dp"
-                android:layout_marginBottom="10dp"/>
+                android:textSize="50dp" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -76,7 +75,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
                     android:text="@string/name"
-                    android:textColor="@color/primaryColor" />
+                    android:textColor="?attr/colorPrimary" />
             </LinearLayout>
 
             <LinearLayout

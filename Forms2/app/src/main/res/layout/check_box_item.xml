@@ -15,14 +15,13 @@
         android:layout_margin="5dp"
         android:background="@android:color/transparent"
         android:drawableLeft="@drawable/ic_baseline_check_box_outline_blank_24"
+        android:drawablePadding="10dp"
         android:drawableTint="@color/secondaryDarkColor"
         android:paddingVertical="10dp"
+        android:textSize="15dp"
         app:layout_constraintEnd_toStartOf="@+id/remove"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="5dp"
-        android:drawablePadding="10dp"
-        android:textSize="15dp"
-        />
+        tools:layout_editor_absoluteY="5dp" />
 
     <ImageView
         android:id="@+id/remove"

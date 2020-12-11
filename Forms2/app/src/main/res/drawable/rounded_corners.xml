@@ -8,7 +8,7 @@
 
             <stroke
                 android:width="2dp"
-                android:color="@color/primaryColor" />
+                android:color="?attr/colorPrimary" />
             <corners android:topRightRadius="17dp"
                 android:bottomRightRadius="17dp"/>
         </shape>

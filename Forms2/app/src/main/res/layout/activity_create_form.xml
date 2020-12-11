@@ -12,7 +12,7 @@
         android:layout_height="60dp"
         android:layout_marginBottom="10dp"
         android:clickable="false"
-        app:cardBackgroundColor="@color/primaryColor"
+        app:cardBackgroundColor="?attr/colorPrimary"
         app:cardCornerRadius="17dp"
         app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -26,7 +26,7 @@
         android:id="@+id/additem"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:background="@color/primaryColor"
+        android:background="?attr/colorPrimary"
         android:elevation="5dp"
         android:src="@drawable/ic_baseline_add_24"
         app:layout_constraintBottom_toBottomOf="@+id/fab"
@@ -44,7 +44,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:clickable="false"
-        app:cardBackgroundColor="@color/primaryColor"
+        app:cardBackgroundColor="?attr/colorPrimary"
         app:cardCornerRadius="17dp"
         app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -54,7 +54,7 @@
         android:id="@+id/save"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:background="@color/primaryColor"
+        android:background="?attr/colorPrimary"
         android:elevation="5dp"
         android:src="@drawable/ic_outline_save_24"
         app:layout_constraintBottom_toBottomOf="@+id/materialCardView2"
@@ -63,15 +63,15 @@
         app:layout_constraintTop_toTopOf="@+id/materialCardView2"
         app:tint="@color/primaryTextColor" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview"
+    <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="15dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginBottom="15dp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/drawer"
@@ -84,7 +84,7 @@
         android:paddingLeft="5dp"
         android:visibility="gone"
         app:elevation="10dp"
-        app:itemIconTint="@color/primaryColor"
+        app:itemIconTint="?attr/colorPrimary"
         app:itemTextColor="@color/defaultTint"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -101,7 +101,7 @@
         android:layout_marginBottom="10dp"
         android:src="@drawable/ic_baseline_cancel_24"
         android:visibility="gone"
-        app:backgroundTint="@color/primaryColor"
+        app:backgroundTint="?attr/colorPrimary"
         app:elevation="10dp"
         app:fabSize="mini"
         app:layout_constraintBottom_toBottomOf="@+id/drawer"
@@ -130,7 +130,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:visibility="gone"
-        app:cardBackgroundColor="@color/primaryDarkColor"
+        app:cardBackgroundColor="?attr/colorPrimaryVariant"
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp"
         app:layout_constraintBottom_toTopOf="@+id/materialCardView2"
@@ -138,6 +138,7 @@
         app:layout_constraintStart_toStartOf="@+id/materialCardView2">
 
         <TextView
+            android:id="@+id/savetv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="6dp"
