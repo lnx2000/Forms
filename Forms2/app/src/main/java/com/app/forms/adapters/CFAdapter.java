@@ -1,8 +1,8 @@
 package com.app.forms.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,10 +21,12 @@ import com.app.forms.Items.BaseClass;
 import com.app.forms.Items.Check;
 import com.app.forms.Items.Text;
 import com.app.forms.R;
-import com.app.forms.activities.CreateFormActivity;
 import com.app.forms.constants.Constants;
-import com.bumptech.glide.Glide;
+import com.cooltechworks.views.WhatsAppEditText;
+import com.cooltechworks.views.WhatsAppTextView;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
@@ -62,6 +64,10 @@ public class CFAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 v = LayoutInflater.from(context).inflate(R.layout.item_check, parent, false);
                 vh = new CheckHolder(v, Constants.typeMultipleCheck);
                 break;
+            case Constants.typeTextMsg:
+                v = LayoutInflater.from(context).inflate(R.layout.item_text_msg, parent, false);
+                vh = new TextMsgHolder(v);
+                break;
 
         }
         return vh;
@@ -76,12 +82,12 @@ public class CFAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             th.title.setText(text.getTitle());
             th.spinner.setSelection(text.getTextTypeChoice());
             th.mandatory.setChecked(text.isMandatory());
-            if (text.isImage()) {
+            /*if (text.isImage()) {
                 Glide.with(context)
                         .load(text.getImagepath())
                         .into(th.imageView);
                 th.imageView.setVisibility(View.VISIBLE);
-            }
+            }*/
 
         } else if (holder instanceof CheckHolder) {
             CheckHolder ch = (CheckHolder) holder;
@@ -89,12 +95,14 @@ public class CFAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ch.initRecyclerView(position);
             ch.title.setText(check.getTitle());
             ch.mandatory.setChecked(check.isMandatory());
-            if (check.isImage()) {
+            /*if (check.isImage()) {
                 Glide.with(context)
                         .load(check.getImagepath())
                         .into(ch.imageView);
                 ch.imageView.setVisibility(View.VISIBLE);
-            }
+            }*/
+        } else if (holder instanceof TextMsgHolder) {
+            ((TextMsgHolder) holder).title.setText(Html.fromHtml(data.get(position).getTitle(), Html.FROM_HTML_MODE_LEGACY));
         }
     }
 
@@ -108,7 +116,7 @@ public class CFAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextInputEditText title;
         Spinner spinner;
         SwitchMaterial mandatory;
-        ImageView imageView;
+        //ImageView imageView;
         Toolbar toolbar;
 
         public TextHolder(@NonNull View itemView) {
@@ -116,7 +124,7 @@ public class CFAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             spinner = itemView.findViewById(R.id.spinner);
             toolbar = itemView.findViewById(R.id.toolbar);
             mandatory = itemView.findViewById(R.id.ismandatory);
-            imageView = itemView.findViewById(R.id.imageview);
+            //imageView = itemView.findViewById(R.id.imageview);
             title = itemView.findViewById(R.id.title);
 
             ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(context,
@@ -139,12 +147,15 @@ public class CFAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             notifyItemMoved(position, position + 1);
                         }
                         break;
-                    case R.id.showimage:
+                    /*case R.id.showimage:
                         if (imageView.getVisibility() == View.GONE) {
                             imageView.setVisibility(View.VISIBLE);
                             imageView.setImageDrawable(((Activity) context).getResources().getDrawable(R.drawable.ic_add_image));
-                        } else imageView.setVisibility(View.GONE);
-                        break;
+                        } else {
+                            imageView.setVisibility(View.GONE);
+                            data.get(position).setImage(false);
+                        }
+                        break;*/
                     case R.id.delete:
                         data.remove(position);
                         notifyItemRemoved(position);
@@ -186,12 +197,11 @@ public class CFAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
                 }
             });
-            imageView.setOnClickListener(v -> {
+            /*imageView.setOnClickListener(v -> {
                 int position = getAdapterPosition();
 
-                //ToDo: add "select image from gallery" intent
                 ((CreateFormActivity) context).StartImageChooserActivity(position);
-            });
+            });*/
 
 
         }
@@ -200,7 +210,7 @@ public class CFAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public class CheckHolder extends RecyclerView.ViewHolder {
 
         TextInputEditText title;
-        ImageView imageView, addOption;
+        ImageView /*imageView,*/ addOption;
         SwitchMaterial mandatory;
         RecyclerView recyclerView;
         Toolbar toolbar;
@@ -211,7 +221,7 @@ public class CFAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             super(itemView);
             this.type = type;
             title = itemView.findViewById(R.id.title);
-            imageView = itemView.findViewById(R.id.imageview);
+            //imageView = itemView.findViewById(R.id.imageview);
             mandatory = itemView.findViewById(R.id.ismandatory);
             recyclerView = itemView.findViewById(R.id.radiogroup);
             addOption = itemView.findViewById(R.id.addradio);
@@ -233,12 +243,15 @@ public class CFAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             notifyItemMoved(position, position + 1);
                         }
                         break;
-                    case R.id.showimage:
+                    /*case R.id.showimage:
                         if (imageView.getVisibility() == View.GONE) {
                             imageView.setVisibility(View.VISIBLE);
                             imageView.setImageDrawable(((Activity) context).getResources().getDrawable(R.drawable.ic_add_image));
-                        } else imageView.setVisibility(View.GONE);
-                        break;
+                        } else {
+                            imageView.setVisibility(View.GONE);
+                            data.get(position).setImage(false);
+                        }
+                        break;*/
                     case R.id.delete:
                         data.remove(position);
                         notifyItemRemoved(position);
@@ -269,12 +282,11 @@ public class CFAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ((Check) data.get(position)).setMandatory(isChecked);
             });
 
-            imageView.setOnClickListener(v -> {
+            /*imageView.setOnClickListener(v -> {
                 int position = getAdapterPosition();
 
-                //ToDo: add "select image from gallery" intent
                 ((CreateFormActivity) context).StartImageChooserActivity(position);
-            });
+            });*/
 
             addOption.setOnClickListener(v -> {
                 int position = getAdapterPosition();
@@ -288,6 +300,105 @@ public class CFAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setAdapter(checkAdapter);
             recyclerView.setItemViewCacheSize(100);
+        }
+    }
+
+    public class TextMsgHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        ShapeableImageView bold, italic, st;
+        WhatsAppEditText title;
+        TextWatcher textWatcher;
+        WhatsAppTextView titletv;
+        TabLayout tabLayout;
+
+        public TextMsgHolder(@NonNull View itemView) {
+            super(itemView);
+            title = itemView.findViewById(R.id.title);
+            titletv = itemView.findViewById(R.id.titletv);
+            tabLayout = itemView.findViewById(R.id.tablayout);
+            bold = itemView.findViewById(R.id.bold);
+            italic = itemView.findViewById(R.id.italic);
+            st = itemView.findViewById(R.id.st);
+            bold.setOnClickListener(this);
+            italic.setOnClickListener(this);
+            st.setOnClickListener(this);
+
+            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    if (tab.getPosition() == 0) {
+                        title.setVisibility(View.VISIBLE);
+                        titletv.setVisibility(View.GONE);
+                    } else {
+                        titletv.setVisibility(View.VISIBLE);
+                        title.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+
+                }
+            });
+
+
+            textWatcher = new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    int position = getAdapterPosition();
+                    data.get(position).setTitle(s.toString());
+                    titletv.setText(s.toString());
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            };
+
+            title.addTextChangedListener(textWatcher);
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            int pos;
+            String s;
+            switch (v.getId()) {
+                case R.id.bold:
+                    pos = title.getSelectionStart();
+                    s = title.getText().toString();
+                    s = s.substring(0, pos) + "**" + s.substring(pos);
+                    title.setText(s);
+                    title.setSelection(pos + 1);
+
+                    break;
+                case R.id.italic:
+                    pos = title.getSelectionStart();
+                    s = title.getText().toString();
+                    s = s.substring(0, pos) + "__" + s.substring(pos);
+                    title.setText(s);
+                    title.setSelection(pos + 1);
+                    break;
+                case R.id.st:
+                    pos = title.getSelectionStart();
+                    s = title.getText().toString();
+                    s = s.substring(0, pos) + "~~" + s.substring(pos);
+                    title.setText(s);
+                    title.setSelection(pos + 1);
+                    break;
+            }
+
         }
     }
 

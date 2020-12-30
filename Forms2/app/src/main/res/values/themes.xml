@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Forms.cyan" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="Theme.Forms.cyan" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/cyanprimaryColor</item>
         <item name="colorPrimaryVariant">@color/cyanprimaryDarkColor</item>
@@ -15,7 +15,7 @@
         <item name="colorAccent">@color/cyanprimaryColor</item>
     </style>
 
-    <style name="Theme.Forms.green" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="Theme.Forms.green" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/greenprimaryColor</item>
         <item name="colorPrimaryVariant">@color/greenprimaryDarkColor</item>
@@ -30,7 +30,7 @@
     </style>
 
 
-    <style name="Theme.Forms.dorange" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="Theme.Forms.dorange" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/dorangeprimaryColor</item>
         <item name="colorPrimaryVariant">@color/dorangeprimaryDarkColor</item>
@@ -44,7 +44,7 @@
         <item name="android:windowBackground">@color/white</item>
     </style>
 
-    <style name="Theme.Forms.bgray" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="Theme.Forms.bgray" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/bgrayprimaryColor</item>
         <item name="colorPrimaryVariant">@color/bgrayprimaryDarkColor</item>
@@ -59,7 +59,7 @@
     </style>
 
 
-    <style name="Theme.Forms.yellow" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="Theme.Forms.yellow" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/yellowprimaryColor</item>
         <item name="colorPrimaryVariant">@color/yellowprimaryDarkColor</item>

@@ -4,7 +4,6 @@
     <color name="cyanprimaryLightColor">#4fb3bf</color>
     <color name="cyanprimaryDarkColor">#005662</color>
 
-
     <color name="greenprimaryColor">#1b5e20</color>
     <color name="greenprimaryLightColor">#4c8c4a</color>
     <color name="greenprimaryDarkColor">#003300</color>
@@ -21,6 +20,20 @@
     <color name="yellowprimaryColor">#ffee58</color>
     <color name="yellowprimaryLightColor">#ffff8b</color>
     <color name="yellowprimaryDarkColor">#c9bc1f</color>
+
+
+    <color name="nightwindowbg">#1f2732</color>
+    <color name="nightprimary">#232d3a</color>
+    <color name="nightprimarydark">#1c242e</color>
+
+
+        <!--<item name="android:colorBackground">#1f2732</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:navigationBarColor">#000000</item>-->
+
+
+
+
 
 
     <color name="secondaryColor">#fafafa</color>

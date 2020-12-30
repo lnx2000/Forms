@@ -1,9 +1,12 @@
 package com.app.forms.Items;
 
-public class FormConfig {
+import androidx.annotation.NonNull;
+
+import com.app.forms.constants.Constants;
+
+public class FormConfig implements Cloneable {
     boolean acceptingResponses;
     boolean loginToSubmit;
-    boolean allowMultipleResponses;
     boolean allowEdit;
     boolean recordEmail;
     boolean shuffle;
@@ -14,6 +17,9 @@ public class FormConfig {
     String unPublishDate;
     String publishTime;
     String unPublishTime;
+
+    public FormConfig() {
+    }
 
     public String getPublishTime() {
         return publishTime;
@@ -53,14 +59,6 @@ public class FormConfig {
 
     public void setLoginToSubmit(boolean loginToSubmit) {
         this.loginToSubmit = loginToSubmit;
-    }
-
-    public boolean isAllowMultipleResponses() {
-        return allowMultipleResponses;
-    }
-
-    public void setAllowMultipleResponses(boolean allowMultipleResponses) {
-        this.allowMultipleResponses = allowMultipleResponses;
     }
 
     public boolean isRecordEmail() {
@@ -117,5 +115,11 @@ public class FormConfig {
 
     public void setUnPublishDate(String unPublishDate) {
         this.unPublishDate = unPublishDate;
+    }
+
+    @NonNull
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

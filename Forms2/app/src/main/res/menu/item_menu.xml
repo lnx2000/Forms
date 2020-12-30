@@ -17,10 +17,5 @@
         android:icon="@drawable/ic_baseline_delete_24"
         android:title=""
         app:showAsAction="always" />
-    <item
-        android:id="@+id/showimage"
-        android:icon="@drawable/ic_outline_image_24"
-        android:title=""
-        app:showAsAction="always" />
 
 </menu>

@@ -8,6 +8,8 @@ public class Check extends BaseClass {
     public Check(int type) {
         this.type = type;
         group = new ArrayList<>();
+        addOption();
+        addOption();
     }
 
     public int getType() {

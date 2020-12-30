@@ -1,34 +1,52 @@
 package com.app.forms.activities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
+import android.util.Log;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.app.forms.AlarmIntentPublishReceiver;
+import com.app.forms.AlarmIntentUnPublishReceiver;
 import com.app.forms.Items.FormItem;
 import com.app.forms.R;
 import com.app.forms.constants.Constants;
 import com.app.forms.fragments.AppSettingFragment;
 import com.app.forms.fragments.HomeFragment;
 import com.app.forms.fragments.InfoFragment;
+import com.app.forms.helpers.SPOps;
+import com.app.forms.helpers.Utils;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
-    final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    public static ArrayList<FormItem> data;
+
+
     FloatingActionButton btnAdd;
     BottomNavigationView bottomNavigation;
     FrameLayout fl;
@@ -36,7 +54,12 @@ public class MainActivity extends AppCompatActivity {
     HomeFragment homeFragment;
     AppSettingFragment appSettingFragment;
     InfoFragment infoFragment;
+    FirebaseStorage firebaseStorage;
+    FirebaseFirestore firebaseFirestore;
+    StorageReference storageReference;
 
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,22 +68,36 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation = findViewById(R.id.nav_view);
         bottomNavigation.setSelectedItemId(R.id.home);
         fl = findViewById(R.id.container);
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReference().child("images/");
+
+
+        data = SPOps.loadSP(this);
+
+        Log.e("123", data.toString() + "     " + data.size());
+        Gson gson = new Gson();
+        if(data.size()!=0)
+        Log.e("123", gson.toJson(data.get(0)));
+
 
         homeFragment = new HomeFragment();
         appSettingFragment = new AppSettingFragment();
         infoFragment = new InfoFragment();
+
+        openFragment(homeFragment);
+
+
         bottomNavigation.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.settings:
                     btnAdd.setImageResource(R.drawable.ic_baseline_home_24);
                     addvis = false;
-                    fl.removeAllViews();
                     openFragment(appSettingFragment);
                     return true;
                 case R.id.info:
                     btnAdd.setImageResource(R.drawable.ic_baseline_home_24);
                     addvis = false;
-                    fl.removeAllViews();
                     openFragment(infoFragment);
                     return true;
             }
@@ -68,21 +105,7 @@ public class MainActivity extends AppCompatActivity {
         });
         btnAdd.setOnClickListener(v -> {
             if (addvis) {
-                View view = LayoutInflater.from(this).inflate(R.layout.alert_dialog_edit_text, null);
-                MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(this)
-                        .setTitle("Form Title")
-                        .setPositiveButton("OK", (dialog, whichButton) -> {
-                            String formTitle = ((TextInputEditText) view.findViewById(R.id.edittext)).getText().toString();
-                            if (formTitle.equals("")) {
-                                ((TextInputEditText) view.findViewById(R.id.edittext)).setError("Field can't be empty");
-                            } else {
-                                startCreateFormActivity(formTitle);
-                            }
-                        })
-                        .setNegativeButton("CANCEL", (dialog, whichButton) -> dialog.cancel());
-                materialAlertDialogBuilder.setView(view);
-
-                materialAlertDialogBuilder.show();
+                startCreateFormActivity("Untitled Form");
 
             } else {
                 addvis = true;
@@ -91,13 +114,11 @@ public class MainActivity extends AppCompatActivity {
                 openFragment(homeFragment);
             }
         });
-        openFragment(homeFragment);
     }
 
     public void openFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, fragment, "current");
-        transaction.addToBackStack(null);
+        transaction.replace(R.id.container, fragment);
         transaction.commit();
     }
 
@@ -108,44 +129,92 @@ public class MainActivity extends AppCompatActivity {
 
     public void startCreateFormActivity(String formTitle) {
 
-        FormItem formItem = new FormItem(formTitle, dateFormat.format(new Date()), generateFormUID(Constants.formUIDLength));
-        homeFragment.addData(formItem);
+        FormItem formItem = Utils.createForm(formTitle);
+        data.add(0, formItem);
+        homeFragment.addData();
+        SPOps.newForm(this);
+
+        startCreateFormActivity(0, Constants.editFragment);
+
+    }
+
+    public void startCreateFormActivity(int position, int fragment) {
         Intent i = new Intent(MainActivity.this, CreateFormActivity.class);
-        String jsonForm = getJsonStringForm(formItem);
-        i.putExtra("form", jsonForm);
-        startActivityForResult(i, Constants.formAdded);
+        String jForm = Utils.jsonForm(data.get(position));
+        i.putExtra("Form", jForm);
+        i.putExtra("position", position);
+        i.putExtra("fragment", fragment);
+        startActivityForResult(i, Constants.returnFormCreateFormActivity);
 
     }
 
-    private String getJsonStringForm(FormItem formItem) {
-        Gson gson = new Gson();
-        return gson.toJson(formItem);
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_CANCELED) {
-            if (requestCode == Constants.formAdded)
-                homeFragment.refreshAdapter();
+        if (requestCode == Constants.returnFormCreateFormActivity) {
+            homeFragment.refreshAdapter();
         }
     }
 
-    private String generateFormUID(int n) {
-        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        AlphaNumericString += AlphaNumericString.toLowerCase();
-        AlphaNumericString += "0123456789";
 
-        StringBuilder sb = new StringBuilder(n);
+    public boolean makeFormPublic(int position) {
+        Date publishDate = null, unPublishDate = null;
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        data.get(position).setUserID(user.getUid());
+        SPOps.saveToSP(position, this);
+        String pDate = data.get(position).getConfig().getPublishDate() + data.get(position).getConfig().getPublishTime();
+        String uDate = data.get(position).getConfig().getUnPublishDate() + data.get(position).getConfig().getUnPublishTime();
+        try {
+            publishDate = Constants.parseDateTime.parse(pDate);
+            unPublishDate = Constants.parseDateTime.parse(uDate);
+        } catch (ParseException e) {
+            return false;
 
-        for (int i = 0; i < n; i++) {
-            int index = (int) (AlphaNumericString.length() * Math.random());
-
-            sb.append(AlphaNumericString.charAt(index));
         }
+        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent p_i = new Intent(MainActivity.this, AlarmIntentPublishReceiver.class);
+        p_i.putExtra("enable", true);
+        p_i.putExtra("form", data.get(position).getUID());
+        PendingIntent pi = PendingIntent.getBroadcast(MainActivity.this, data.get(position).getUID(), p_i, 0);
+        am.set(AlarmManager.RTC_WAKEUP, publishDate.getTime(), pi);
+        Toast.makeText(this, "publish alarm set!", Toast.LENGTH_SHORT).show();
+        SPOps.updatePrefs(data.get(position).getUID(), true, this);
 
-        return sb.toString();
+        Intent u_i = new Intent(MainActivity.this, AlarmIntentUnPublishReceiver.class);
+        u_i.putExtra("enable", false);
+        u_i.putExtra("form", data.get(position).getUID());
+        PendingIntent ui = PendingIntent.getBroadcast(MainActivity.this, data.get(position).getUID(), u_i, 0);
+        am.set(AlarmManager.RTC_WAKEUP, unPublishDate.getTime(), ui);
+        Toast.makeText(this, "unpublish alarm set!", Toast.LENGTH_SHORT).show();
 
+        return true;
 
     }
+
+
+    public void unpublishForm(int position) {
+
+        int formID = data.get(position).getUID();
+
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+        DocumentReference ref = firebaseFirestore.collection("Forms").document("" + formID);
+        ref.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onSuccess(Void aVoid) {
+                SPOps.updatePrefs(formID, false, MainActivity.this);
+                Utils.showNotification(MainActivity.this, "Form Unpulished", "Form is no more accepting responses", 2);
+                data.get(position).setEnabled(false);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Utils.showNotification(MainActivity.this, "Unpublishing...", "Error occured while revoking form", 2);
+            }
+        });
+    }
+
+
 }

@@ -21,8 +21,19 @@
         android:layout_height="match_parent"
         android:clickable="false">
 
+        <View
+            android:id="@+id/acceptingresview"
+            android:layout_width="10dp"
+            android:layout_height="0dp"
+            android:background="@color/cyanprimaryColor"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/formtitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
@@ -39,14 +50,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:text="Created on: 20/20/2020 08.00PM"
             android:textColor="@color/secondaryDarkColor"
             android:textSize="15dp"
             app:layout_constraintBottom_toTopOf="@+id/toolbar"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:layout_constraintTop_toBottomOf="@+id/formtitle"
             app:layout_constraintVertical_bias="0.0" />
 
 
@@ -54,11 +64,11 @@
             android:id="@+id/toolbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/simple_border"
-            android:visibility="visible"
+            android:visibility="gone"
             app:contentInsetStart="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/enable"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/form_item_menu" />
@@ -71,11 +81,21 @@
             android:layout_marginRight="20dp"
             android:background="@drawable/coloured_rounded_corners"
             android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
-            app:layout_constraintBottom_toTopOf="@+id/toolbar"
+            app:layout_constraintBottom_toBottomOf="@+id/formtitle"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/formtitle"
             app:tint="@color/primaryTextColor" />
 
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/enable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="ENABLE    "
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/toolbar"
+            app:layout_constraintStart_toStartOf="@+id/toolbar" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

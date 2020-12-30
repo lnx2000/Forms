@@ -6,4 +6,5 @@
     <string name="boldappname"><b>Forms</b></string>
     <string name="writtenby">Forms is written by   </string>
     <string name="name"><b><u>Omkar Amilkanthwar</u></b></string>
+    <string name="warning">Enabling will move this form to the public space and will be available to everyone with URL from date of publish. To ensure privacy set configs accordingly.</string>
 </resources>

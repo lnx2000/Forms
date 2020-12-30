@@ -1,22 +1,55 @@
 package com.app.forms.Items;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 
 public class FormItem {
     private String name;
     private String createdOn;
     private String lastUpdate;
-    private String UID;
+    private int UID;
     private FormConfig config;
     private ArrayList<BaseClass> form;
+    private boolean enabled;
+    private String userID;
 
-    public FormItem(String name, String createdOn, String UID) {
+    public FormItem(FormItem formItem){
+        this.name = formItem.name;
+        this.createdOn = formItem.createdOn;
+        this.lastUpdate = formItem.lastUpdate;
+        this.UID = formItem.UID;
+        try {
+            this.config =(FormConfig) formItem.config.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        this.form = new ArrayList<>(formItem.form);
+        this.enabled = new Boolean(formItem.enabled);
+        this.userID = formItem.userID;
+    }
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public FormItem(String name, String createdOn, int UID) {
         this.name = name;
         this.createdOn = createdOn;
         this.UID = UID;
         form = new ArrayList<>();
         config = new FormConfig();
 
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public String getLastUpdate() {
@@ -59,11 +92,11 @@ public class FormItem {
         this.createdOn = createdOn;
     }
 
-    public String getUID() {
+    public int getUID() {
         return UID;
     }
 
-    public void setUID(String UID) {
+    public void setUID(int UID) {
         this.UID = UID;
     }
 }

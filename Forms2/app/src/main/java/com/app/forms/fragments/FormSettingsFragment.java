@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.app.forms.Items.FormConfig;
 import com.app.forms.R;
+import com.app.forms.constants.Constants;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -19,14 +20,11 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
 public class FormSettingsFragment extends Fragment implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
-    private final SimpleDateFormat formatter = new SimpleDateFormat("hh:mm a", Locale.getDefault());
-    SwitchMaterial publish, unpublish, acceptingresponses, logintosubmit,
-            allowmultiple, allowedit, recordemail, shuffle, sendResponse;
+
+    SwitchMaterial publish, unpublish, logintosubmit, allowedit, recordemail, shuffle, sendResponse;
     ImageView chosepublishdate, chosepublishtime, choseunpublishdate, choseunpublishtime;
     TextView publishdate, publishtime, unpublishdate, unpublishtime;
     FormConfig configs;
@@ -61,9 +59,7 @@ public class FormSettingsFragment extends Fragment implements CompoundButton.OnC
         unpublishdate = v.findViewById(R.id.unpublistdate);
         unpublishtime = v.findViewById(R.id.unpublishtime);
 
-        acceptingresponses = v.findViewById(R.id.acceptingresponses);
         logintosubmit = v.findViewById(R.id.logintosubmit);
-        allowmultiple = v.findViewById(R.id.allowmultiple);
         allowedit = v.findViewById(R.id.allowedit);
         recordemail = v.findViewById(R.id.recordemail);
         shuffle = v.findViewById(R.id.shuffle);
@@ -77,9 +73,7 @@ public class FormSettingsFragment extends Fragment implements CompoundButton.OnC
 
         publish.setOnCheckedChangeListener(this);
         unpublish.setOnCheckedChangeListener(this);
-        acceptingresponses.setOnCheckedChangeListener(this);
         logintosubmit.setOnCheckedChangeListener(this);
-        allowmultiple.setOnCheckedChangeListener(this);
         allowedit.setOnCheckedChangeListener(this);
         recordemail.setOnCheckedChangeListener(this);
         shuffle.setOnCheckedChangeListener(this);
@@ -91,13 +85,32 @@ public class FormSettingsFragment extends Fragment implements CompoundButton.OnC
     }
 
     private void updateUI() {
-        acceptingresponses.setChecked(configs.isAcceptingResponses());
         logintosubmit.setChecked(configs.isLoginToSubmit());
-        allowmultiple.setChecked(configs.isAllowMultipleResponses());
         allowedit.setChecked(configs.isAllowEdit());
         recordemail.setChecked(configs.isRecordEmail());
         shuffle.setChecked(configs.isShuffle());
         sendResponse.setChecked(configs.isSendResponseCopy());
+        publish.setChecked(configs.isPublish());
+        if (configs.isPublish()) {
+            publishtime.setVisibility(View.VISIBLE);
+            publishdate.setVisibility(View.VISIBLE);
+            chosepublishdate.setVisibility(View.VISIBLE);
+            chosepublishtime.setVisibility(View.VISIBLE);
+            publishdate.setText(configs.getPublishDate());
+            publishtime.setText(configs.getPublishTime());
+        }
+        unpublish.setChecked(configs.isUnPublish());
+        if (configs.isUnPublish()) {
+
+            unpublishtime.setVisibility(View.VISIBLE);
+            unpublishdate.setVisibility(View.VISIBLE);
+            choseunpublishdate.setVisibility(View.VISIBLE);
+            choseunpublishtime.setVisibility(View.VISIBLE);
+            unpublishdate.setText(configs.getUnPublishDate());
+            unpublishtime.setText(configs.getUnPublishTime());
+
+
+        }
 
     }
 
@@ -113,6 +126,7 @@ public class FormSettingsFragment extends Fragment implements CompoundButton.OnC
         materialDateBuilder.setSelection(today);
 
         MaterialDatePicker materialDatePicker = materialDateBuilder.build();
+
 
         materialDatePicker.addOnPositiveButtonClickListener(
                 selection -> {
@@ -143,7 +157,7 @@ public class FormSettingsFragment extends Fragment implements CompoundButton.OnC
             cal.set(Calendar.MINUTE, newMinute);
             cal.setLenient(false);
 
-            String format = formatter.format(cal.getTime());
+            String format = Constants.timeFormatter.format(cal.getTime());
             v.setText(format);
             if (v.getId() == R.id.publishtime) {
                 configs.setPublishTime(format);
@@ -189,8 +203,8 @@ public class FormSettingsFragment extends Fragment implements CompoundButton.OnC
                     publishdate.setVisibility(View.VISIBLE);
                     chosepublishdate.setVisibility(View.VISIBLE);
                     chosepublishtime.setVisibility(View.VISIBLE);
-                    publishdate.setText("Choose Date");
-                    publishtime.setText("Choose Time");
+                    publishdate.setText(configs.getPublishDate());
+                    publishtime.setText(configs.getPublishTime());
                 } else {
                     publishtime.setVisibility(View.GONE);
                     publishdate.setVisibility(View.GONE);
@@ -205,8 +219,8 @@ public class FormSettingsFragment extends Fragment implements CompoundButton.OnC
                     unpublishdate.setVisibility(View.VISIBLE);
                     choseunpublishdate.setVisibility(View.VISIBLE);
                     choseunpublishtime.setVisibility(View.VISIBLE);
-                    unpublishdate.setText("Choose Date");
-                    unpublishtime.setText("Choose Time");
+                    unpublishdate.setText(configs.getUnPublishDate());
+                    unpublishtime.setText(configs.getUnPublishTime());
                 } else {
                     unpublishtime.setVisibility(View.GONE);
                     unpublishdate.setVisibility(View.GONE);
@@ -214,14 +228,8 @@ public class FormSettingsFragment extends Fragment implements CompoundButton.OnC
                     choseunpublishtime.setVisibility(View.GONE);
                 }
                 break;
-            case R.id.acceptingresponses:
-                configs.setAcceptingResponses(isChecked);
-                break;
             case R.id.logintosubmit:
                 configs.setLoginToSubmit(isChecked);
-                break;
-            case R.id.allowmultiple:
-                configs.setAllowMultipleResponses(isChecked);
                 break;
             case R.id.allowedit:
                 configs.setAllowEdit(isChecked);
@@ -239,7 +247,4 @@ public class FormSettingsFragment extends Fragment implements CompoundButton.OnC
         }
     }
 
-    public FormConfig getConfigs() {
-        return configs;
-    }
 }

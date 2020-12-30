@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import androidx.fragment.app.Fragment;
 
 import com.app.forms.R;
+import com.app.forms.constants.Constants;
 
 public class InfoFragment extends Fragment {
     ImageView linkedin, github;
@@ -28,17 +29,16 @@ public class InfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_info, container, false);
         linkedin = v.findViewById(R.id.linkedin);
         github = v.findViewById(R.id.github);
 
         github.setOnClickListener(v1 -> {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/lnx2000"));
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.githubUrl));
             startActivity(browserIntent);
         });
         linkedin.setOnClickListener(v2 -> {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.linkedin.com/in/omkar-amilkanthwar-994809186/"));
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.linkedinUrl));
             startActivity(browserIntent);
         });
         return v;

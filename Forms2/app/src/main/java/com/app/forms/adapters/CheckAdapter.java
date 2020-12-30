@@ -46,10 +46,15 @@ public class CheckAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (type == Constants.typeSingleCheck)
-            ((RadioItemViewHolder) holder).text.setHint(data.get(position));
-        else
-            ((CheckItemViewHolder) holder).text.setHint(data.get(position));
+        if (type == Constants.typeSingleCheck) {
+            if (data.get(position).contains("Option"))
+                ((RadioItemViewHolder) holder).text.setHint(data.get(position));
+            else ((RadioItemViewHolder) holder).text.setText(data.get(position));
+        } else {
+            if (data.get(position).contains("Option"))
+                ((CheckItemViewHolder) holder).text.setHint(data.get(position));
+            else ((CheckItemViewHolder) holder).text.setText(data.get(position));
+        }
 
     }
 

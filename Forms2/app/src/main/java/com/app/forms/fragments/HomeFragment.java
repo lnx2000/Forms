@@ -2,8 +2,6 @@ package com.app.forms.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.forms.Items.FormItem;
 import com.app.forms.R;
+import com.app.forms.activities.MainActivity;
 import com.app.forms.adapters.Adapter;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -35,9 +34,8 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        data = new ArrayList<>();
+        data = ((MainActivity) getContext()).data;
         adapter = new Adapter(data, getActivity());
-
     }
 
     @Override
@@ -67,32 +65,6 @@ public class HomeFragment extends Fragment {
                 et.setText("");
             }
         });
-        et.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String filter = et.getText().toString().toLowerCase().trim();
-                ArrayList<FormItem> newdata = new ArrayList<>();
-                if (filter == null || filter.length() == 0)
-                    newdata.addAll(data);
-                else {
-                    for (FormItem f : data) {
-                        if (f.getName().toLowerCase().trim().contains(filter))
-                            newdata.add(f);
-                    }
-                }
-                adapter.applyFilter(newdata);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
 
         return v;
     }
@@ -101,8 +73,8 @@ public class HomeFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
-    public void addData(FormItem f) {
-        data.add(0, f);
-        adapter.addData(f);
+
+    public void addData() {
+        adapter.notifyItemInserted(0);
     }
 }

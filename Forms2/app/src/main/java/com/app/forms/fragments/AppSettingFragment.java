@@ -79,7 +79,6 @@ public class AppSettingFragment extends Fragment implements View.OnClickListener
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
@@ -99,7 +98,6 @@ public class AppSettingFragment extends Fragment implements View.OnClickListener
                         updateUI();
                     } else {
                         Toast.makeText(getContext(), "Authentication Failed", Toast.LENGTH_SHORT).show();
-                        //Snackbar.make(this, "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
                     }
 
                 });
@@ -119,7 +117,7 @@ public class AppSettingFragment extends Fragment implements View.OnClickListener
             userprofile.setImageDrawable(getResources().getDrawable(R.drawable.anonymous));
             mailid.setText("");
             displayname.setText("Anonymous");
-            signup.setText("Sign Up");
+            signup.setText("Login/SignUp");
         }
     }
 
@@ -133,8 +131,7 @@ public class AppSettingFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.signup:
-                //Log.e("123", signup.getText().toString());
-                if (((TextView) v).getText().equals("Sign Up"))
+                if (((TextView) v).getText().equals("Login/SignUp"))
                     signIn();
                 else
                     signOut();

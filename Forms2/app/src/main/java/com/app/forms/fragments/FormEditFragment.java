@@ -3,7 +3,6 @@ package com.app.forms.fragments;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.forms.Items.BaseClass;
-import com.app.forms.Items.Check;
-import com.app.forms.Items.Text;
 import com.app.forms.R;
 import com.app.forms.adapters.CFAdapter;
-import com.app.forms.constants.Constants;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,7 +32,6 @@ public class FormEditFragment extends Fragment {
 
     public FormEditFragment(ArrayList<BaseClass> data) {
         this.data = data;
-        Log.e("123", "constructor");
     }
 
     @Override
@@ -70,8 +65,11 @@ public class FormEditFragment extends Fragment {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 Collections.swap(data, viewHolder.getAdapterPosition(), target.getAdapterPosition());
-                viewHolder.itemView.findViewById(R.id.main_card).setElevation(R.dimen.zero_dp);
-                target.itemView.findViewById(R.id.main_card).setElevation(R.dimen.zero_dp);
+
+                //((MaterialCardView)viewHolder.itemView).setCardElevation(R.dimen.ten_dp);
+                //((MaterialCardView)target.itemView).setCardElevation(R.dimen.ten_dp);
+                //viewHolder.itemView.findViewById(R.id.main_card).setElevation(R.dimen.zero_dp);
+                //target.itemView.findViewById(R.id.main_card).setElevation(R.dimen.zero_dp);
                 // and notify the adapter that its dataset has changed
                 createFormAdapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 return true;
@@ -80,7 +78,7 @@ public class FormEditFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                viewHolder.itemView.findViewById(R.id.main_card).setElevation(R.dimen.ten_dp);
+                //((MaterialCardView)viewHolder.itemView).setCardElevation(R.dimen.ten_dp);
 
             }
         });
@@ -95,21 +93,13 @@ public class FormEditFragment extends Fragment {
         createFormAdapter.notifyItemInserted(data.size() - 1);
     }
 
-    public void activityResult(Uri bitmap, int rescode) {
+    /*public void activityResult(Uri bitmap, int rescode) {
 
         int type = createFormAdapter.getItemViewType(rescode);
-        switch (type) {
-            case Constants.typeTextField:
-                ((Text) data.get(rescode)).setImagepath(bitmap);
-                ((Text) data.get(rescode)).setImage(true);
-                break;
-            case Constants.typeSingleCheck:
-            case Constants.typeMultipleCheck:
-                ((Check) data.get(rescode)).setImagepath(bitmap);
-                ((Check) data.get(rescode)).setImage(true);
-                break;
-        }
+
+        data.get(rescode).setImage(true);
+        data.get(rescode).setImagepath(bitmap);
         createFormAdapter.notifyItemChanged(rescode);
-    }
+    }*/
 
 }
