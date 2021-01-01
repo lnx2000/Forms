@@ -1,92 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:orientation="vertical">
-
-    <com.cooltechworks.views.WhatsAppEditText
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/colored_simple_border"
-        android:hint="\n\nWite a comment...\n\n"
-        android:inputType="textMultiLine"
-        android:minHeight="100dp"
-        android:padding="10dp"
-        android:textAlignment="center"
-        android:textColor="@color/secondaryTextColor"
-        android:textSize="16dp"
-        android:visibility="visible" />
-
-    <com.cooltechworks.views.WhatsAppTextView
-        android:id="@+id/titletv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/colored_simple_border"
-        android:minHeight="100dp"
-        android:padding="10dp"
-        android:textAlignment="center"
-        android:textColor="@color/secondaryTextColor"
-        android:textSize="16dp"
-        android:visibility="gone" />
+    app:cardElevation="0dp">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="10dp">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/bold"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginHorizontal="10dp"
-            android:layout_weight="1"
-            android:src="@drawable/ic_baseline_format_bold_24" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/italic"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginHorizontal="10dp"
-            android:layout_weight="1"
-            android:src="@drawable/ic_baseline_format_italic_24" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/st"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="5dp"
+                android:src="@drawable/ic_baseline_dialpad_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageView
+                android:id="@+id/delete"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_baseline_delete_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.cooltechworks.views.WhatsAppEditText
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:layout_weight="1"
-            android:src="@drawable/ic_baseline_format_clear_24" />
+            android:layout_marginTop="5dp"
+            android:background="@drawable/colored_simple_border"
+            android:hint="\n\nWite a comment...\n\n"
+            android:inputType="textMultiLine"
+            android:minHeight="100dp"
+            android:padding="10dp"
+            android:textAlignment="center"
+            android:textColor="@color/secondaryTextColor"
+            android:textSize="16dp"
+            android:visibility="visible" />
+
+        <com.cooltechworks.views.WhatsAppTextView
+            android:id="@+id/titletv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/colored_simple_border"
+            android:minHeight="100dp"
+            android:padding="10dp"
+            android:textAlignment="center"
+            android:textColor="@color/secondaryTextColor"
+            android:textSize="16dp"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/bold"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_baseline_format_bold_24" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/italic"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_baseline_format_italic_24" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/st"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_baseline_format_clear_24" />
+
+
+        </LinearLayout>
+
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tablayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Write" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Preview" />
+        </com.google.android.material.tabs.TabLayout>
 
 
     </LinearLayout>
-
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tablayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginBottom="10dp">
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Write" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Preview" />
-    </com.google.android.material.tabs.TabLayout>
-
-
-</LinearLayout>
+</com.google.android.material.card.MaterialCardView>

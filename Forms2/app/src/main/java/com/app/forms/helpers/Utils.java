@@ -19,7 +19,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Utils {
-    public static int generateFormUID(int n) {
+    public static int generateUID(int n) {
         String AlphaNumericString = "0123456789";
 
         StringBuilder sb = new StringBuilder(n);
@@ -38,6 +38,13 @@ public class Utils {
         if (user == null)
             return false;
         return true;
+    }
+
+    public static String getUserID() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null)
+            return null;
+        return user.getUid();
     }
 
     public static String jsonForm(FormItem f) {
@@ -66,7 +73,7 @@ public class Utils {
     }
 
     public static FormItem createForm(String formTitle) {
-        FormItem formItem = new FormItem(formTitle, Constants.dFormatter.format(new Date()), Utils.generateFormUID(Constants.formUIDLength));
+        FormItem formItem = new FormItem(formTitle, Constants.dFormatter.format(new Date()), Utils.generateUID(Constants.formUIDLength));
         Date d = new Date();
         formItem.getConfig().setPublishDate(Constants.dateFormatter.format(d));
         formItem.getConfig().setPublishTime("12:00 am");

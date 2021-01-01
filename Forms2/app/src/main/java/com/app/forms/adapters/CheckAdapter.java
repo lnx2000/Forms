@@ -1,6 +1,7 @@
 package com.app.forms.adapters;
 
 import android.content.Context;
+import android.os.strictmode.FileUriExposedViolation;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -15,6 +16,9 @@ import com.app.forms.R;
 import com.app.forms.constants.Constants;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class CheckAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -133,6 +137,7 @@ public class CheckAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     notifyItemRemoved(position);
                 }
             });
+
 
         }
     }

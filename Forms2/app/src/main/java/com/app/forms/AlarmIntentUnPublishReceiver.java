@@ -28,24 +28,26 @@ import static com.app.forms.helpers.Utils.showNotification;
 public class AlarmIntentUnPublishReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.e("123", "unpulish intent received");
+
 
         boolean enable = intent.getExtras().getBoolean("enable");
         int formID = intent.getExtras().getInt("form");
+        String name = intent.getExtras().getString("Name");
         if (!enable) {
-            removeForm(formID, context);
+            removeForm(formID, context, name);
         }
 
     }
 
 
-    private void removeForm(int formID, Context context) {
+    private void removeForm(int formID, Context context, String name) {
 
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
         DocumentReference ref = firebaseFirestore.collection("Forms").document("" + formID);
         Map<String, Object> map = new HashMap<>();
         map.put("acceptingResponses", false);
         map.put("text", "This form is not accepting responses anymore");
+        map.put("name", name);
         ref.set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override

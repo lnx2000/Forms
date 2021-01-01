@@ -56,6 +56,7 @@ public class CFAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 v = LayoutInflater.from(context).inflate(R.layout.item_text, parent, false);
                 vh = new TextHolder(v);
                 break;
+            case Constants.typepoll:
             case Constants.typeSingleCheck:
                 v = LayoutInflater.from(context).inflate(R.layout.item_check, parent, false);
                 vh = new CheckHolder(v, Constants.typeSingleCheck);
@@ -67,6 +68,11 @@ public class CFAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case Constants.typeTextMsg:
                 v = LayoutInflater.from(context).inflate(R.layout.item_text_msg, parent, false);
                 vh = new TextMsgHolder(v);
+                break;
+            case Constants.typerating:
+            case Constants.typeupload:
+                v = LayoutInflater.from(context).inflate(R.layout.item_simple_text, parent, false);
+                vh = new SimpleTextHolder(v, viewType);
                 break;
 
         }
@@ -103,6 +109,12 @@ public class CFAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }*/
         } else if (holder instanceof TextMsgHolder) {
             ((TextMsgHolder) holder).title.setText(Html.fromHtml(data.get(position).getTitle(), Html.FROM_HTML_MODE_LEGACY));
+        } else if (holder instanceof SimpleTextHolder) {
+            SimpleTextHolder th = (SimpleTextHolder) holder;
+            BaseClass text = (BaseClass) data.get(position);
+            th.title.setText(text.getTitle());
+            th.mandatory.setChecked(text.isMandatory());
+
         }
     }
 
@@ -309,6 +321,7 @@ public class CFAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextWatcher textWatcher;
         WhatsAppTextView titletv;
         TabLayout tabLayout;
+        ImageView delete;
 
         public TextMsgHolder(@NonNull View itemView) {
             super(itemView);
@@ -318,9 +331,11 @@ public class CFAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             bold = itemView.findViewById(R.id.bold);
             italic = itemView.findViewById(R.id.italic);
             st = itemView.findViewById(R.id.st);
+            delete = itemView.findViewById(R.id.delete);
             bold.setOnClickListener(this);
             italic.setOnClickListener(this);
             st.setOnClickListener(this);
+            delete.setOnClickListener(this);
 
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
@@ -372,6 +387,7 @@ public class CFAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         @Override
         public void onClick(View v) {
+            int position = getAdapterPosition();
             int pos;
             String s;
             switch (v.getId()) {
@@ -397,7 +413,84 @@ public class CFAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     title.setText(s);
                     title.setSelection(pos + 1);
                     break;
+                case R.id.delete:
+                    data.remove(position);
+                    notifyItemRemoved(position);
+                    break;
             }
+
+        }
+    }
+
+    public class SimpleTextHolder extends RecyclerView.ViewHolder {
+        TextInputEditText title;
+        SwitchMaterial mandatory;
+        Toolbar toolbar;
+
+        public SimpleTextHolder(@NonNull View itemView, int viewtype) {
+            super(itemView);
+            title = itemView.findViewById(R.id.title);
+            mandatory = itemView.findViewById(R.id.ismandatory);
+            toolbar = itemView.findViewById(R.id.toolbar);
+            if (viewtype == Constants.typerating) {
+                title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_star_rate_24, 0, 0, 0);
+            }
+
+            title.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    int position = getAdapterPosition();
+                    data.get(position).setTitle(s.toString());
+
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+            mandatory.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                int position = getAdapterPosition();
+                ((BaseClass) data.get(position)).setMandatory(isChecked);
+            });
+
+            toolbar.setOnMenuItemClickListener(item -> {
+                int position = getAdapterPosition();
+                switch (item.getItemId()) {
+                    case R.id.moveup:
+                        if (position > 0) {
+                            Collections.swap(data, position, position - 1);
+                            notifyItemMoved(position, position - 1);
+                        }
+                        break;
+                    case R.id.movedown:
+                        if (position < data.size() - 1) {
+                            Collections.swap(data, position, position + 1);
+                            notifyItemMoved(position, position + 1);
+                        }
+                        break;
+                    /*case R.id.showimage:
+                        if (imageView.getVisibility() == View.GONE) {
+                            imageView.setVisibility(View.VISIBLE);
+                            imageView.setImageDrawable(((Activity) context).getResources().getDrawable(R.drawable.ic_add_image));
+                        } else {
+                            imageView.setVisibility(View.GONE);
+                            data.get(position).setImage(false);
+                        }
+                        break;*/
+                    case R.id.delete:
+                        data.remove(position);
+                        notifyItemRemoved(position);
+                        break;
+                }
+                return true;
+            });
 
         }
     }

@@ -20,14 +20,16 @@ public class FormPreviewFragment extends Fragment {
     ArrayList<BaseClass> data;
     RecyclerView.LayoutManager manager;
     FormPreviewAdapter adapter;
+    int formID;
 
 
     public FormPreviewFragment() {
         // Required empty public constructor
     }
 
-    public FormPreviewFragment(ArrayList<BaseClass> data){
+    public FormPreviewFragment(ArrayList<BaseClass> data, int formID) {
         this.data = data;
+        this.formID = formID;
     }
 
     @Override
@@ -44,11 +46,12 @@ public class FormPreviewFragment extends Fragment {
         recyclerView = v.findViewById(R.id.recyclerview);
 
 
-        adapter = new FormPreviewAdapter(getContext(), data);
+        adapter = new FormPreviewAdapter(getContext(), data, true, null, "" + formID);
 
         manager = new LinearLayoutManager(getContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(manager);
+        recyclerView.setItemViewCacheSize(100);
 
         return v;
     }

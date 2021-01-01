@@ -21,7 +21,7 @@ public class JsonDecode {
         obj.remove("form");
 
         FormItem item = gson.fromJson(obj.toString(), FormItem.class);
-        ArrayList<BaseClass> data  = decodeArray(form);
+        ArrayList<BaseClass> data = decodeArray(form);
         item.setForm(data);
         return item;
     }
@@ -35,9 +35,13 @@ public class JsonDecode {
             if (jobj.has("textTypeChoice")) {
                 Text text = gson.fromJson(jobj.toString(), Text.class);
                 data.add(text);
-            } else {
+            } else if (jobj.has("group")) {
                 Check check = gson.fromJson(jobj.toString(), Check.class);
                 data.add(check);
+
+            } else {
+                BaseClass baseClass = gson.fromJson(jobj.toString(), BaseClass.class);
+                data.add(baseClass);
             }
 
         }

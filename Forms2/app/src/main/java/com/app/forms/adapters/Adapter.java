@@ -1,6 +1,7 @@
 package com.app.forms.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.app.forms.Items.FormItem;
 import com.app.forms.R;
 import com.app.forms.activities.MainActivity;
 import com.app.forms.constants.Constants;
+import com.app.forms.helpers.SPOps;
 import com.app.forms.helpers.Utils;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -119,8 +121,15 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         ((MainActivity) context).startCreateFormActivity(position, Constants.settingFragment);
                         break;
                     case R.id.share:
+                        Intent i = new Intent();
+                        i.setAction(Intent.ACTION_SEND);
+                        i.putExtra(Intent.EXTRA_TEXT, Constants.formBaseUrl + data.get(position).getUID());
+                        i.setType("text/plain");
+                        context.startActivity(i);
                         break;
                     case R.id.delete:
+                        SPOps.removeLocalForm(data.get(position).getUID(), position, context);
+
                         break;
                 }
                 return true;

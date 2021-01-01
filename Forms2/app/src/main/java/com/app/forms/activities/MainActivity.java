@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -37,7 +36,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.gson.Gson;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -74,12 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         data = SPOps.loadSP(this);
-
-        Log.e("123", data.toString() + "     " + data.size());
-        Gson gson = new Gson();
-        if(data.size()!=0)
-        Log.e("123", gson.toJson(data.get(0)));
-
 
         homeFragment = new HomeFragment();
         appSettingFragment = new AppSettingFragment();
@@ -184,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
         Intent u_i = new Intent(MainActivity.this, AlarmIntentUnPublishReceiver.class);
         u_i.putExtra("enable", false);
         u_i.putExtra("form", data.get(position).getUID());
+        u_i.putExtra("name", data.get(position).getName());
         PendingIntent ui = PendingIntent.getBroadcast(MainActivity.this, data.get(position).getUID(), u_i, 0);
         am.set(AlarmManager.RTC_WAKEUP, unPublishDate.getTime(), ui);
         Toast.makeText(this, "unpublish alarm set!", Toast.LENGTH_SHORT).show();
@@ -217,4 +210,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void removeItem(int position) {
+
+        data.remove(position);
+        homeFragment.refreshAdapter();
+
+    }
 }

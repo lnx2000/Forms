@@ -30,7 +30,6 @@ public class AlarmIntentPublishReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.e("123", "publish intent received");
 
         boolean enable = intent.getExtras().getBoolean("enable");
         int formID = intent.getExtras().getInt("form");
@@ -81,6 +80,7 @@ public class AlarmIntentPublishReceiver extends BroadcastReceiver {
         Map<String, Object> map = new HashMap<>();
 
         String formString = gson.toJson(formItem.getForm());
+        map.put("name", formItem.getName());
         map.put("Form", formString);
         map.put("userID", formItem.getUserID());
         map.put("Enabled", enabled);

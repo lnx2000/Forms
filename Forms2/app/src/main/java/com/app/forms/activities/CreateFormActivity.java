@@ -1,38 +1,34 @@
 package com.app.forms.activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
-import android.text.Html;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.app.forms.ActivityCallback;
 import com.app.forms.Items.BaseClass;
 import com.app.forms.Items.Check;
 import com.app.forms.Items.FormItem;
 import com.app.forms.Items.Text;
-import com.app.forms.Items.TextMsg;
 import com.app.forms.R;
 import com.app.forms.constants.Constants;
 import com.app.forms.fragments.FormEditFragment;
 import com.app.forms.fragments.FormPreviewFragment;
 import com.app.forms.fragments.FormSettingsFragment;
 import com.app.forms.helpers.JsonDecode;
-import com.app.forms.helpers.SPOps;
-import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -54,8 +50,9 @@ public class CreateFormActivity extends AppCompatActivity {
     FormItem form;
     MaterialCardView saveCard, additemfab;
     int position;
-    TextInputEditText titleEditText;
     int fromUID;
+    ActivityCallback activityCallback;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +67,8 @@ public class CreateFormActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         saveCard = findViewById(R.id.savecard);
         additemfab = findViewById(R.id.additemfab);
-        MaterialToolbar toolbar = (MaterialToolbar) LayoutInflater.from(this).inflate(R.layout.custom_toolbar, null);
-        titleEditText = toolbar.findViewById(R.id.titleedittext);
 
-        //setSupportActionBar(toolbar);
+        getSupportActionBar().hide();
 
         position = getIntent().getExtras().getInt("position");
         int fragmenttype = getIntent().getExtras().getInt("fragment");
@@ -89,11 +84,12 @@ public class CreateFormActivity extends AppCompatActivity {
 
         setTitle(formTitle);
 
+
         data = form.getForm();
 
         formEditFragment = new FormEditFragment(data);
         formSettingsFragment = new FormSettingsFragment(form.getConfig());
-        formPreviewFragment = new FormPreviewFragment(form.getForm());
+        formPreviewFragment = new FormPreviewFragment(form.getForm(), form.getUID());
 
 
         if (fragmenttype == Constants.editFragment) {
@@ -133,7 +129,7 @@ public class CreateFormActivity extends AppCompatActivity {
         navview.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.textmsg:
-                    data.add(new TextMsg(Constants.typeTextMsg));
+                    data.add(new BaseClass(Constants.typeTextMsg));
                     formEditFragment.notifyAdapterItemAdded();
                     break;
                 case R.id.textfield:
@@ -153,34 +149,19 @@ public class CreateFormActivity extends AppCompatActivity {
                     formEditFragment.notifyAdapterItemAdded();
                     break;
                 case R.id.ratingfield:
-                    data.add(new Text(Constants.typerating));
+                    data.add(new BaseClass(Constants.typerating));
                     formEditFragment.notifyAdapterItemAdded();
                     break;
                 case R.id.uploadfield:
-                    data.add(new Text(Constants.typeupload));
+                    data.add(new BaseClass(Constants.typeupload));
                     formEditFragment.notifyAdapterItemAdded();
                     break;
             }
+            formEditFragment.smoothScroll(data.size());
             visibility(false);
             return true;
         });
 
-        titleEditText.setOnClickListener(v -> {
-
-            titleEditText.setFocusable(true);
-            titleEditText.requestFocus();
-        });
-        titleEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    SPOps.renameForm(fromUID, titleEditText.getText().toString(), CreateFormActivity.this);
-                    titleEditText.setFocusable(false);
-
-                }
-                return false;
-            }
-        });
 
     }
 
@@ -243,5 +224,25 @@ public class CreateFormActivity extends AppCompatActivity {
         savedmsg.setVisibility(View.VISIBLE);
         savedmsg.postDelayed(() -> savedmsg.setVisibility(View.GONE), 1000);
     }
+
+    public void getFile(ActivityCallback activityCallback) {
+        Intent i = new Intent();
+        i.setAction(Intent.ACTION_GET_CONTENT);
+        i.setType("*/*");
+        this.activityCallback = activityCallback;
+        startActivityForResult(i, 1000);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1000) {
+            Uri f = data.getData();
+            activityCallback.uploadFile(f);
+
+        }
+    }
+
 
 }

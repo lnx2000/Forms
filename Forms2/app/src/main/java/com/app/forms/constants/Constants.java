@@ -26,5 +26,7 @@ public class Constants {
     public static final String githubUrl = "https://github.com/lnx2000";
     public static final String linkedinUrl = "https://www.linkedin.com/in/omkar-amilkanthwar-994809186/";
     public static final SimpleDateFormat dFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+    public static final String formBaseUrl = "http://com.app.forms/f/";
+    public static final String notAccepting = " is no longer accepting responses.\nTry contacting the owner of the form if you think this a mistake";
 
 }

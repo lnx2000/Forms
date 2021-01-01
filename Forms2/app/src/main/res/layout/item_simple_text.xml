@@ -32,6 +32,8 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputEditText
+            android:drawableStart="@drawable/ic_baseline_cloud_upload_24"
+            android:drawablePadding="10dp"
             android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -39,19 +41,10 @@
             android:background="@drawable/colored_simple_border"
             android:hint="Enter title"
             android:padding="10dp"
-            app:layout_constraintEnd_toStartOf="@+id/spinner"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_marginLeft="10dp"
-            android:gravity="end"
-            app:layout_constraintBottom_toBottomOf="@+id/title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/title" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/ismandatory"

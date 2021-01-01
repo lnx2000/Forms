@@ -109,6 +109,30 @@ public class SPOps {
         edit.putString("" + formID, jsonForm);
         edit.apply();
 
+    }
+
+    public static void removeLocalForm(int formID, int position, Context context) {
+
+        SharedPreferences sp = context.getSharedPreferences("Forms", Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sp.edit();
+        editor.remove("" + formID);
+
+        Gson gson = new Gson();
+        String jsonUids = sp.getString("UIDs", "");
+        ArrayList<Integer> uids = gson.fromJson(jsonUids, new TypeToken<ArrayList<Integer>>() {
+        }.getType());
+
+        int index = uids.indexOf(formID);
+        uids.remove(index);
+        jsonUids = gson.toJson(uids);
+        editor.putString("UIDs", jsonUids);
+
+        ((MainActivity) context).removeItem(position);
+
+        editor.apply();
+
 
     }
+
 }

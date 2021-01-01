@@ -1,6 +1,5 @@
 package com.app.forms.fragments;
 
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +11,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.forms.Items.BaseClass;
@@ -25,6 +25,8 @@ public class FormEditFragment extends Fragment {
     RecyclerView recyclerView;
     ArrayList<BaseClass> data;
     CFAdapter createFormAdapter;
+    RecyclerView.SmoothScroller scroller;
+    RecyclerView.LayoutManager layoutManager;
 
     public FormEditFragment() {
         // Required empty public constructor
@@ -37,6 +39,15 @@ public class FormEditFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        scroller = new LinearSmoothScroller(getContext()) {
+            @Override
+            protected int getVerticalSnapPreference() {
+                return LinearSmoothScroller.SNAP_TO_START;
+
+            }
+
+        };
+
 
     }
 
@@ -47,7 +58,8 @@ public class FormEditFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_form_edit, container, false);
         recyclerView = v.findViewById(R.id.recyclerview);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+
+        layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         createFormAdapter = new CFAdapter(data, getContext());
         recyclerView.setAdapter(createFormAdapter);
@@ -101,5 +113,9 @@ public class FormEditFragment extends Fragment {
         data.get(rescode).setImagepath(bitmap);
         createFormAdapter.notifyItemChanged(rescode);
     }*/
+    public void smoothScroll(int position){
+        scroller.setTargetPosition(position);
+        layoutManager.startSmoothScroll(scroller);
+    }
 
 }

@@ -3,7 +3,6 @@
     package="com.app.forms">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -16,12 +15,18 @@
         android:theme="@style/Theme.Forms.cyan">
         <activity android:name=".activities.LoadFormActivity">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"></action>
-                <category android:name="android.intent.category.DEFAULT"></category>
-                <category android:name="android.intent.category.BROWSABLE"></category>
-                <data android:host="com.app.forms" android:scheme="http"></data>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="com.app.forms"
+                    android:scheme="http" />
+
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activities.CreateFormActivity"
             android:windowSoftInputMode="adjustPan" />
@@ -44,6 +49,16 @@
             android:name=".AlarmIntentUnPublishReceiver"
             android:enabled="true"
             android:exported="true" />
+<!--
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>-->
     </application>
 
 </manifest>

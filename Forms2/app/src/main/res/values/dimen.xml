@@ -2,4 +2,10 @@
 <resources>
     <dimen name="ten_dp">10dp</dimen>
     <dimen name="zero_dp">0dp</dimen>
+    <dimen name="five_dp">5dp</dimen>
+    <dimen name="two_dp">2dp</dimen>
+    <dimen name="_18_dp">18dp</dimen>
+    <dimen name="iv_min">25dp</dimen>
+    <dimen name="iv_max">40dp</dimen>
+    <dimen name="_20_dp">20dp</dimen>
 </resources>
