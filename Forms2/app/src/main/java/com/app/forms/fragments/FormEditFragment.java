@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.app.forms.Items.BaseClass;
+import com.app.forms.items.BaseClass;
 import com.app.forms.R;
 import com.app.forms.adapters.CFAdapter;
 

@@ -1,4 +1,4 @@
-package com.app.forms.Items;
+package com.app.forms.items;
 
 public class BaseClass {
     String title;

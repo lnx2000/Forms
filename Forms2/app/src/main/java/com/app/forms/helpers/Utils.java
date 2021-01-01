@@ -8,7 +8,7 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
-import com.app.forms.Items.FormItem;
+import com.app.forms.items.FormItem;
 import com.app.forms.R;
 import com.app.forms.constants.Constants;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,6 +45,13 @@ public class Utils {
         if (user == null)
             return null;
         return user.getUid();
+    }
+    public static String getUserEmailID(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null)
+            return null;
+        return user.getEmail();
+
     }
 
     public static String jsonForm(FormItem f) {

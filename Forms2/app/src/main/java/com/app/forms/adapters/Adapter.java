@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.AutoTransition;
 import androidx.transition.TransitionManager;
 
-import com.app.forms.Items.FormItem;
+import com.app.forms.items.FormItem;
 import com.app.forms.R;
 import com.app.forms.activities.MainActivity;
 import com.app.forms.constants.Constants;

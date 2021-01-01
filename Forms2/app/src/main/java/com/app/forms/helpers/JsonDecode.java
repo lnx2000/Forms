@@ -1,9 +1,9 @@
 package com.app.forms.helpers;
 
-import com.app.forms.Items.BaseClass;
-import com.app.forms.Items.Check;
-import com.app.forms.Items.FormItem;
-import com.app.forms.Items.Text;
+import com.app.forms.items.BaseClass;
+import com.app.forms.items.Check;
+import com.app.forms.items.FormItem;
+import com.app.forms.items.Text;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/ll">
+
+    <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="10dp"
+        app:contentPadding="20dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/typeofabuse"
+                android:textColor="@color/secondaryTextColor"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RadioGroup
+                android:id="@+id/rg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView9">
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/nudity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nudity" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/violence"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Promotes hatred, violence or\n illegal.offensive activities" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/spam"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Spam, malware  or phishing" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/_private"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Private and confidential information" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/copy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Copyright infringement" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/other"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Other" />
+
+            </RadioGroup>
+
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:text="@string/description"
+                android:textColor="@color/secondaryTextColor"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="@id/cl"
+                app:layout_constraintStart_toStartOf="@id/cl"
+                app:layout_constraintTop_toBottomOf="@+id/rg" />
+
+            <EditText
+                android:id="@+id/des"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/simple_border"
+                android:hint="Add description"
+                android:inputType="textMultiLine"
+                android:lines="2"
+                android:maxLines="10"
+                android:padding="5dp"
+                android:textAlignment="textStart"
+                android:textColor="@color/secondaryTextColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView8" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/des">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:text="Cancel"
+                    android:textColor="@color/secondaryTextColor"
+                    app:backgroundTint="@color/secondaryDarkColor" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/report"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="Report" />
+
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>

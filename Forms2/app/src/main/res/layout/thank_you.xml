@@ -58,6 +58,7 @@
                 android:src="@drawable/ic_checkmark" />
 
             <TextView
+                android:id="@+id/msg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -77,6 +78,7 @@
 
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -103,6 +105,16 @@
 
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/report"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/report"
+        app:layout_constraintEnd_toEndOf="@+id/materialCardView5"
+        app:layout_constraintStart_toStartOf="@+id/materialCardView5"
+        app:layout_constraintTop_toBottomOf="@+id/materialCardView5" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

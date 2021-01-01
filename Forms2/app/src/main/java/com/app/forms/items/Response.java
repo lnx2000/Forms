@@ -1,4 +1,4 @@
-package com.app.forms.Items;
+package com.app.forms.items;
 
 import java.util.Set;
 
@@ -12,8 +12,9 @@ public class Response {
     //String fileurl;
     boolean mandatory;
 
-    public Response() {
+    public Response(int type) {
         mandatory = false;
+        this.type = type;
     }
 
     public int getType() {

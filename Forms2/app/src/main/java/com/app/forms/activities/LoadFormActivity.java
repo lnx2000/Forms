@@ -1,8 +1,8 @@
 package com.app.forms.activities;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.app.forms.R;
 import com.app.forms.constants.Constants;
+import com.app.forms.fragments.FormPreviewFragment;
 import com.app.forms.helpers.Utils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,7 +25,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.gson.Gson;
 
 import java.util.List;
 import java.util.Map;
@@ -35,6 +35,8 @@ public class LoadFormActivity extends AppCompatActivity {
     DocumentReference ref;
     ConstraintLayout cl;
     ProgressBar progressBar;
+    FormPreviewFragment formPreviewFragment;
+    int formID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +49,8 @@ public class LoadFormActivity extends AppCompatActivity {
 
         Uri data = getIntent().getData();
         List<String> params = data.getPathSegments();
-        int formID = Integer.parseInt(params.get(1));
+
+        formID = Integer.parseInt(params.get(1));
         firebaseFirestore = FirebaseFirestore.getInstance();
         ref = firebaseFirestore.collection("Forms").document("" + formID);
 
@@ -96,6 +99,7 @@ public class LoadFormActivity extends AppCompatActivity {
         if (accepting) {
             if (verifyallConditions(map)) {
 
+
             }
         } else {
             String name = (String) map.get("name");
@@ -103,6 +107,18 @@ public class LoadFormActivity extends AppCompatActivity {
             ((TextView) v.findViewById(R.id.title)).setText(name);
             ((TextView) v.findViewById(R.id.subtext)).setText("The " + name + Constants.notAccepting);
             v.setLayoutParams(new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            TextView report = v.findViewById(R.id.report);
+            report.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(LoadFormActivity.this, ReportActivity.class);
+                    i.putExtra("formID", ""+formID);
+                    startActivity(i);
+                    finish();
+                }
+            });
+
+
             cl.addView(v);
         }
 

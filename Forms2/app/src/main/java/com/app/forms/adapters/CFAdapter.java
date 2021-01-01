@@ -17,9 +17,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.app.forms.Items.BaseClass;
-import com.app.forms.Items.Check;
-import com.app.forms.Items.Text;
+import com.app.forms.items.BaseClass;
+import com.app.forms.items.Check;
+import com.app.forms.items.Text;
 import com.app.forms.R;
 import com.app.forms.constants.Constants;
 import com.cooltechworks.views.WhatsAppEditText;

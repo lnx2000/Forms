@@ -13,6 +13,7 @@ public class Constants {
     public static final int typerating = 4;
     public static final int typeupload = 5;
     public static final int formAdded = 1;
+    public static final int typeSubmit = 25;
     public static final int typeTextMsg = 100;
     public static final int formUIDLength = 8;
     public static final String changesSaved = "Changes Saved";

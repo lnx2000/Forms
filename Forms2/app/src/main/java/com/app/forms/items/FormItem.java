@@ -1,6 +1,5 @@
-package com.app.forms.Items;
+package com.app.forms.items;
 
-import java.text.Normalizer;
 import java.util.ArrayList;
 
 public class FormItem {

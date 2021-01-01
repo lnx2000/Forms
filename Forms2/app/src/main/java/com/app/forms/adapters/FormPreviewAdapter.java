@@ -24,16 +24,17 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.forms.ActivityCallback;
-import com.app.forms.Items.BaseClass;
-import com.app.forms.Items.Check;
-import com.app.forms.Items.Response;
 import com.app.forms.R;
 import com.app.forms.activities.CreateFormActivity;
 import com.app.forms.constants.Constants;
 import com.app.forms.helpers.Utils;
+import com.app.forms.items.BaseClass;
+import com.app.forms.items.Check;
+import com.app.forms.items.Response;
 import com.cooltechworks.views.WhatsAppTextView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
@@ -104,6 +105,10 @@ public class FormPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             case Constants.typeupload:
                 v = LayoutInflater.from(context).inflate(R.layout.show_upload, parent, false);
                 vh = new showUploadHolder(v);
+                break;
+            case Constants.typeSubmit:
+                v = LayoutInflater.from(context).inflate(R.layout.show_submit, parent, false);
+                vh = new showSubmitHolder(v);
 
         }
         return vh;
@@ -431,6 +436,24 @@ public class FormPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     ((CreateFormActivity) context).getFile(activityCallback);
                 });
             }
+        }
+    }
+
+    private class showSubmitHolder extends RecyclerView.ViewHolder {
+        MaterialButton submit;
+
+        public showSubmitHolder(@NonNull View itemView) {
+            super(itemView);
+            submit = itemView.findViewById(R.id.submit);
+            if (!preview) {
+                submit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //TODO: submit form here
+                    }
+                });
+            }
+
         }
     }
 

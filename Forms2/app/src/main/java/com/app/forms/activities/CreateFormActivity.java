@@ -15,10 +15,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.app.forms.ActivityCallback;
-import com.app.forms.Items.BaseClass;
-import com.app.forms.Items.Check;
-import com.app.forms.Items.FormItem;
-import com.app.forms.Items.Text;
+import com.app.forms.items.BaseClass;
+import com.app.forms.items.Check;
+import com.app.forms.items.FormItem;
+import com.app.forms.items.Text;
 import com.app.forms.R;
 import com.app.forms.constants.Constants;
 import com.app.forms.fragments.FormEditFragment;
@@ -89,7 +89,7 @@ public class CreateFormActivity extends AppCompatActivity {
 
         formEditFragment = new FormEditFragment(data);
         formSettingsFragment = new FormSettingsFragment(form.getConfig());
-        formPreviewFragment = new FormPreviewFragment(form.getForm(), form.getUID());
+        formPreviewFragment = new FormPreviewFragment(form.getForm(), form.getUID(), true);
 
 
         if (fragmenttype == Constants.editFragment) {

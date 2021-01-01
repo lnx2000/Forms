@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.app.forms.Items.FormConfig;
+import com.app.forms.items.FormConfig;
 import com.app.forms.R;
 import com.app.forms.constants.Constants;
 import com.google.android.material.datepicker.CalendarConstraints;

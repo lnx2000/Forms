@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.app.forms.Items.FormItem;
+import com.app.forms.items.FormItem;
 import com.app.forms.R;
 import com.app.forms.activities.MainActivity;
 import com.app.forms.adapters.Adapter;

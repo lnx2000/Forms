@@ -1,8 +1,6 @@
-package com.app.forms.Items;
+package com.app.forms.items;
 
 import androidx.annotation.NonNull;
-
-import com.app.forms.constants.Constants;
 
 public class FormConfig implements Cloneable {
     boolean acceptingResponses;

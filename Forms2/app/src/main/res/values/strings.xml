@@ -9,4 +9,10 @@
     <string name="warning">Enabling will move this form to the public space and will be available to everyone with URL from date of publish. To ensure privacy set configs accordingly.</string>
     <string name="notaccepting">The Internship Drive is no longer accepting responses.<br></br>Try contacting the owner of th form if you think this is mistake</string>
 
+    <string name="report"><u>Report Abuse</u></string>
+    <string name="title_activity_report">ReportActivity</string>
+    <string name="typeofabuse">Type of abuse<font color="#dd0000"> *</font></string>
+    <string name="description">Descritpion<font color="#dd0000"> *</font></string>
+
+
 </resources>
