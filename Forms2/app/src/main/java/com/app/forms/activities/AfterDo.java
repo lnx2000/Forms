@@ -25,7 +25,7 @@ public class AfterDo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(AfterDo.this, ReportActivity.class);
-                i.putExtra("formID", ""+formID);
+                i.putExtra("formID", "" + formID);
                 startActivity(i);
                 finish();
 
@@ -35,6 +35,9 @@ public class AfterDo extends AppCompatActivity {
         if (resCosde == Constants.reportSubmitted) {
             msg.setText("Report has been submitted successfully!");
             report.setVisibility(View.GONE);
+        } else if (resCosde == Constants.alreadyfilled) {
+            msg.setText("You've already responded");
+            report.setVisibility(View.VISIBLE);
         } else {
             msg.setText("Your responses has been recorded!");
             report.setVisibility(View.VISIBLE);

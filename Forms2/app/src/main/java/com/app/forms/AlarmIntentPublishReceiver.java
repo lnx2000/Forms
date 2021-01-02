@@ -9,8 +9,8 @@ import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
-import com.app.forms.items.FormItem;
 import com.app.forms.helpers.JsonDecode;
+import com.app.forms.items.FormItem;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -85,6 +85,7 @@ public class AlarmIntentPublishReceiver extends BroadcastReceiver {
         map.put("Enabled", enabled);
         formItem.getConfig().setAcceptingResponses(true);
         map.put("acceptingResponses", formItem.getConfig().isAcceptingResponses());
+        map.put("allowEdit", formItem.getConfig().isAllowEdit());
         map.put("loginToSubmit", formItem.getConfig().isLoginToSubmit());
         map.put("showCount", formItem.getConfig().isShowCount());
         map.put("recordEmail", formItem.getConfig().isRecordEmail());

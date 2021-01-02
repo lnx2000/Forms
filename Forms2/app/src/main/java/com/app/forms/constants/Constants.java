@@ -32,5 +32,6 @@ public class Constants {
     public static final String notAccepting = " is no longer accepting responses.\nTry contacting the owner of the form if you think this a mistake";
     public static final int responseSubmitted = 1;
     public static final int reportSubmitted = 2;
+    public static final int alreadyfilled = 3;
 
 }

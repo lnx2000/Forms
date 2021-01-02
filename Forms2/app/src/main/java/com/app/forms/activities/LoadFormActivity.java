@@ -62,6 +62,7 @@ public class LoadFormActivity extends AppCompatActivity {
     int formID;
     ArrayList<BaseClass> _form;
     Response response;
+    boolean already_filled = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,12 +80,59 @@ public class LoadFormActivity extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
         ref = firebaseFirestore.collection("Forms").document("" + formID);
 
+
         retrive();
 
 
     }
 
     private void retrive() {
+        DocumentReference ref = firebaseFirestore.collection("Forms").
+                document("" + formID).
+                collection("Responses")
+                .document(Utils.getUserID());
+
+        ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    already_filled = true;
+                    formretrive();
+                }
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+                if (!Utils.isUserLoggedIn()) {
+                    Snackbar.make(cl, "You need to login first", BaseTransientBottomBar.LENGTH_INDEFINITE)
+                            .setAction("LOGIN", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    login();
+                                }
+                            }).show();
+                    progressBar.setVisibility(View.GONE);
+
+                } else {
+                    //Toast.makeText(LoadFormActivity.this, "Please check your network connection :(", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(cl, "Please check your connection :(", BaseTransientBottomBar.LENGTH_SHORT)
+                            .setAction("RETRY", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    retrive();
+                                }
+                            }).show();
+                    progressBar.setVisibility(View.GONE);
+                }
+
+            }
+        });
+
+    }
+
+    private void formretrive() {
 
         ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -131,7 +179,7 @@ public class LoadFormActivity extends AppCompatActivity {
                             .setAction("RETRY", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    retrive();
+                                    formretrive();
                                 }
                             }).show();
                     progressBar.setVisibility(View.GONE);
@@ -174,7 +222,7 @@ public class LoadFormActivity extends AppCompatActivity {
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        if (map == null) retrive();
+                        if (map == null) formretrive();
                         else {
                             loadForm(map);
                         }
@@ -247,6 +295,17 @@ public class LoadFormActivity extends AppCompatActivity {
     }
 
     private boolean verifyallConditions(Map<String, Object> map) {
+        if (!(boolean) map.get("allowEdit")) {
+            if (already_filled) {
+                //start intent
+                Intent i = new Intent(LoadFormActivity.this, AfterDo.class);
+                i.putExtra("resCode", Constants.alreadyfilled);
+                i.putExtra("formID", formID);
+                startActivity(i);
+                finish();
+                return false;
+            }
+        }
         if ((boolean) map.get("loginToSubmit")) {
             if (!Utils.isUserLoggedIn()) {
                 View v = LayoutInflater.from(this).inflate(R.layout.login_required, null);

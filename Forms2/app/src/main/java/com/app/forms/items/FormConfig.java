@@ -11,12 +11,20 @@ public class FormConfig implements Cloneable {
     boolean sendResponseCopy;
     boolean publish;
     boolean unPublish;
+    boolean allowEdit;
     String publishDate;
     String unPublishDate;
     String publishTime;
     String unPublishTime;
-
     public FormConfig() {
+    }
+
+    public boolean isAllowEdit() {
+        return allowEdit;
+    }
+
+    public void setAllowEdit(boolean allowEdit) {
+        this.allowEdit = allowEdit;
     }
 
     public String getPublishTime() {

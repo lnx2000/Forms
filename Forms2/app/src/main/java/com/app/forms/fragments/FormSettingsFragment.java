@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.app.forms.items.FormConfig;
 import com.app.forms.R;
 import com.app.forms.constants.Constants;
+import com.app.forms.items.FormConfig;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -24,7 +24,7 @@ import java.util.Calendar;
 
 public class FormSettingsFragment extends Fragment implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
-    SwitchMaterial publish, unpublish, logintosubmit, showcount, recordemail, shuffle, sendResponse;
+    SwitchMaterial publish, unpublish, logintosubmit, showcount, recordemail, shuffle, sendResponse, allowedit;
     ImageView chosepublishdate, chosepublishtime, choseunpublishdate, choseunpublishtime;
     TextView publishdate, publishtime, unpublishdate, unpublishtime;
     FormConfig configs;
@@ -64,6 +64,7 @@ public class FormSettingsFragment extends Fragment implements CompoundButton.OnC
         recordemail = v.findViewById(R.id.recordemail);
         shuffle = v.findViewById(R.id.shuffle);
         sendResponse = v.findViewById(R.id.sendResponse);
+        allowedit = v.findViewById(R.id.allowedit);
 
 
         chosepublishdate.setOnClickListener(this);
@@ -78,6 +79,7 @@ public class FormSettingsFragment extends Fragment implements CompoundButton.OnC
         recordemail.setOnCheckedChangeListener(this);
         shuffle.setOnCheckedChangeListener(this);
         sendResponse.setOnCheckedChangeListener(this);
+        allowedit.setOnCheckedChangeListener(this);
 
 
         updateUI();
@@ -90,6 +92,7 @@ public class FormSettingsFragment extends Fragment implements CompoundButton.OnC
         recordemail.setChecked(configs.isRecordEmail());
         shuffle.setChecked(configs.isShuffle());
         sendResponse.setChecked(configs.isSendResponseCopy());
+        allowedit.setChecked(configs.isAllowEdit());
         publish.setChecked(configs.isPublish());
         if (configs.isPublish()) {
             publishtime.setVisibility(View.VISIBLE);
@@ -243,6 +246,8 @@ public class FormSettingsFragment extends Fragment implements CompoundButton.OnC
             case R.id.sendResponse:
                 configs.setSendResponseCopy(isChecked);
                 break;
+            case R.id.allowedit:
+                configs.setAllowEdit(isChecked);
 
         }
     }
