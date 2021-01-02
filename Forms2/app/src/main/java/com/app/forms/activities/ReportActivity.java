@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.app.forms.R;
+import com.app.forms.constants.Constants;
 import com.app.forms.helpers.Utils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -33,6 +34,7 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
 
@@ -109,6 +111,8 @@ public class ReportActivity extends AppCompatActivity implements View.OnClickLis
 
     private void startNewActivity() {
         Intent i = new Intent(ReportActivity.this, AfterDo.class);
+        i.putExtra("resCode", Constants.reportSubmitted);
+        i.putExtra("formID", 1);
         startActivity(i);
         finish();
 

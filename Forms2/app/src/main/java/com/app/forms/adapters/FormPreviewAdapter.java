@@ -2,9 +2,15 @@ package com.app.forms.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +32,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.app.forms.ActivityCallback;
 import com.app.forms.R;
 import com.app.forms.activities.CreateFormActivity;
+import com.app.forms.activities.LoadFormActivity;
 import com.app.forms.constants.Constants;
 import com.app.forms.helpers.Utils;
 import com.app.forms.items.BaseClass;
 import com.app.forms.items.Check;
-import com.app.forms.items.Response;
+import com.app.forms.items.ItemResponse;
 import com.cooltechworks.views.WhatsAppTextView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -54,18 +61,19 @@ public class FormPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     boolean preview;
     FirebaseStorage firebaseStorage;
     String formID;
+    boolean count;
 
     @Nullable
-    ArrayList<Response> response;
+    ArrayList<ItemResponse> response;
 
-    public FormPreviewAdapter(Context context, ArrayList<BaseClass> data, boolean preview, ArrayList<Response> response, String formID) {
+    public FormPreviewAdapter(Context context, ArrayList<BaseClass> data, boolean preview, ArrayList<ItemResponse> response, String formID, boolean count) {
         this.context = context;
         this.data = data;
         this.preview = preview;
         this.response = response;
         firebaseStorage = FirebaseStorage.getInstance();
         this.formID = formID;
-
+        this.count = count;
     }
 
 
@@ -118,18 +126,25 @@ public class FormPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof showTextHolder) {
 
-            ((showTextHolder) holder).title.setText(data.get(position).getTitle());
+            String title = data.get(position).getTitle();
+            if (data.get(position).isMandatory())
+                ((showTextHolder) holder).title.setText(formatTitle(title));
+            else ((showTextHolder) holder).title.setText(title);
 
-            if (true) { //show_count
+            if (count) { //show_count
 
                 ((showTextHolder) holder).count.setVisibility(View.VISIBLE);
-                ((showTextHolder) holder).count.setText("" + (position + 1) + ".");
+                ((showTextHolder) holder).count.setText("" + data.get(position).getCount() + ".");
 
             } else ((showTextHolder) holder).count.setVisibility(View.GONE);
 
         } else if (holder instanceof showSingleCheckHolder) {
 
-            ((showSingleCheckHolder) holder).title.setText(data.get(position).getTitle());
+            String title = data.get(position).getTitle();
+            if (data.get(position).isMandatory())
+                ((showSingleCheckHolder) holder).title.setText(formatTitle(title));
+            else ((showSingleCheckHolder) holder).title.setText(title);
+
             ArrayList<String> group = ((Check) data.get(position)).getGroup();
             RadioGroup.LayoutParams lp = new RadioGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             lp.setMargins(0, (int) context.getResources().getDimension(R.dimen.two_dp), 0, (int) context.getResources().getDimension(R.dimen.two_dp));
@@ -140,19 +155,25 @@ public class FormPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 ((showSingleCheckHolder) holder).rg.addView(rb, lp);
 
             }
-            if (true) { //show_count
+            if (count) { //show_count
 
                 ((showSingleCheckHolder) holder).count.setVisibility(View.VISIBLE);
-                ((showSingleCheckHolder) holder).count.setText("" + (position + 1) + ".");
+                ((showSingleCheckHolder) holder).count.setText("" + data.get(position).getCount() + ".");
 
-            } else ((showTextHolder) holder).count.setVisibility(View.GONE);
+            } else ((showSingleCheckHolder) holder).count.setVisibility(View.GONE);
 
         } else if (holder instanceof showMultipleCheckHolder) {
 
-            ((showMultipleCheckHolder) holder).title.setText(data.get(position).getTitle());
+
+            String title = data.get(position).getTitle();
+            if (data.get(position).isMandatory())
+                ((showMultipleCheckHolder) holder).title.setText(formatTitle(title));
+            else ((showMultipleCheckHolder) holder).title.setText(title);
+
             ArrayList<String> group = ((Check) data.get(position)).getGroup();
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             lp.setMargins(0, (int) context.getResources().getDimension(R.dimen.two_dp), 0, (int) context.getResources().getDimension(R.dimen.two_dp));
+
 
             for (String s : group) {
 
@@ -161,29 +182,39 @@ public class FormPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             }
 
-            if (true) { //show_count
+            if (count) { //show_count
 
                 ((showMultipleCheckHolder) holder).count.setVisibility(View.VISIBLE);
-                ((showMultipleCheckHolder) holder).count.setText("" + (position + 1) + ".");
+                ((showMultipleCheckHolder) holder).count.setText("" + data.get(position).getCount() + ".");
 
-            } else ((showTextHolder) holder).count.setVisibility(View.GONE);
+            } else ((showMultipleCheckHolder) holder).count.setVisibility(View.GONE);
 
         } else if (holder instanceof showMsgHolder) {
 
             ((showMsgHolder) holder).tv.setText(data.get(position).getTitle());
 
         } else if (holder instanceof showRatingHolder) {
-            ((showRatingHolder) holder).title.setText(data.get(position).getTitle());
-            if (true) {
+
+            String title = data.get(position).getTitle();
+            if (data.get(position).isMandatory())
+                ((showRatingHolder) holder).title.setText(formatTitle(title));
+            else ((showRatingHolder) holder).title.setText(title);
+
+            if (count) {
                 ((showRatingHolder) holder).count.setVisibility(View.VISIBLE);
-                ((showRatingHolder) holder).count.setText("" + (position + 1));
-            }
+                ((showRatingHolder) holder).count.setText("" + data.get(position).getCount() + ".");
+            } else ((showRatingHolder) holder).count.setVisibility(View.GONE);
         } else if (holder instanceof showUploadHolder) {
-            ((showUploadHolder) holder).title.setText(data.get(position).getTitle());
-            if (true) {
+
+            String title = data.get(position).getTitle();
+            if (data.get(position).isMandatory())
+                ((showUploadHolder) holder).title.setText(formatTitle(title));
+            else ((showUploadHolder) holder).title.setText(title);
+
+            if (count) {
                 ((showUploadHolder) holder).count.setVisibility(View.VISIBLE);
-                ((showUploadHolder) holder).count.setText("" + (position + 1));
-            }
+                ((showUploadHolder) holder).count.setText("" + data.get(position).getCount() + ".");
+            } else ((showUploadHolder) holder).count.setVisibility(View.GONE);
 
         }
 
@@ -215,6 +246,19 @@ public class FormPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return v;
 
 
+    }
+
+    private SpannableStringBuilder formatTitle(String title) {
+
+        SpannableStringBuilder strBuilder = new SpannableStringBuilder();
+        strBuilder.append(title);
+        int start = strBuilder.length();
+        strBuilder.append(" *");
+        int end = strBuilder.length();
+        strBuilder.setSpan(new ForegroundColorSpan(Color.parseColor("#DD0000")), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        strBuilder.setSpan(new RelativeSizeSpan(0.8f), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        return strBuilder;
     }
 
     private class showTextHolder extends RecyclerView.ViewHolder {
@@ -391,7 +435,7 @@ public class FormPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     String path = uri.getPath();
                     int idx = path.lastIndexOf(".");
                     String type = path.substring(idx);
-                    String name = "" + Utils.generateUID(6) + type;
+                    String name = Utils.getUserID() + type;
 
                     int _idx = path.lastIndexOf("/");
                     String filename = path.substring(_idx + 1);
@@ -404,7 +448,7 @@ public class FormPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         return;
                     }
                     InputStream inputStream = null;
-                    StorageReference storageReference = firebaseStorage.getReference(formID + "/" + Utils.getUserID() + "/" + name);
+                    StorageReference storageReference = firebaseStorage.getReference(formID + "/" + name);
                     try {
 
                         inputStream = context.getContentResolver().openInputStream(uri);
@@ -416,7 +460,6 @@ public class FormPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressIndicator.setVisibility(View.GONE);
-                            //TODO: update flag that file has been uploaded
                             int position = getAdapterPosition();
                             response.get(position).setMandatory(true);
                         }
@@ -450,6 +493,7 @@ public class FormPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     @Override
                     public void onClick(View v) {
                         //TODO: submit form here
+                        ((LoadFormActivity) context).submit();
                     }
                 });
             }
@@ -458,4 +502,3 @@ public class FormPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
 }
-//TODO add show count option in form settting, remove allow edit

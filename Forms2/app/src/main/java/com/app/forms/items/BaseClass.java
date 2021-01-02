@@ -4,6 +4,7 @@ public class BaseClass {
     String title;
     boolean mandatory;
     int type;
+    int count;
 
     public BaseClass() {
     }
@@ -11,6 +12,14 @@ public class BaseClass {
     public BaseClass(int type) {
         title = "";
         this.type = type;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 
     public int getType() {

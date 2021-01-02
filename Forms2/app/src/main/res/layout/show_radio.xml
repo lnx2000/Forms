@@ -7,5 +7,4 @@
     android:background="@drawable/simple_border"
     android:padding="10dp"
     android:paddingVertical="10dp"
-    android:text="Rada"
     android:textSize="18dp"/>

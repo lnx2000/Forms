@@ -20,6 +20,31 @@
     </style>
 
 
+    <style name="Theme.Forms.green" parent="Theme.Forms.cyan">
+
+        <item name="colorPrimary">@color/greenprimaryColor</item>
+        <item name="colorPrimaryVariant">@color/greenprimaryDarkColor</item>
+        <item name="colorAccent">@color/greenprimaryColor</item>
+
+    </style>
+
+    <style name="Theme.Forms.dorange" parent="Theme.Forms.cyan">
+
+        <item name="colorPrimary">@color/dorangeprimaryColor</item>
+        <item name="colorPrimaryVariant">@color/dorangeprimaryDarkColor</item>
+        <item name="colorAccent">@color/dorangeprimaryColor</item>
+
+    </style>
+
+
+    <style name="Theme.Forms.yellow" parent="Theme.Forms.cyan">
+
+        <item name="colorPrimary">@color/yellowprimaryColor</item>
+        <item name="colorPrimaryVariant">@color/yellowprimaryDarkColor</item>
+        <item name="colorAccent">@color/yellowprimaryColor</item>
+    </style>
+
+
 
 
 </resources>

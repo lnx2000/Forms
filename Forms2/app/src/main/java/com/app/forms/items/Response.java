@@ -1,71 +1,35 @@
 package com.app.forms.items;
 
-import java.util.Set;
+import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
 
 public class Response {
-    int type;
 
-    String text;
-    int schecked;
-    Set<Integer> mchecked;
-    int rating;
-    //String fileurl;
-    boolean mandatory;
+    @Nullable
+    ArrayList<ItemResponse> responses;
+    @Nullable
+    String email;
 
-    public Response(int type) {
-        mandatory = false;
-        this.type = type;
+    public Response() {
+        responses = new ArrayList<>();
+        email = null;
     }
 
-    public int getType() {
-        return type;
+    public ArrayList<ItemResponse> getResponses() {
+        return responses;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setResponses(ArrayList<ItemResponse> responses) {
+        this.responses = responses;
     }
 
-    public String getText() {
-        return text;
+    @Nullable
+    public String getEmail() {
+        return email;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public int getSchecked() {
-        return schecked;
-    }
-
-    public void setSchecked(int schecked) {
-        this.schecked = schecked;
-    }
-
-    public Set<Integer> getMchecked() {
-        return mchecked;
-    }
-
-    public void setMchecked(Set<Integer> mchecked) {
-        this.mchecked = mchecked;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-
-    public boolean isMandatory() {
-        return mandatory;
-    }
-
-    public void setMandatory(boolean mandatory) {
-        this.mandatory = mandatory;
-    }
-
-    public void addIntoSet(int i) {
-        mchecked.add(i);
+    public void setEmail(@Nullable String email) {
+        this.email = email;
     }
 }

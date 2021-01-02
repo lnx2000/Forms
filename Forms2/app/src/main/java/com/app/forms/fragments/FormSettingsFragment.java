@@ -24,7 +24,7 @@ import java.util.Calendar;
 
 public class FormSettingsFragment extends Fragment implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
-    SwitchMaterial publish, unpublish, logintosubmit, allowedit, recordemail, shuffle, sendResponse;
+    SwitchMaterial publish, unpublish, logintosubmit, showcount, recordemail, shuffle, sendResponse;
     ImageView chosepublishdate, chosepublishtime, choseunpublishdate, choseunpublishtime;
     TextView publishdate, publishtime, unpublishdate, unpublishtime;
     FormConfig configs;
@@ -60,7 +60,7 @@ public class FormSettingsFragment extends Fragment implements CompoundButton.OnC
         unpublishtime = v.findViewById(R.id.unpublishtime);
 
         logintosubmit = v.findViewById(R.id.logintosubmit);
-        allowedit = v.findViewById(R.id.allowedit);
+        showcount = v.findViewById(R.id.showcount);
         recordemail = v.findViewById(R.id.recordemail);
         shuffle = v.findViewById(R.id.shuffle);
         sendResponse = v.findViewById(R.id.sendResponse);
@@ -74,7 +74,7 @@ public class FormSettingsFragment extends Fragment implements CompoundButton.OnC
         publish.setOnCheckedChangeListener(this);
         unpublish.setOnCheckedChangeListener(this);
         logintosubmit.setOnCheckedChangeListener(this);
-        allowedit.setOnCheckedChangeListener(this);
+        showcount.setOnCheckedChangeListener(this);
         recordemail.setOnCheckedChangeListener(this);
         shuffle.setOnCheckedChangeListener(this);
         sendResponse.setOnCheckedChangeListener(this);
@@ -86,7 +86,7 @@ public class FormSettingsFragment extends Fragment implements CompoundButton.OnC
 
     private void updateUI() {
         logintosubmit.setChecked(configs.isLoginToSubmit());
-        allowedit.setChecked(configs.isAllowEdit());
+        showcount.setChecked(configs.isShowCount());
         recordemail.setChecked(configs.isRecordEmail());
         shuffle.setChecked(configs.isShuffle());
         sendResponse.setChecked(configs.isSendResponseCopy());
@@ -231,8 +231,8 @@ public class FormSettingsFragment extends Fragment implements CompoundButton.OnC
             case R.id.logintosubmit:
                 configs.setLoginToSubmit(isChecked);
                 break;
-            case R.id.allowedit:
-                configs.setAllowEdit(isChecked);
+            case R.id.showcount:
+                configs.setShowCount(isChecked);
                 break;
             case R.id.recordemail:
                 configs.setRecordEmail(isChecked);

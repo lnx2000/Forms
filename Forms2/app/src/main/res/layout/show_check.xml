@@ -5,5 +5,4 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:background="@drawable/simple_border"
-    android:text="Rada"
     android:textSize="18dp"/>

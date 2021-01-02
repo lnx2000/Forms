@@ -4,8 +4,10 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -18,7 +20,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.app.forms.AlarmIntentPublishReceiver;
 import com.app.forms.AlarmIntentUnPublishReceiver;
-import com.app.forms.items.FormItem;
 import com.app.forms.R;
 import com.app.forms.constants.Constants;
 import com.app.forms.fragments.AppSettingFragment;
@@ -26,6 +27,7 @@ import com.app.forms.fragments.HomeFragment;
 import com.app.forms.fragments.InfoFragment;
 import com.app.forms.helpers.SPOps;
 import com.app.forms.helpers.Utils;
+import com.app.forms.items.FormItem;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -60,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btnAdd = findViewById(R.id.btnAdd);
@@ -122,9 +126,11 @@ public class MainActivity extends AppCompatActivity {
     public void startCreateFormActivity(String formTitle) {
 
         FormItem formItem = Utils.createForm(formTitle);
-        data.add(0, formItem);
+        if (homeFragment.sortNewFirst)
+            data.add(0, formItem);
+        else data.add(formItem);
         homeFragment.addData();
-        SPOps.newForm(this);
+        SPOps.newForm(this, homeFragment.sortNewFirst);
 
         startCreateFormActivity(0, Constants.editFragment);
 

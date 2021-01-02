@@ -1,31 +1,38 @@
 package com.app.forms.fragments;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.app.forms.items.FormItem;
 import com.app.forms.R;
 import com.app.forms.activities.MainActivity;
 import com.app.forms.adapters.Adapter;
+import com.app.forms.items.FormItem;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class HomeFragment extends Fragment {
     RecyclerView recyclerView;
-    ImageView search;
+    ImageView search, sort;
     TextInputEditText et;
     ArrayList<FormItem> data;
     Adapter adapter;
+    public boolean sortNewFirst = true;
+    ConstraintLayout bucket;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -49,6 +56,8 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         et = v.findViewById(R.id.edit_query);
         search = v.findViewById(R.id.search);
+        bucket = v.findViewById(R.id.bucket);
+        sort = v.findViewById(R.id.sort);
 
 
         search.setOnClickListener(v1 -> {
@@ -65,6 +74,40 @@ public class HomeFragment extends Fragment {
                 et.setText("");
             }
         });
+        sort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                TypedValue typedValue = new TypedValue();
+                TypedArray a = getContext().obtainStyledAttributes(typedValue.data, new int[]{R.attr.colorPrimary});
+                int color = a.getColor(0, 0);
+                a.recycle();
+
+                if (sortNewFirst) {
+
+                    Snackbar sb = Snackbar.make(bucket, "Oldest first", 1000)
+                            .setAnchorView(getActivity().findViewById(R.id.btnAdd));
+                    Snackbar.SnackbarLayout sl = (Snackbar.SnackbarLayout) sb.getView();
+                    sl.setBackgroundColor(color);
+                    sortNewFirst = false;
+                    Collections.reverse(data);
+                    adapter.notifyDataSetChanged();
+                    sb.show();
+
+
+                } else {
+                    Snackbar sb = Snackbar.make(bucket, "Newest first", 1000)
+                            .setAnchorView(getActivity().findViewById(R.id.btnAdd));
+                    Snackbar.SnackbarLayout sl = (Snackbar.SnackbarLayout) sb.getView();
+                    sl.setBackgroundColor(color);
+                    sortNewFirst = true;
+                    Collections.reverse(data);
+                    adapter.notifyDataSetChanged();
+                    sb.show();
+
+                }
+            }
+        });
 
         return v;
     }
@@ -75,6 +118,8 @@ public class HomeFragment extends Fragment {
 
 
     public void addData() {
-        adapter.notifyItemInserted(0);
+
+        if (sortNewFirst) adapter.notifyItemInserted(0);
+        else adapter.notifyItemInserted(data.size());
     }
 }

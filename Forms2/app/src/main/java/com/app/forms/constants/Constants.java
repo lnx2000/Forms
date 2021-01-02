@@ -26,8 +26,11 @@ public class Constants {
     public static final SimpleDateFormat parseDateTime = new SimpleDateFormat("dd MMM yyyyhh:mm a", Locale.getDefault());
     public static final String githubUrl = "https://github.com/lnx2000";
     public static final String linkedinUrl = "https://www.linkedin.com/in/omkar-amilkanthwar-994809186/";
+    public static final String emailID = "omkar.amilkanthwar210@gmail.com";
     public static final SimpleDateFormat dFormatter = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
     public static final String formBaseUrl = "http://com.app.forms/f/";
     public static final String notAccepting = " is no longer accepting responses.\nTry contacting the owner of the form if you think this a mistake";
+    public static final int responseSubmitted = 1;
+    public static final int reportSubmitted = 2;
 
 }

@@ -8,6 +8,7 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
+import com.app.forms.items.BaseClass;
 import com.app.forms.items.FormItem;
 import com.app.forms.R;
 import com.app.forms.constants.Constants;
@@ -92,6 +93,7 @@ public class Utils {
         d = c.getTime();
         formItem.getConfig().setUnPublishDate(Constants.dateFormatter.format(d));
 
+        formItem.getForm().add(new BaseClass(Constants.typeSubmit));
 
         return formItem;
     }

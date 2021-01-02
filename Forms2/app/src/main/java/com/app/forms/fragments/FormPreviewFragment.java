@@ -10,9 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.forms.R;
+import com.app.forms.activities.CreateFormActivity;
 import com.app.forms.adapters.FormPreviewAdapter;
 import com.app.forms.constants.Constants;
 import com.app.forms.items.BaseClass;
+import com.app.forms.items.ItemResponse;
 import com.app.forms.items.Response;
 
 import java.util.ArrayList;
@@ -24,7 +26,8 @@ public class FormPreviewFragment extends Fragment {
     FormPreviewAdapter adapter;
     int formID;
     boolean preview;
-    ArrayList<Response> responses = null;
+    Response response = null;
+    boolean count = false;
 
 
     public FormPreviewFragment() {
@@ -35,6 +38,14 @@ public class FormPreviewFragment extends Fragment {
         this.data = data;
         this.formID = formID;
         this.preview = preview;
+    }
+
+    public FormPreviewFragment(ArrayList<BaseClass> data, int formID, boolean preview, boolean count, Response response) {
+        this.data = data;
+        this.formID = formID;
+        this.preview = preview;
+        this.count = count;
+        this.response = response;
     }
 
     @Override
@@ -52,10 +63,16 @@ public class FormPreviewFragment extends Fragment {
 
 
         if (!preview) {
-            responses = prepareResponses();
-        } else responses = null;
-        adapter = new FormPreviewAdapter(getContext(), data, preview, responses, "" + formID);
+            response.setResponses(prepareResponses());
+        } else response.setResponses(null);
 
+        setCounts();
+
+        if (getActivity() instanceof CreateFormActivity)
+            adapter = new FormPreviewAdapter(getContext(), data, preview, response.getResponses(), "" + formID, ((CreateFormActivity) getActivity()).getCount());
+        else {
+            adapter = new FormPreviewAdapter(getContext(), data, preview, response.getResponses(), "" + formID, count);
+        }
         manager = new LinearLayoutManager(getContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(manager);
@@ -64,17 +81,32 @@ public class FormPreviewFragment extends Fragment {
         return v;
     }
 
-    private ArrayList<Response> prepareResponses() {
-        ArrayList<Response> responses = new ArrayList<>();
+    private void setCounts() {
+        int _count = 1;
+        for (BaseClass b : data) {
+            if (b.getType() != Constants.typeTextMsg) {
+                b.setCount(_count);
+                _count++;
+            }
+        }
+
+
+    }
+
+    private ArrayList<ItemResponse> prepareResponses() {
+        ArrayList<ItemResponse> responses = new ArrayList<>();
 
         for (BaseClass b : data) {
-            if (b.getType() == Constants.typeTextMsg)
-                responses.add(null);
-            else responses.add(new Response(b.getType()));
+            if (b.getType() == Constants.typerating || b.getType() == Constants.typeTextMsg)
+                responses.add(new ItemResponse(b.getType(), true));
+            else responses.add(new ItemResponse(b.getType(), false));
         }
         return responses;
     }
 
+    public void setCount(boolean count) {
+        this.count = count;
+    }
 
 
 }

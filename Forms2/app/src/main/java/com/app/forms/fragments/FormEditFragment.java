@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.app.forms.items.BaseClass;
 import com.app.forms.R;
 import com.app.forms.adapters.CFAdapter;
+import com.app.forms.items.BaseClass;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -102,7 +102,7 @@ public class FormEditFragment extends Fragment {
     }
 
     public void notifyAdapterItemAdded() {
-        createFormAdapter.notifyItemInserted(data.size() - 1);
+        createFormAdapter.notifyItemInserted(data.size() - 2);
     }
 
     /*public void activityResult(Uri bitmap, int rescode) {
@@ -113,7 +113,7 @@ public class FormEditFragment extends Fragment {
         data.get(rescode).setImagepath(bitmap);
         createFormAdapter.notifyItemChanged(rescode);
     }*/
-    public void smoothScroll(int position){
+    public void smoothScroll(int position) {
         scroller.setTargetPosition(position);
         layoutManager.startSmoothScroll(scroller);
     }

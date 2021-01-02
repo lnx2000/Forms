@@ -13,6 +13,7 @@
     <string name="title_activity_report">ReportActivity</string>
     <string name="typeofabuse">Type of abuse<font color="#dd0000"> *</font></string>
     <string name="description">Descritpion<font color="#dd0000"> *</font></string>
+    <string name="mandatory"><font color = "#dd0000"> *</font></string>
 
 
 </resources>

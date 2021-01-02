@@ -5,39 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.CreateFormActivity">
-    <!--
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/cyanprimaryColor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/titleedittext"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:background="@android:color/transparent"
-                android:ellipsize="end"
-                android:focusableInTouchMode="false"
-                android:imeOptions="actionDone"
-
-                android:maxLength="30"
-                android:maxLines="1"
-                android:scrollHorizontally="true"
-                android:text="Untitled Form"
-                android:textColor="@color/primaryTextColor"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:theme="@style/toolbar_edit_text" />
-
-
-        </com.google.android.material.appbar.MaterialToolbar>
-    -->
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/additemfab"

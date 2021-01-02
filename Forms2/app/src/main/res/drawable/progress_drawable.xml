@@ -12,7 +12,7 @@
             <shape android:shape="line">
                 <stroke
                     android:width="5dp"
-                    android:color="@color/cyanprimaryColor" />
+                    android:color="?attr/colorPrimary" />
             </shape>
         </clip>
     </item>
@@ -22,7 +22,7 @@
             <shape android:shape="line">
                 <stroke
                     android:width="5dp"
-                    android:color="@color/cyanprimaryColor" />
+                    android:color="?attr/colorPrimary" />
             </shape>
         </clip>
     </item>

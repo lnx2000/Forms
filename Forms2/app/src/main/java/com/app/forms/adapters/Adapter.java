@@ -15,12 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.AutoTransition;
 import androidx.transition.TransitionManager;
 
-import com.app.forms.items.FormItem;
 import com.app.forms.R;
 import com.app.forms.activities.MainActivity;
 import com.app.forms.constants.Constants;
 import com.app.forms.helpers.SPOps;
 import com.app.forms.helpers.Utils;
+import com.app.forms.items.FormItem;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
@@ -62,7 +62,7 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             e.printStackTrace();
         }
         Date currdate = new Date();
-        if (currdate.after(publishDate) && currdate.before(unPublishDate)) {
+        if (currdate.after(publishDate) && currdate.before(unPublishDate) && data.get(position).getConfig().isPublish()) {
             ((ViewHolder) holder).v.setVisibility(View.VISIBLE);
         } else ((ViewHolder) holder).v.setVisibility(View.GONE);
 
@@ -145,7 +145,7 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             .setPositiveButton("OK", (dialog, whichButton) -> {
                                 if (Utils.isUserLoggedIn()) {
                                     if (!((MainActivity) context).makeFormPublic(position)) {
-                                        Toast.makeText(context, "Form Cant be published"/*\nPlease check whether date are correctly mentioned*/, Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, "Form Can't be published"/*\nPlease check whether date are correctly mentioned*/, Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
                                     enable.setChecked(false);
@@ -160,7 +160,7 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                                 enable.setChecked(false);
                             });
                     materialAlertDialogBuilder.setView(view);
-                    materialAlertDialogBuilder.show();
+                    materialAlertDialogBuilder.show().setCanceledOnTouchOutside(false);
 
 
                 } else if (!isChecked && buttonView.isPressed()) {

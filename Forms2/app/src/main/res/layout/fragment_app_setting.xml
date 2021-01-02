@@ -25,7 +25,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent">
 
                 <com.google.android.material.card.MaterialCardView
@@ -93,7 +92,8 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/appthemecard"
+
+            android:id="@+id/savedrescard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
@@ -103,39 +103,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/materialCardView2">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="5dp"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/ic_theme" />
-
-            <TextView
-                android:id="@+id/apptheme"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="App Theme"
-                android:textColor="@color/secondaryTextColor"
-                android:textSize="20dp" />
-
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-
-            android:id="@+id/savedrescard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:layout_margin="15dp"
-            app:cardCornerRadius="15dp"
-            app:cardElevation="10dp"
-            app:contentPadding="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appthemecard">
 
             <ImageView
                 android:layout_width="30dp"
@@ -156,6 +123,39 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+        <com.google.android.material.card.MaterialCardView
+
+            android:id="@+id/contactuscard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="15dp"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="10dp"
+            app:contentPadding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/savedrescard">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/ic_baseline_phone_24" />
+
+            <TextView
+                android:id="@+id/contactus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Contact Us"
+                android:textColor="@color/secondaryTextColor"
+                android:textSize="20dp" />
+
+
+        </com.google.android.material.card.MaterialCardView>
+
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/signupcard"
@@ -167,7 +167,7 @@
             app:contentPadding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/savedrescard">
+            app:layout_constraintTop_toBottomOf="@+id/contactuscard">
 
             <ImageView
                 android:layout_width="30dp"

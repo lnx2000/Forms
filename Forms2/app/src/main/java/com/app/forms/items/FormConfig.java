@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 public class FormConfig implements Cloneable {
     boolean acceptingResponses;
     boolean loginToSubmit;
-    boolean allowEdit;
+    boolean showCount;
     boolean recordEmail;
     boolean shuffle;
     boolean sendResponseCopy;
@@ -35,12 +35,12 @@ public class FormConfig implements Cloneable {
         this.unPublishTime = unPublishTime;
     }
 
-    public boolean isAllowEdit() {
-        return allowEdit;
+    public boolean isShowCount() {
+        return showCount;
     }
 
-    public void setAllowEdit(boolean allowEdit) {
-        this.allowEdit = allowEdit;
+    public void setShowCount(boolean showCount) {
+        this.showCount = showCount;
     }
 
     public boolean isAcceptingResponses() {

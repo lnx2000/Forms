@@ -3,15 +3,16 @@ package com.app.forms.helpers;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.app.forms.items.FormItem;
 import com.app.forms.activities.MainActivity;
 import com.app.forms.constants.Constants;
+import com.app.forms.items.FormItem;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -39,7 +40,10 @@ public class SPOps {
         return forms;
     }
 
-    public static void newForm(Context context) {
+    public static void newForm(Context context, boolean sortNewFirst) {
+        if (!sortNewFirst)
+            Collections.reverse(MainActivity.data);
+
         ArrayList<Integer> uids = new ArrayList<>();
         for (FormItem item : MainActivity.data) {
             uids.add(item.getUID());
@@ -52,6 +56,9 @@ public class SPOps {
         editor.putString("UIDs", jsonUids);
         editor.putString("" + uids.get(0), gson.toJson(MainActivity.data.get(0)));
         editor.apply();
+
+        if (!sortNewFirst)
+            Collections.reverse(MainActivity.data);
     }
 
     public static boolean saveToSP(int position, Context context) {
@@ -131,8 +138,7 @@ public class SPOps {
         ((MainActivity) context).removeItem(position);
 
         editor.apply();
-
-
     }
+
 
 }

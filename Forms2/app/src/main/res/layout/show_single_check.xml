@@ -11,8 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1."
-        android:textColor="@color/cyanprimaryColor"
-        android:textSize="25dp"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="23dp"
         android:textStyle="italic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,9 +25,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:text="How are you?"
-        android:textColor="@color/cyanprimaryColor"
-        android:textSize="25dp"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="23dp"
         android:textStyle="italic" />
 
     <RadioGroup

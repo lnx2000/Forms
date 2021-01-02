@@ -81,7 +81,7 @@ public class CFAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder == null) return;
+
         if (holder instanceof TextHolder) {
             TextHolder th = (TextHolder) holder;
             Text text = (Text) data.get(position);
@@ -120,7 +120,7 @@ public class CFAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return data.size()-1;
     }
 
 
@@ -184,7 +184,7 @@ public class CFAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     int position = getAdapterPosition();
-                    ((Text) data.get(position)).setTitle(s.toString());
+                    ((Text) data.get(position)).setTitle(s.toString().trim());
                 }
 
                 @Override
@@ -280,7 +280,7 @@ public class CFAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     int position = getAdapterPosition();
-                    ((Check) data.get(position)).setTitle(s.toString());
+                    ((Check) data.get(position)).setTitle(s.toString().trim());
                 }
 
                 @Override
@@ -370,8 +370,8 @@ public class CFAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     int position = getAdapterPosition();
-                    data.get(position).setTitle(s.toString());
-                    titletv.setText(s.toString());
+                    data.get(position).setTitle(s.toString().trim());
+                    titletv.setText(s.toString().trim());
 
                 }
 
@@ -445,7 +445,7 @@ public class CFAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     int position = getAdapterPosition();
-                    data.get(position).setTitle(s.toString());
+                    data.get(position).setTitle(s.toString().trim());
 
 
                 }

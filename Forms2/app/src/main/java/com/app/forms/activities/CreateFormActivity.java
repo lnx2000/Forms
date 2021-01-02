@@ -15,16 +15,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.app.forms.ActivityCallback;
-import com.app.forms.items.BaseClass;
-import com.app.forms.items.Check;
-import com.app.forms.items.FormItem;
-import com.app.forms.items.Text;
 import com.app.forms.R;
 import com.app.forms.constants.Constants;
 import com.app.forms.fragments.FormEditFragment;
 import com.app.forms.fragments.FormPreviewFragment;
 import com.app.forms.fragments.FormSettingsFragment;
 import com.app.forms.helpers.JsonDecode;
+import com.app.forms.items.BaseClass;
+import com.app.forms.items.Check;
+import com.app.forms.items.FormItem;
+import com.app.forms.items.Text;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -129,31 +129,31 @@ public class CreateFormActivity extends AppCompatActivity {
         navview.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.textmsg:
-                    data.add(new BaseClass(Constants.typeTextMsg));
+                    data.add(data.size() - 1, new BaseClass(Constants.typeTextMsg));
                     formEditFragment.notifyAdapterItemAdded();
                     break;
                 case R.id.textfield:
-                    data.add(new Text(Constants.typeTextField));
+                    data.add(data.size() - 1, new Text(Constants.typeTextField));
                     formEditFragment.notifyAdapterItemAdded();
                     break;
                 case R.id.radiofield:
-                    data.add(new Check(Constants.typeSingleCheck));
+                    data.add(data.size() - 1, new Check(Constants.typeSingleCheck));
                     formEditFragment.notifyAdapterItemAdded();
                     break;
                 case R.id.checkfield:
-                    data.add(new Check(Constants.typeMultipleCheck));
+                    data.add(data.size() - 1, new Check(Constants.typeMultipleCheck));
                     formEditFragment.notifyAdapterItemAdded();
                     break;
                 case R.id.pollfield:
-                    data.add(new Check(Constants.typepoll));
+                    data.add(data.size() - 1, new Check(Constants.typepoll));
                     formEditFragment.notifyAdapterItemAdded();
                     break;
                 case R.id.ratingfield:
-                    data.add(new BaseClass(Constants.typerating));
+                    data.add(data.size() - 1, new BaseClass(Constants.typerating));
                     formEditFragment.notifyAdapterItemAdded();
                     break;
                 case R.id.uploadfield:
-                    data.add(new BaseClass(Constants.typeupload));
+                    data.add(data.size() - 1, new BaseClass(Constants.typeupload));
                     formEditFragment.notifyAdapterItemAdded();
                     break;
             }
@@ -242,6 +242,10 @@ public class CreateFormActivity extends AppCompatActivity {
             activityCallback.uploadFile(f);
 
         }
+    }
+
+    public boolean getCount() {
+        return form.getConfig().isShowCount();
     }
 
 

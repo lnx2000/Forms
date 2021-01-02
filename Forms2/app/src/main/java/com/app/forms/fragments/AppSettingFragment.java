@@ -2,6 +2,7 @@ package com.app.forms.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.app.forms.R;
+import com.app.forms.constants.Constants;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -20,6 +22,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,7 +34,8 @@ public class AppSettingFragment extends Fragment implements View.OnClickListener
     FirebaseAuth firebaseAuth;
     FirebaseAuth.AuthStateListener authStateListener;
     ImageView userprofile;
-    TextView displayname, mailid, apptheme, signup;
+    TextView displayname, mailid, contactus, signup;
+    MaterialCardView signupcard, contactuscard;
     ProgressDialog dialog;
 
     public AppSettingFragment() {
@@ -53,11 +57,16 @@ public class AppSettingFragment extends Fragment implements View.OnClickListener
         userprofile = v.findViewById(R.id.userprofile);
         displayname = v.findViewById(R.id.displayname);
         mailid = v.findViewById(R.id.mailid);
-        apptheme = v.findViewById(R.id.apptheme);
         signup = v.findViewById(R.id.signup);
+        contactus = v.findViewById(R.id.contactus);
+        signupcard = v.findViewById(R.id.signupcard);
+        contactuscard = v.findViewById(R.id.contactuscard);
+
 
         signup.setOnClickListener(this);
-        apptheme.setOnClickListener(this);
+        contactus.setOnClickListener(this);
+        signupcard.setOnClickListener(this);
+        contactuscard.setOnClickListener(this);
 
         updateUI();
 
@@ -129,15 +138,24 @@ public class AppSettingFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
+
         switch (v.getId()) {
             case R.id.signup:
-                if (((TextView) v).getText().equals("Login/SignUp"))
+            case R.id.signupcard:
+                if (signup.getText().equals("Login/SignUp"))
                     signIn();
                 else
                     signOut();
                 break;
-            case R.id.apptheme:
-                //ToDo: change app theme here
+            case R.id.contactuscard:
+            case R.id.contactus:
+                Intent i = new Intent(Intent.ACTION_SEND);
+                String[] recipients = {Constants.emailID};
+                i.setData(Uri.parse("mailto:"));
+                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_EMAIL, recipients);
+                i.putExtra(Intent.EXTRA_SUBJECT, "Forms:support");
+                startActivity(Intent.createChooser(i, "Send mail"));
                 break;
 
         }
