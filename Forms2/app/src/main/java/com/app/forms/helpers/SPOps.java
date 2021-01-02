@@ -118,7 +118,7 @@ public class SPOps {
 
     }
 
-    public static void removeLocalForm(int formID, int position, Context context) {
+    public static void removeLocalForm(int formID, Context context) {
 
         SharedPreferences sp = context.getSharedPreferences("Forms", Context.MODE_PRIVATE);
 
@@ -135,7 +135,6 @@ public class SPOps {
         jsonUids = gson.toJson(uids);
         editor.putString("UIDs", jsonUids);
 
-        ((MainActivity) context).removeItem(position);
 
         editor.apply();
     }

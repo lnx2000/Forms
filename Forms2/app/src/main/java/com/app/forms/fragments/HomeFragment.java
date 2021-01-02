@@ -1,14 +1,18 @@
 package com.app.forms.fragments;
 
 import android.content.Context;
-import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.util.TypedValue;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -26,12 +30,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class HomeFragment extends Fragment {
+    public boolean sortNewFirst = true;
     RecyclerView recyclerView;
     ImageView search, sort;
     TextInputEditText et;
     ArrayList<FormItem> data;
     Adapter adapter;
-    public boolean sortNewFirst = true;
     ConstraintLayout bucket;
 
     public HomeFragment() {
@@ -74,32 +78,59 @@ public class HomeFragment extends Fragment {
                 et.setText("");
             }
         });
+        et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                ArrayList<FormItem> newData = new ArrayList<>();
+                for (FormItem f : data) {
+                    if (f.getName().toLowerCase().contains(s.toString().toLowerCase()))
+                        newData.add(f);
+                }
+                adapter.setData(newData);
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    et.clearFocus();
+                    adapter.setData(data);
+                }
+
+                return false;
+            }
+        });
         sort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                TypedValue typedValue = new TypedValue();
-                TypedArray a = getContext().obtainStyledAttributes(typedValue.data, new int[]{R.attr.colorPrimary});
-                int color = a.getColor(0, 0);
-                a.recycle();
-
                 if (sortNewFirst) {
-
                     Snackbar sb = Snackbar.make(bucket, "Oldest first", 1000)
-                            .setAnchorView(getActivity().findViewById(R.id.btnAdd));
+                            .setAnchorView(getActivity().findViewById(R.id.btnAdd))
+                            .setTextColor(Color.BLACK);
                     Snackbar.SnackbarLayout sl = (Snackbar.SnackbarLayout) sb.getView();
-                    sl.setBackgroundColor(color);
+                    sl.setBackgroundColor(Color.WHITE);
                     sortNewFirst = false;
                     Collections.reverse(data);
                     adapter.notifyDataSetChanged();
                     sb.show();
-
-
                 } else {
                     Snackbar sb = Snackbar.make(bucket, "Newest first", 1000)
-                            .setAnchorView(getActivity().findViewById(R.id.btnAdd));
+                            .setAnchorView(getActivity().findViewById(R.id.btnAdd))
+                            .setTextColor(Color.BLACK);
                     Snackbar.SnackbarLayout sl = (Snackbar.SnackbarLayout) sb.getView();
-                    sl.setBackgroundColor(color);
+                    sl.setBackgroundColor(Color.WHITE);
                     sortNewFirst = true;
                     Collections.reverse(data);
                     adapter.notifyDataSetChanged();

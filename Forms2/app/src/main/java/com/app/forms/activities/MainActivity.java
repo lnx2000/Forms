@@ -4,10 +4,10 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.widget.EditText;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -32,6 +32,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -131,8 +133,9 @@ public class MainActivity extends AppCompatActivity {
         else data.add(formItem);
         homeFragment.addData();
         SPOps.newForm(this, homeFragment.sortNewFirst);
-
-        startCreateFormActivity(0, Constants.editFragment);
+        if (homeFragment.sortNewFirst)
+            startCreateFormActivity(0, Constants.editFragment);
+        else startCreateFormActivity(data.size() - 1, Constants.editFragment);
 
     }
 
@@ -220,6 +223,33 @@ public class MainActivity extends AppCompatActivity {
 
         data.remove(position);
         homeFragment.refreshAdapter();
+
+    }
+
+    public void deleteForm(int position) {
+        String name = data.get(position).getName();
+        FormItem f = data.get(position);
+        data.remove(position);
+        homeFragment.refreshAdapter();
+        Snackbar sb = Snackbar.make(fl, name + " has been deleted.", 5000)
+                .addCallback(new BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                    @Override
+                    public void onDismissed(Snackbar transientBottomBar, int event) {
+                        super.onDismissed(transientBottomBar, event);
+                        if (event == DISMISS_EVENT_TIMEOUT || event == DISMISS_EVENT_SWIPE)
+                            SPOps.removeLocalForm(f.getUID(), MainActivity.this);
+                    }
+                }).setAction("UNDO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        data.add(position, f);
+                        homeFragment.refreshAdapter();
+                    }
+                }).setAnchorView(btnAdd).setTextColor(Color.BLACK);
+
+        sb.getView().setBackgroundColor(Color.WHITE);
+
+        sb.show();
 
     }
 }

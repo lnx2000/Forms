@@ -22,6 +22,8 @@ import com.app.forms.helpers.SPOps;
 import com.app.forms.helpers.Utils;
 import com.app.forms.items.FormItem;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.text.ParseException;
@@ -79,6 +81,11 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyDataSetChanged();
     }
 
+    public void setData(ArrayList<FormItem> data) {
+        this.data = data;
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         Toolbar toolbar;
         ConstraintLayout container;
@@ -128,7 +135,9 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         context.startActivity(i);
                         break;
                     case R.id.delete:
-                        SPOps.removeLocalForm(data.get(position).getUID(), position, context);
+
+                        ((MainActivity)context).deleteForm(position);
+                        //SPOps.removeLocalForm(data.get(position).getUID(), position, context);
 
                         break;
                 }

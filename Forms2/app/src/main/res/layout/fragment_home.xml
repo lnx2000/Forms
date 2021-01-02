@@ -29,10 +29,12 @@
             android:layout_marginLeft="15dp"
             android:background="@android:color/transparent"
             android:focusableInTouchMode="false"
-            android:imeOptions="actionSearch"
+            android:imeOptions="actionDone"
             android:maxWidth="200dp"
             android:maxLength="15"
             android:maxLines="1"
+            android:singleLine="true"
+
             android:text="MY FORMS"
             android:textColor="@color/secondaryTextColor"
             android:textSize="20dp" />
