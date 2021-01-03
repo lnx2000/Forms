@@ -16,8 +16,8 @@ public class Constants {
     public static final int typeSubmit = 25;
     public static final int typeTextMsg = 100;
     public static final int formUIDLength = 8;
-    public static final String changesSaved = "Changes Saved";
-    public static final String changesNotSaved = "Error while saving";
+    public static final String changesSaved = "Changes Saved.";
+    public static final String changesNotSaved = "Can't be saved when enabled.";
     public static final int editFragment = 0;
     public static final int settingFragment = 1;
     public static final int returnFormCreateFormActivity = 100;

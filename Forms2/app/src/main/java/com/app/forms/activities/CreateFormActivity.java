@@ -1,15 +1,14 @@
 package com.app.forms.activities;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
+import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -29,6 +28,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -167,19 +168,23 @@ public class CreateFormActivity extends AppCompatActivity {
 
     private boolean saveDataToSP() {
 
-        Gson gson = new Gson();
-        form.setLastUpdate(Constants.dateFormatter.format(new Date()));
-        String jsonForm = gson.toJson(form);
+        if (form.isEnabled()) {
+            showMsg(false);
 
-        SharedPreferences sp = getSharedPreferences("Forms", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString("" + form.getUID(), jsonForm);
-        editor.apply();
-        MainActivity.data.set(position, form);
+        } else {
 
+            Gson gson = new Gson();
+            form.setLastUpdate(Constants.dateFormatter.format(new Date()));
+            String jsonForm = gson.toJson(form);
 
-        showMsg(true);
+            SharedPreferences sp = getSharedPreferences("Forms", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("" + form.getUID(), jsonForm);
+            editor.apply();
+            MainActivity.data.set(position, form);
 
+            showMsg(true);
+        }
         return false;
     }
 
@@ -215,13 +220,26 @@ public class CreateFormActivity extends AppCompatActivity {
     }*/
 
     private void showMsg(boolean res) {
+        TypedValue typedValue = new TypedValue();
+
+        TypedArray a = this.obtainStyledAttributes(typedValue.data, new int[]{R.attr.colorPrimary});
+        int color = a.getColor(0, 0);
+
+        a.recycle();
+
         if (res) {
-            ((TextView) savedmsg.findViewById(R.id.savetv)).setText(Constants.changesSaved);
+            Snackbar sb = Snackbar.make(bottomNavigationView, Constants.changesSaved, BaseTransientBottomBar.LENGTH_SHORT)
+                    .setAnchorView(bottomNavigationView);
+            sb.getView().setBackgroundColor(color);
+            sb.setTextColor(Color.WHITE);
+            sb.show();
         } else {
-            ((TextView) savedmsg.findViewById(R.id.savetv)).setText(Constants.changesNotSaved);
+            Snackbar sb = Snackbar.make(bottomNavigationView, Constants.changesNotSaved, BaseTransientBottomBar.LENGTH_SHORT)
+                    .setAnchorView(bottomNavigationView);
+            sb.getView().setBackgroundColor(color);
+            sb.setTextColor(Color.WHITE);
+            sb.show();
         }
-        savedmsg.setVisibility(View.VISIBLE);
-        savedmsg.postDelayed(() -> savedmsg.setVisibility(View.GONE), 1000);
     }
 
 
