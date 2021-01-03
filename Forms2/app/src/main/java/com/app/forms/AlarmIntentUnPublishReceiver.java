@@ -9,8 +9,8 @@ import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
-import com.app.forms.items.FormItem;
 import com.app.forms.helpers.JsonDecode;
+import com.app.forms.items.FormItem;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -45,9 +45,8 @@ public class AlarmIntentUnPublishReceiver extends BroadcastReceiver {
         DocumentReference ref = firebaseFirestore.collection("Forms").document("" + formID);
         Map<String, Object> map = new HashMap<>();
         map.put("acceptingResponses", false);
-        map.put("text", "This form is not accepting responses anymore");
-        map.put("name", name);
-        ref.set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+        ref.update(map).addOnSuccessListener(new OnSuccessListener<Void>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onSuccess(Void aVoid) {

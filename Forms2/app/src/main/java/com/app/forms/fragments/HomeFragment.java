@@ -86,13 +86,14 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                ArrayList<FormItem> newData = new ArrayList<>();
-                for (FormItem f : data) {
-                    if (f.getName().toLowerCase().contains(s.toString().toLowerCase()))
-                        newData.add(f);
+                if (data != null) {
+                    ArrayList<FormItem> newData = new ArrayList<>();
+                    for (FormItem f : data) {
+                        if (f.getName().toLowerCase().contains(s.toString().toLowerCase()))
+                            newData.add(f);
+                    }
+                    adapter.setData(newData);
                 }
-                adapter.setData(newData);
-
             }
 
             @Override

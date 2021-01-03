@@ -82,14 +82,12 @@ public class CreateFormActivity extends AppCompatActivity {
 
         fromUID = form.getUID();
 
-        setTitle(formTitle);
-
 
         data = form.getForm();
 
-        formEditFragment = new FormEditFragment(data);
+        formEditFragment = new FormEditFragment(form);
         formSettingsFragment = new FormSettingsFragment(form.getConfig());
-        formPreviewFragment = new FormPreviewFragment(form.getForm(), form.getUID(), true);
+        formPreviewFragment = new FormPreviewFragment(form.getForm(), form.getUID(), true, formTitle);
 
 
         if (fragmenttype == Constants.editFragment) {
@@ -109,6 +107,7 @@ public class CreateFormActivity extends AppCompatActivity {
                     openFragment(formSettingsFragment);
                     break;
                 case R.id.preview:
+                    formPreviewFragment.setTitle(form.getName());
                     openFragment(formPreviewFragment);
                     break;
             }
@@ -225,24 +224,6 @@ public class CreateFormActivity extends AppCompatActivity {
         savedmsg.postDelayed(() -> savedmsg.setVisibility(View.GONE), 1000);
     }
 
-    public void getFile(ActivityCallback activityCallback) {
-        Intent i = new Intent();
-        i.setAction(Intent.ACTION_GET_CONTENT);
-        i.setType("*/*");
-        this.activityCallback = activityCallback;
-        startActivityForResult(i, 1000);
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1000) {
-            Uri f = data.getData();
-            activityCallback.uploadFile(f);
-
-        }
-    }
 
     public boolean getCount() {
         return form.getConfig().isShowCount();

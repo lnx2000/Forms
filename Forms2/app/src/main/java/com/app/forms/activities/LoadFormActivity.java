@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.app.forms.ActivityCallback;
 import com.app.forms.R;
 import com.app.forms.constants.Constants;
 import com.app.forms.fragments.FormPreviewFragment;
@@ -63,6 +64,9 @@ public class LoadFormActivity extends AppCompatActivity {
     ArrayList<BaseClass> _form;
     Response response;
     boolean already_filled = false;
+    boolean loginRequired = true;
+    String documentName = null;
+    ActivityCallback activityCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,13 +84,14 @@ public class LoadFormActivity extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
         ref = firebaseFirestore.collection("Forms").document("" + formID);
 
-
-        retrive();
-
+        //retrive();
+        formretrive();
 
     }
 
     private void retrive() {
+        progressBar.setVisibility(View.VISIBLE);
+        documentName = Utils.getUserID();
         DocumentReference ref = firebaseFirestore.collection("Forms").
                 document("" + formID).
                 collection("Responses")
@@ -97,14 +102,13 @@ public class LoadFormActivity extends AppCompatActivity {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) {
                     already_filled = true;
-                    formretrive();
                 }
+                loadForm(map);
 
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-
                 if (!Utils.isUserLoggedIn()) {
                     Snackbar.make(cl, "You need to login first", BaseTransientBottomBar.LENGTH_INDEFINITE)
                             .setAction("LOGIN", new View.OnClickListener() {
@@ -133,7 +137,7 @@ public class LoadFormActivity extends AppCompatActivity {
     }
 
     private void formretrive() {
-
+        progressBar.setVisibility(View.VISIBLE);
         ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -141,7 +145,7 @@ public class LoadFormActivity extends AppCompatActivity {
                     map = documentSnapshot.getData();
                     progressBar.setVisibility(View.GONE);
 
-                    if ((boolean) map.get("loginToSubmit") && !Utils.isUserLoggedIn()) {
+                    if (((boolean) map.get("loginToSubmit") || !(boolean) map.get("allowEdit")) && !Utils.isUserLoggedIn()) {
                         Snackbar.make(cl, "You need to login first", BaseTransientBottomBar.LENGTH_INDEFINITE)
                                 .setAction("LOGIN", new View.OnClickListener() {
                                     @Override
@@ -149,6 +153,10 @@ public class LoadFormActivity extends AppCompatActivity {
                                         login();
                                     }
                                 }).show();
+                        progressBar.setVisibility(View.GONE);
+                    } else if (((boolean) map.get("loginToSubmit") || !(boolean) map.get("allowEdit"))) {
+                        //user is already logged in
+                        retrive();
                     } else {
                         loadForm(map);
                     }
@@ -156,13 +164,13 @@ public class LoadFormActivity extends AppCompatActivity {
                     //Toast.makeText(LoadFormActivity.this, "No such form exists :(", Toast.LENGTH_SHORT).show();
                     Snackbar.make(cl, "No such form exists :(", BaseTransientBottomBar.LENGTH_SHORT)
                             .show();
+                    progressBar.setVisibility(View.GONE);
                 }
 
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-
                 if (!Utils.isUserLoggedIn()) {
                     Snackbar.make(cl, "You need to login first", BaseTransientBottomBar.LENGTH_INDEFINITE)
                             .setAction("LOGIN", new View.OnClickListener() {
@@ -212,6 +220,11 @@ public class LoadFormActivity extends AppCompatActivity {
             } catch (ApiException e) {
             }
         }
+        if (requestCode == 1000) {
+            Uri f = data.getData();
+            activityCallback.uploadFile(f);
+
+        }
     }
 
     private void firebaseAuthWithGoogle(String idToken) {
@@ -222,9 +235,9 @@ public class LoadFormActivity extends AppCompatActivity {
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        if (map == null) formretrive();
-                        else {
-                            loadForm(map);
+                        if (((boolean) map.get("loginToSubmit") || !(boolean) map.get("allowEdit"))) {
+                            //user is already logged in
+                            retrive();
                         }
                     } else {
                         Toast.makeText(this, "Authentication Failed", Toast.LENGTH_SHORT).show();
@@ -271,7 +284,6 @@ public class LoadFormActivity extends AppCompatActivity {
         response = new Response();
         response.setEmail(Utils.getUserEmailID());
         String form = (String) map.get("Form");
-        Log.e("123", form);
         try {
             _form = JsonDecode.decodeArray(form);
         } catch (JSONException e) {
@@ -283,12 +295,13 @@ public class LoadFormActivity extends AppCompatActivity {
         }
 
         boolean show_count = (boolean) map.get("showCount");
-        FormPreviewFragment formPreviewFragment = new FormPreviewFragment(_form, ((Long) map.get("formID")).intValue(), false, show_count, response);
+        FormPreviewFragment formPreviewFragment = new FormPreviewFragment(_form, ((Long) map.get("formID")).intValue(), false, show_count, response, (String) map.get("name"));
         openFragment(formPreviewFragment);
 
     }
 
     private void openFragment(FormPreviewFragment fragment) {
+        progressBar.setVisibility(View.GONE);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.cl, fragment);
         transaction.commit();
@@ -350,10 +363,12 @@ public class LoadFormActivity extends AppCompatActivity {
 
     private void uploadResponse() {
         Gson gson = new Gson();
+        if (documentName == null)
+            documentName = Utils.generateSUID(28);
         DocumentReference ref = firebaseFirestore.collection("Forms").
                 document("" + formID).
                 collection("Responses")
-                .document(Utils.getUserID());
+                .document(documentName);
         Map<String, String> map = new HashMap<>();
         map.put("email", response.getEmail());
         map.put("response", gson.toJson(response.getResponses()));
@@ -382,10 +397,24 @@ public class LoadFormActivity extends AppCompatActivity {
     private boolean checkAllMandatory() {
         ArrayList<ItemResponse> itemResponses = response.getResponses();
         for (int i = 0; i < _form.size(); i++) {
-            if (_form.get(i).isMandatory() != itemResponses.get(i).isMandatory()) {
+            Log.e("123", "" + _form.get(i).isMandatory() + " " + itemResponses.get(i).isMandatory());
+            if (_form.get(i).isMandatory() && !itemResponses.get(i).isMandatory()) {
+                Gson gson = new Gson();
+                Log.e("123", gson.toJson(itemResponses.get(i)));
+                Log.e("123", gson.toJson(_form.get(i)));
                 return false;
             }
         }
         return true;
     }
+
+    public void getFile(ActivityCallback activityCallback) {
+        Intent i = new Intent();
+        i.setAction(Intent.ACTION_GET_CONTENT);
+        i.setType("*/*");
+        this.activityCallback = activityCallback;
+        startActivityForResult(i, 1000);
+
+    }
+
 }

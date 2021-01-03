@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,24 +29,31 @@ public class FormPreviewFragment extends Fragment {
     boolean preview;
     Response response = null;
     boolean count = false;
+    TextView title;
+    String _title;
 
 
     public FormPreviewFragment() {
         // Required empty public constructor
     }
 
-    public FormPreviewFragment(ArrayList<BaseClass> data, int formID, boolean preview) {
+
+
+
+    public FormPreviewFragment(ArrayList<BaseClass> data, int formID, boolean preview, String _title) {
         this.data = data;
         this.formID = formID;
         this.preview = preview;
+        this._title = _title;
     }
 
-    public FormPreviewFragment(ArrayList<BaseClass> data, int formID, boolean preview, boolean count, Response response) {
+    public FormPreviewFragment(ArrayList<BaseClass> data, int formID, boolean preview, boolean count, Response response, String _title) {
         this.data = data;
         this.formID = formID;
         this.preview = preview;
         this.count = count;
         this.response = response;
+        this._title = _title;
     }
 
     @Override
@@ -60,16 +68,18 @@ public class FormPreviewFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_form_preview, container, false);
         recyclerView = v.findViewById(R.id.recyclerview);
+        title = v.findViewById(R.id.title);
+        title.setText(_title);
 
 
         if (!preview) {
             response.setResponses(prepareResponses());
-        } else response.setResponses(null);
+        }
 
         setCounts();
 
         if (getActivity() instanceof CreateFormActivity)
-            adapter = new FormPreviewAdapter(getContext(), data, preview, response.getResponses(), "" + formID, ((CreateFormActivity) getActivity()).getCount());
+            adapter = new FormPreviewAdapter(getContext(), data, preview, null, "" + formID, ((CreateFormActivity) getActivity()).getCount());
         else {
             adapter = new FormPreviewAdapter(getContext(), data, preview, response.getResponses(), "" + formID, count);
         }
@@ -106,6 +116,10 @@ public class FormPreviewFragment extends Fragment {
 
     public void setCount(boolean count) {
         this.count = count;
+    }
+
+    public void setTitle(String _title) {
+        this._title = _title;
     }
 
 

@@ -11,6 +11,7 @@ import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.forms.ActivityCallback;
 import com.app.forms.R;
-import com.app.forms.activities.CreateFormActivity;
 import com.app.forms.activities.LoadFormActivity;
 import com.app.forms.constants.Constants;
 import com.app.forms.helpers.Utils;
@@ -340,6 +340,7 @@ public class FormPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 checkedChangeListener = new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        Log.e("123", "on check chnaged listener" + getAdapterPosition());
                         int position = getAdapterPosition();
                         int idx = lv.indexOfChild(buttonView);
                         if (isChecked) {
@@ -476,7 +477,7 @@ public class FormPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             };
             if (!preview) {
                 tv.setOnClickListener(v -> {
-                    ((CreateFormActivity) context).getFile(activityCallback);
+                    ((LoadFormActivity) context).getFile(activityCallback);
                 });
             }
         }

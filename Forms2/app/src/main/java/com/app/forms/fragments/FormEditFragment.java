@@ -2,9 +2,15 @@ package com.app.forms.fragments;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -17,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.app.forms.R;
 import com.app.forms.adapters.CFAdapter;
 import com.app.forms.items.BaseClass;
+import com.app.forms.items.FormItem;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,13 +34,16 @@ public class FormEditFragment extends Fragment {
     CFAdapter createFormAdapter;
     RecyclerView.SmoothScroller scroller;
     RecyclerView.LayoutManager layoutManager;
+    EditText title;
+    FormItem formItem;
 
     public FormEditFragment() {
         // Required empty public constructor
     }
 
-    public FormEditFragment(ArrayList<BaseClass> data) {
-        this.data = data;
+    public FormEditFragment(FormItem formItem) {
+        this.formItem = formItem;
+        this.data = formItem.getForm();
     }
 
     @Override
@@ -57,8 +67,8 @@ public class FormEditFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_form_edit, container, false);
         recyclerView = v.findViewById(R.id.recyclerview);
-
-
+        title = v.findViewById(R.id.title);
+        title.setText(formItem.getName());
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         createFormAdapter = new CFAdapter(data, getContext());
@@ -96,6 +106,34 @@ public class FormEditFragment extends Fragment {
         });
 
         th.attachToRecyclerView(recyclerView);
+
+
+        title.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                formItem.setName(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        title.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    title.clearFocus();
+                }
+                return false;
+            }
+        });
 
 
         return v;

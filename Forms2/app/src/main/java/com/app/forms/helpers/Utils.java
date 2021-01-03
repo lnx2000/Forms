@@ -8,14 +8,15 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
-import com.app.forms.items.BaseClass;
-import com.app.forms.items.FormItem;
 import com.app.forms.R;
 import com.app.forms.constants.Constants;
+import com.app.forms.items.BaseClass;
+import com.app.forms.items.FormItem;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
+import java.security.SecureRandom;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -47,7 +48,8 @@ public class Utils {
             return null;
         return user.getUid();
     }
-    public static String getUserEmailID(){
+
+    public static String getUserEmailID() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null)
             return null;
@@ -96,5 +98,18 @@ public class Utils {
         formItem.getForm().add(new BaseClass(Constants.typeSubmit));
 
         return formItem;
+    }
+
+    public static String generateSUID(int len) {
+
+        String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        SecureRandom rnd = new SecureRandom();
+
+        StringBuilder sb = new StringBuilder(len);
+        for (int i = 0; i < len; i++)
+            sb.append(AB.charAt(rnd.nextInt(AB.length())));
+        return sb.toString();
+
+
     }
 }

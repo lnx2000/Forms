@@ -15,7 +15,7 @@ public class ItemResponse {
 
     public ItemResponse(int type, boolean mandatory) {
         mchecked = new HashSet<>();
-        mandatory = mandatory;
+        this.mandatory = mandatory;
         this.type = type;
     }
 
