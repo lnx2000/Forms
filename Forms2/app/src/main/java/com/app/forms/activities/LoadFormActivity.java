@@ -67,6 +67,7 @@ public class LoadFormActivity extends AppCompatActivity {
     boolean loginRequired = true;
     String documentName = null;
     ActivityCallback activityCallback;
+    ArrayList<Integer> order = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -291,13 +292,29 @@ public class LoadFormActivity extends AppCompatActivity {
         }
 
         if ((boolean) map.get("shuffle")) {
-            Collections.shuffle(_form.subList(0, _form.size() - 1));
+
+            order = getOrderArrayList();
+
         }
 
         boolean show_count = (boolean) map.get("showCount");
-        FormPreviewFragment formPreviewFragment = new FormPreviewFragment(_form, ((Long) map.get("formID")).intValue(), false, show_count, response, (String) map.get("name"));
+        FormPreviewFragment formPreviewFragment = new FormPreviewFragment(_form,
+                ((Long) map.get("formID")).intValue(),
+                false, show_count, response,
+                (String) map.get("name"),
+                order);
         openFragment(formPreviewFragment);
 
+    }
+
+    private ArrayList<Integer> getOrderArrayList() {
+        ArrayList<Integer> order = new ArrayList<>();
+        for (int i = 0; i < _form.size() - 1; i++)
+            order.add(i);
+
+        Collections.shuffle(order);
+        order.add(_form.size() - 1);
+        return order;
     }
 
     private void openFragment(FormPreviewFragment fragment) {

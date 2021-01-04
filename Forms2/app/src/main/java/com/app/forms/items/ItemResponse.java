@@ -4,28 +4,21 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ItemResponse {
-    int type;
-
     String text;
-    int schecked;
+    Integer schecked;
     Set<Integer> mchecked;
     int rating;
     //String fileurl;
-    boolean mandatory;
+    Boolean mandatory;
 
-    public ItemResponse(int type, boolean mandatory) {
-        mchecked = new HashSet<>();
+    public ItemResponse(boolean mandatory) {
+        mchecked = null;
         this.mandatory = mandatory;
-        this.type = type;
+        schecked = null;
+        text = null;
+        rating = 1;
     }
 
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
 
     public String getText() {
         return text;
@@ -68,6 +61,15 @@ public class ItemResponse {
     }
 
     public void addIntoSet(int i) {
+        if (mchecked == null)
+            mchecked = new HashSet<>();
         mchecked.add(i);
+    }
+
+    public void removeFromSet(int i) {
+        mchecked.remove(i);
+        if (mchecked.size() == 0)
+            mchecked = null;
+
     }
 }

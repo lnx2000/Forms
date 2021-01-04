@@ -11,7 +11,6 @@ import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,11 +61,19 @@ public class FormPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     FirebaseStorage firebaseStorage;
     String formID;
     boolean count;
+    @Nullable
+    ArrayList<Integer> order;
 
     @Nullable
     ArrayList<ItemResponse> response;
 
-    public FormPreviewAdapter(Context context, ArrayList<BaseClass> data, boolean preview, ArrayList<ItemResponse> response, String formID, boolean count) {
+    public FormPreviewAdapter(Context context,
+                              ArrayList<BaseClass> data,
+                              boolean preview,
+                              ArrayList<ItemResponse> response,
+                              String formID,
+                              boolean count,
+                              ArrayList<Integer> order) {
         this.context = context;
         this.data = data;
         this.preview = preview;
@@ -74,11 +81,14 @@ public class FormPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         firebaseStorage = FirebaseStorage.getInstance();
         this.formID = formID;
         this.count = count;
+        this.order = order;
     }
 
 
     @Override
     public int getItemViewType(int position) {
+        if (order != null)
+            return data.get(order.get(position)).getType();
         return data.get(position).getType();
     }
 
@@ -124,6 +134,8 @@ public class FormPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if (order != null)
+            position = order.get(position);
         if (holder instanceof showTextHolder) {
 
             String title = data.get(position).getTitle();
@@ -163,7 +175,6 @@ public class FormPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             } else ((showSingleCheckHolder) holder).count.setVisibility(View.GONE);
 
         } else if (holder instanceof showMultipleCheckHolder) {
-
 
             String title = data.get(position).getTitle();
             if (data.get(position).isMandatory())
@@ -280,7 +291,8 @@ public class FormPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        int position = getAdapterPosition();
+                        int position = order.get(getAdapterPosition());
+
                         response.get(position).setText(s.toString());
                         if (s.toString().length() == 0) {
                             response.get(position).setMandatory(false);
@@ -312,7 +324,7 @@ public class FormPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
-                        int position = getAdapterPosition();
+                        int position = order.get(getAdapterPosition());
                         RadioButton rb = group.findViewById(checkedId);
                         response.get(position).setSchecked(group.indexOfChild(rb));
                         response.get(position).setMandatory(true);
@@ -340,13 +352,13 @@ public class FormPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 checkedChangeListener = new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        Log.e("123", "on check chnaged listener" + getAdapterPosition());
-                        int position = getAdapterPosition();
+
+                        int position = order.get(getAdapterPosition());
                         int idx = lv.indexOfChild(buttonView);
                         if (isChecked) {
                             response.get(position).addIntoSet(idx);
                         } else {
-                            response.get(position).getMchecked().remove(idx);
+                            response.get(position).removeFromSet(idx);
                         }
                         if (response.get(position).getMchecked().size() == 0) {
                             response.get(position).setMandatory(false);
@@ -395,7 +407,7 @@ public class FormPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     iv.setX(seekBar.getThumb().getBounds().centerX() + 2 * px20);
                     iv.requestLayout();
                     if (!preview) {
-                        int position = getAdapterPosition();
+                        int position = order.get(getAdapterPosition());
                         response.get(position).setRating(progress + 1);
                     }
                 }
@@ -430,14 +442,13 @@ public class FormPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             activityCallback = new ActivityCallback() {
                 @Override
                 public void uploadFile(Uri uri) {
-                    int position = getAdapterPosition();
+                    int position = order.get(getAdapterPosition());
                     response.get(position).setMandatory(false);
                     progressIndicator.setVisibility(View.VISIBLE);
                     String path = uri.getPath();
                     int idx = path.lastIndexOf(".");
                     String type = path.substring(idx);
                     String name = Utils.getUserID() + type;
-
                     int _idx = path.lastIndexOf("/");
                     String filename = path.substring(_idx + 1);
                     tv.setText(filename);
@@ -461,7 +472,7 @@ public class FormPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressIndicator.setVisibility(View.GONE);
-                            int position = getAdapterPosition();
+                            int position = order.get(getAdapterPosition());
                             response.get(position).setMandatory(true);
                         }
                     }).addOnFailureListener(new OnFailureListener() {

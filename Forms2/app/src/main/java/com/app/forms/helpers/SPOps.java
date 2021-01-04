@@ -139,5 +139,13 @@ public class SPOps {
         editor.apply();
     }
 
+    public static String getForm(int formID, Context context) {
+        SharedPreferences sp = context.getSharedPreferences("Forms", MODE_PRIVATE);
+        String jsonForm = sp.getString("" + formID, null);
+
+        return jsonForm;
+
+    }
+
 
 }
