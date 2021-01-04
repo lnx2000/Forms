@@ -12,28 +12,6 @@ public class FormItem {
     private boolean enabled;
     private String userID;
 
-    public FormItem(FormItem formItem){
-        this.name = formItem.name;
-        this.createdOn = formItem.createdOn;
-        this.lastUpdate = formItem.lastUpdate;
-        this.UID = formItem.UID;
-        try {
-            this.config =(FormConfig) formItem.config.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        this.form = new ArrayList<>(formItem.form);
-        this.enabled = new Boolean(formItem.enabled);
-        this.userID = formItem.userID;
-    }
-    public String getUserID() {
-        return userID;
-    }
-
-    public void setUserID(String userID) {
-        this.userID = userID;
-    }
-
     public FormItem(String name, String createdOn, int UID) {
         this.name = name;
         this.createdOn = createdOn;
@@ -41,6 +19,14 @@ public class FormItem {
         form = new ArrayList<>();
         config = new FormConfig();
 
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     public boolean isEnabled() {

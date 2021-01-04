@@ -17,6 +17,7 @@ public class AfterDo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.thank_you);
+        getSupportActionBar().hide();
         report = findViewById(R.id.report);
         msg = findViewById(R.id.msg);
         int formID = getIntent().getExtras().getInt("formID");

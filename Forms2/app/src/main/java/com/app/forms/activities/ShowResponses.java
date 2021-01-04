@@ -9,8 +9,7 @@ import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.app.forms.R;
-import com.app.forms.helpers.JsonDecode;
-import com.app.forms.helpers.SPOps;
+import com.app.forms.items.BaseClass;
 import com.app.forms.items.FormItem;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -26,8 +25,9 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.DefaultValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
-
-import org.json.JSONException;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -35,6 +35,9 @@ public class ShowResponses extends AppCompatActivity {
     int formID;
     FormItem formItem;
     LinearLayout ll;
+    FirebaseFirestore firebaseFirestore;
+    CollectionReference collectionReference;
+    DocumentReference documentReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +46,24 @@ public class ShowResponses extends AppCompatActivity {
 
         ll = findViewById(R.id.linearLayout);
         formID = getIntent().getExtras().getInt("fromID");
+
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        collectionReference = firebaseFirestore.collection("Forms")
+                .document("" + formID)
+                .collection("Responses");
+        documentReference = firebaseFirestore.collection("Forms")
+                .document("" + formID);
+
+        /*
         String jsonForm = SPOps.getForm(formID, this);
         try {
             formItem = JsonDecode.decode(jsonForm);
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
+
+        loadResponses();
 
 
     }
@@ -169,6 +184,16 @@ public class ShowResponses extends AppCompatActivity {
         color.add(ColorTemplate.rgb("#e6dbc8"));
 
         return color;
+    }
+
+    private void loadResponses() {
+
+
+    }
+
+    private ArrayList<BaseClass> loadForm() {
+
+        return null;
     }
 
 }

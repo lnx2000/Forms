@@ -49,13 +49,15 @@ public class HomeFragment extends Fragment {
         adapter = new Adapter(data, getActivity());
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_home, container, false);
-        recyclerView = v.findViewById(R.id.recyclerview);
 
+
+        recyclerView = v.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
         et = v.findViewById(R.id.edit_query);
@@ -140,6 +142,7 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
+
 
         return v;
     }

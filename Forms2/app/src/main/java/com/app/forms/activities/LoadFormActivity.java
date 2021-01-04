@@ -32,7 +32,6 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
@@ -145,7 +144,7 @@ public class LoadFormActivity extends AppCompatActivity {
                     map = documentSnapshot.getData();
                     progressBar.setVisibility(View.GONE);
 
-                    if (((boolean) map.get("loginToSubmit") || !(boolean) map.get("allowEdit")) && !Utils.isUserLoggedIn()) {
+                    if ((boolean) map.get("loginToSubmit") && !Utils.isUserLoggedIn()) {
                         Snackbar.make(cl, "You need to login first", BaseTransientBottomBar.LENGTH_INDEFINITE)
                                 .setAction("LOGIN", new View.OnClickListener() {
                                     @Override
@@ -154,7 +153,7 @@ public class LoadFormActivity extends AppCompatActivity {
                                     }
                                 }).show();
                         progressBar.setVisibility(View.GONE);
-                    } else if (((boolean) map.get("loginToSubmit") || !(boolean) map.get("allowEdit"))) {
+                    } else if ((boolean) map.get("loginToSubmit")) {
                         //user is already logged in
                         retrive();
                     } else {
@@ -294,7 +293,7 @@ public class LoadFormActivity extends AppCompatActivity {
         if ((boolean) map.get("shuffle")) {
             Collections.shuffle(order);
         }
-        order.add(_form.size()-1);
+        order.add(_form.size() - 1);
 
         boolean show_count = (boolean) map.get("showCount");
         FormPreviewFragment formPreviewFragment = new FormPreviewFragment(_form,
@@ -332,7 +331,7 @@ public class LoadFormActivity extends AppCompatActivity {
                 finish();
                 return false;
             }
-        }
+        }/*
         if ((boolean) map.get("loginToSubmit")) {
             if (!Utils.isUserLoggedIn()) {
                 View v = LayoutInflater.from(this).inflate(R.layout.login_required, null);
@@ -349,7 +348,7 @@ public class LoadFormActivity extends AppCompatActivity {
                 alert.show();
                 return false;
             }
-        }
+        }*/
 
 
         return true;
@@ -377,8 +376,9 @@ public class LoadFormActivity extends AppCompatActivity {
 
     private void uploadResponse() {
         Gson gson = new Gson();
-        if (documentName == null)
+        if ((boolean) map.get("allowEdit"))
             documentName = Utils.generateSUID(28);
+        else documentName = Utils.getUserID();
         DocumentReference ref = firebaseFirestore.collection("Forms").
                 document("" + formID).
                 collection("Responses")

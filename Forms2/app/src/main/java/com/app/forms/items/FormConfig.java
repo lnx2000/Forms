@@ -15,7 +15,9 @@ public class FormConfig implements Cloneable {
     String unPublishDate;
     String publishTime;
     String unPublishTime;
+
     public FormConfig() {
+        allowEdit = true;
     }
 
     public boolean isAllowEdit() {

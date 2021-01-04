@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
 
         openFragment(homeFragment);
 
-        Utils.showNotification(this, "hello", "forms welcomes you", 10);
 
         bottomNavigation.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
@@ -102,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                     openFragment(infoFragment);
                     return true;
             }
-            return false;
+            return true;
         });
         btnAdd.setOnClickListener(v -> {
             if (addvis) {
@@ -112,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
                 addvis = true;
                 btnAdd.setImageResource(R.drawable.ic_baseline_add_24);
                 bottomNavigation.setSelectedItemId(R.id.home);
+                //homeFragment = new HomeFragment();
                 openFragment(homeFragment);
             }
         });
@@ -236,19 +236,23 @@ public class MainActivity extends AppCompatActivity {
         FormItem f = data.get(position);
         data.remove(position);
         homeFragment.refreshAdapter();
-        Snackbar sb = Snackbar.make(fl, name + " has been deleted.", 5000)
+        btnAdd.setEnabled(false);
+        Snackbar sb = Snackbar.make(fl, name + " has been deleted.", 2500)
                 .addCallback(new BaseTransientBottomBar.BaseCallback<Snackbar>() {
                     @Override
                     public void onDismissed(Snackbar transientBottomBar, int event) {
                         super.onDismissed(transientBottomBar, event);
-                        if (event == DISMISS_EVENT_TIMEOUT || event == DISMISS_EVENT_SWIPE)
+                        if (event == DISMISS_EVENT_TIMEOUT || event == DISMISS_EVENT_SWIPE) {
                             SPOps.removeLocalForm(f.getUID(), MainActivity.this);
+                            btnAdd.setEnabled(true);
+                        }
                     }
                 }).setAction("UNDO", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         data.add(position, f);
                         homeFragment.refreshAdapter();
+                        btnAdd.setEnabled(true);
                     }
                 }).setAnchorView(btnAdd).setTextColor(Color.BLACK);
 

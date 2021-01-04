@@ -8,6 +8,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.app.forms.R;
@@ -28,6 +29,7 @@ public class FormSettingsFragment extends Fragment implements CompoundButton.OnC
     ImageView chosepublishdate, chosepublishtime, choseunpublishdate, choseunpublishtime;
     TextView publishdate, publishtime, unpublishdate, unpublishtime;
     FormConfig configs;
+    ConstraintLayout alloweditlayout, recordemaillayout;
 
     public FormSettingsFragment() {
         // Required empty public constructor
@@ -59,6 +61,10 @@ public class FormSettingsFragment extends Fragment implements CompoundButton.OnC
         unpublishdate = v.findViewById(R.id.unpublistdate);
         unpublishtime = v.findViewById(R.id.unpublishtime);
 
+        alloweditlayout = v.findViewById(R.id.alloweditlayout);
+        recordemaillayout = v.findViewById(R.id.recordemaillayout);
+
+
         logintosubmit = v.findViewById(R.id.logintosubmit);
         showcount = v.findViewById(R.id.showcount);
         recordemail = v.findViewById(R.id.recordemail);
@@ -88,11 +94,27 @@ public class FormSettingsFragment extends Fragment implements CompoundButton.OnC
 
     private void updateUI() {
         logintosubmit.setChecked(configs.isLoginToSubmit());
+        if (configs.isLoginToSubmit()) {
+            alloweditlayout.setAlpha(1.0f);
+            recordemaillayout.setAlpha(1.0f);
+            allowedit.setChecked(configs.isAllowEdit());
+            recordemail.setChecked(configs.isRecordEmail());
+            allowedit.setEnabled(true);
+            recordemail.setEnabled(true);
+
+        } else {
+            alloweditlayout.setAlpha(0.5f);
+            recordemaillayout.setAlpha(0.5f);
+            allowedit.setChecked(configs.isAllowEdit());
+            recordemail.setChecked(configs.isRecordEmail());
+            allowedit.setEnabled(false);
+            recordemail.setEnabled(false);
+
+        }
+
         showcount.setChecked(configs.isShowCount());
-        recordemail.setChecked(configs.isRecordEmail());
         shuffle.setChecked(configs.isShuffle());
         sendResponse.setChecked(configs.isSendResponseCopy());
-        allowedit.setChecked(configs.isAllowEdit());
         publish.setChecked(configs.isPublish());
         if (configs.isPublish()) {
             publishtime.setVisibility(View.VISIBLE);
@@ -233,6 +255,26 @@ public class FormSettingsFragment extends Fragment implements CompoundButton.OnC
                 break;
             case R.id.logintosubmit:
                 configs.setLoginToSubmit(isChecked);
+                if (isChecked) {
+                    alloweditlayout.setAlpha(1.0f);
+                    recordemaillayout.setAlpha(1.0f);
+                    allowedit.setEnabled(true);
+                    recordemail.setEnabled(true);
+                    allowedit.setChecked(configs.isAllowEdit());
+                    recordemail.setChecked(configs.isRecordEmail());
+
+                } else {
+                    alloweditlayout.setAlpha(0.5f);
+                    recordemaillayout.setAlpha(0.5f);
+                    configs.setAllowEdit(true);
+                    configs.setRecordEmail(false);
+                    allowedit.setChecked(configs.isAllowEdit());
+                    recordemail.setChecked(configs.isRecordEmail());
+                    allowedit.setEnabled(false);
+                    recordemail.setEnabled(false);
+
+
+                }
                 break;
             case R.id.showcount:
                 configs.setShowCount(isChecked);
