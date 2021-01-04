@@ -9,10 +9,10 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_forms_document_svgrepo_com_cyan"
+        android:icon="@drawable/app_icon_cyan"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
-        android:roundIcon="@drawable/ic_forms_document_svgrepo_com_cyan"
+        android:roundIcon="@drawable/app_icon_cyan"
         android:supportsRtl="true"
         android:theme="@style/Theme.Forms.cyan">
         <activity android:name=".activities.ShowResponses"></activity>

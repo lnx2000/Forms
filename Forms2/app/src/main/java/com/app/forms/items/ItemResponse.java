@@ -4,21 +4,21 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ItemResponse {
+
     String text;
-    Integer schecked;
+    int schecked;
     Set<Integer> mchecked;
     int rating;
     //String fileurl;
-    Boolean mandatory;
+    boolean mandatory;
 
     public ItemResponse(boolean mandatory) {
         mchecked = null;
         this.mandatory = mandatory;
-        schecked = null;
+        schecked = -1;
         text = null;
         rating = 1;
     }
-
 
     public String getText() {
         return text;
@@ -68,8 +68,5 @@ public class ItemResponse {
 
     public void removeFromSet(int i) {
         mchecked.remove(i);
-        if (mchecked.size() == 0)
-            mchecked = null;
-
     }
 }

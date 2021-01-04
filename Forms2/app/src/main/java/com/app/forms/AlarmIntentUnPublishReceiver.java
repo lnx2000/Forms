@@ -51,13 +51,13 @@ public class AlarmIntentUnPublishReceiver extends BroadcastReceiver {
             @Override
             public void onSuccess(Void aVoid) {
                 updatePrefs(formID, context, false);
-                showNotification(context, "Form Unpulished", "Form is no more accepting responses", 2);
+                showNotification(context, "Form Unpulished", name + " is no more accepting responses", 2);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onFailure(@NonNull Exception e) {
-                showNotification(context, "Unpublishing...", "Error occured while revoking form", 2);
+                showNotification(context, "Unpublishing " + name, "Error occured while revoking form", 2);
             }
         });
 
@@ -75,7 +75,6 @@ public class AlarmIntentUnPublishReceiver extends BroadcastReceiver {
             e.printStackTrace();
         }
         formItem.setEnabled(enabled);
-        formItem.getConfig().setAcceptingResponses(false);
         Gson gson = new Gson();
         jsonForm = gson.toJson(formItem);
 

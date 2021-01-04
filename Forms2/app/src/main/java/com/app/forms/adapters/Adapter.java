@@ -18,12 +18,9 @@ import androidx.transition.TransitionManager;
 import com.app.forms.R;
 import com.app.forms.activities.MainActivity;
 import com.app.forms.constants.Constants;
-import com.app.forms.helpers.SPOps;
 import com.app.forms.helpers.Utils;
 import com.app.forms.items.FormItem;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.text.ParseException;
@@ -64,7 +61,7 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             e.printStackTrace();
         }
         Date currdate = new Date();
-        if (currdate.after(publishDate) && currdate.before(unPublishDate) && data.get(position).getConfig().isPublish()) {
+        if (currdate.after(publishDate) && currdate.before(unPublishDate) && data.get(position).getConfig().isPublish() && data.get(position).isEnabled()) {
             ((ViewHolder) holder).v.setVisibility(View.VISIBLE);
         } else ((ViewHolder) holder).v.setVisibility(View.GONE);
 
@@ -136,7 +133,7 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         break;
                     case R.id.delete:
 
-                        ((MainActivity)context).deleteForm(position);
+                        ((MainActivity) context).deleteForm(position);
                         //SPOps.removeLocalForm(data.get(position).getUID(), position, context);
 
                         break;

@@ -52,14 +52,14 @@ public class AlarmIntentPublishReceiver extends BroadcastReceiver {
             @Override
             public void onSuccess(Void aVoid) {
                 //updatePrefs(formID, context, true);
-                showNotification(context, "Form Published", "Form is now accepting responses", 1);
+                showNotification(context, "Form Published", map.get("name") + " is now accepting responses", 1);
 
             }
         }).addOnFailureListener(new OnFailureListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onFailure(@NonNull Exception e) {
-                showNotification(context, "Publishing...", "Error occured while invoking form", 1);
+                showNotification(context, "Publishing " + map.get("name"), "Error occured while invoking form", 1);
                 updatePrefs(formID, false, context);
             }
         });
@@ -83,8 +83,7 @@ public class AlarmIntentPublishReceiver extends BroadcastReceiver {
         map.put("Form", formString);
         map.put("userID", formItem.getUserID());
         map.put("Enabled", enabled);
-        formItem.getConfig().setAcceptingResponses(true);
-        map.put("acceptingResponses", formItem.getConfig().isAcceptingResponses());
+        map.put("acceptingResponses", true);
         map.put("allowEdit", formItem.getConfig().isAllowEdit());
         map.put("loginToSubmit", formItem.getConfig().isLoginToSubmit());
         map.put("showCount", formItem.getConfig().isShowCount());

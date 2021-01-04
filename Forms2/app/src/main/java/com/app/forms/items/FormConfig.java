@@ -3,7 +3,6 @@ package com.app.forms.items;
 import androidx.annotation.NonNull;
 
 public class FormConfig implements Cloneable {
-    boolean acceptingResponses;
     boolean loginToSubmit;
     boolean showCount;
     boolean recordEmail;
@@ -51,13 +50,6 @@ public class FormConfig implements Cloneable {
         this.showCount = showCount;
     }
 
-    public boolean isAcceptingResponses() {
-        return acceptingResponses;
-    }
-
-    public void setAcceptingResponses(boolean acceptingResponses) {
-        this.acceptingResponses = acceptingResponses;
-    }
 
     public boolean isLoginToSubmit() {
         return loginToSubmit;

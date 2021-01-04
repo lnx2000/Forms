@@ -44,6 +44,8 @@ import com.google.firebase.storage.StorageReference;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     public static ArrayList<FormItem> data;
@@ -85,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
         openFragment(homeFragment);
 
+        Utils.showNotification(this, "hello", "forms welcomes you", 10);
 
         bottomNavigation.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
@@ -201,23 +204,25 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
         DocumentReference ref = firebaseFirestore.collection("Forms").document("" + formID);
-        ref.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("acceptingResponses", false);
+        ref.update(map).addOnSuccessListener(new OnSuccessListener<Void>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onSuccess(Void aVoid) {
                 SPOps.updatePrefs(formID, false, MainActivity.this);
-                Utils.showNotification(MainActivity.this, "Form Unpulished", "Form is no more accepting responses", 2);
+                Utils.showNotification(MainActivity.this, "Form Unpulished", data.get(position).getName() + " is no more accepting responses", 2);
                 data.get(position).setEnabled(false);
+                homeFragment.refreshAdapter();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onFailure(@NonNull Exception e) {
-                Utils.showNotification(MainActivity.this, "Unpublishing...", "Error occured while revoking form", 2);
+                Utils.showNotification(MainActivity.this, "Unpublishing " + data.get(position), "Error occured while revoking form", 2);
             }
         });
     }
-
 
     public void removeItem(int position) {
 

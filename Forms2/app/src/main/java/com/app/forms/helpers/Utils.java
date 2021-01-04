@@ -73,7 +73,7 @@ public class Utils {
         notificationManager.createNotificationChannel(channel);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, name.toString())
-                .setSmallIcon(R.drawable.ic_forms_document_svgrepo_com_cyan)
+                .setSmallIcon(R.drawable.notification_icon)
                 .setContentTitle(title)
                 .setContentText(msg)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);

@@ -3,7 +3,6 @@ package com.app.forms.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -291,11 +290,11 @@ public class LoadFormActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        order = getOrderArrayList();
         if ((boolean) map.get("shuffle")) {
-
-            order = getOrderArrayList();
-
+            Collections.shuffle(order);
         }
+        order.add(_form.size()-1);
 
         boolean show_count = (boolean) map.get("showCount");
         FormPreviewFragment formPreviewFragment = new FormPreviewFragment(_form,
@@ -312,8 +311,6 @@ public class LoadFormActivity extends AppCompatActivity {
         for (int i = 0; i < _form.size() - 1; i++)
             order.add(i);
 
-        Collections.shuffle(order);
-        order.add(_form.size() - 1);
         return order;
     }
 
@@ -414,11 +411,8 @@ public class LoadFormActivity extends AppCompatActivity {
     private boolean checkAllMandatory() {
         ArrayList<ItemResponse> itemResponses = response.getResponses();
         for (int i = 0; i < _form.size(); i++) {
-            Log.e("123", "" + _form.get(i).isMandatory() + " " + itemResponses.get(i).isMandatory());
             if (_form.get(i).isMandatory() && !itemResponses.get(i).isMandatory()) {
                 Gson gson = new Gson();
-                Log.e("123", gson.toJson(itemResponses.get(i)));
-                Log.e("123", gson.toJson(_form.get(i)));
                 return false;
             }
         }

@@ -2,8 +2,10 @@ package com.app.forms.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -11,6 +13,7 @@ import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -272,6 +275,24 @@ public class FormPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return strBuilder;
     }
 
+    public String getPath(Uri uri) {
+
+        String path = null;
+        String[] projection = {MediaStore.Files.FileColumns.DATA};
+        Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
+
+        if (cursor == null) {
+            path = uri.getPath();
+        } else {
+            cursor.moveToFirst();
+            int column_index = cursor.getColumnIndexOrThrow(projection[0]);
+            path = cursor.getString(column_index);
+            cursor.close();
+        }
+
+        return ((path == null || path.isEmpty()) ? (uri.getPath()) : path);
+    }
+
     private class showTextHolder extends RecyclerView.ViewHolder {
         TextView count, title;
         TextInputEditText answer;
@@ -445,7 +466,7 @@ public class FormPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     int position = order.get(getAdapterPosition());
                     response.get(position).setMandatory(false);
                     progressIndicator.setVisibility(View.VISIBLE);
-                    String path = uri.getPath();
+                    String path = getPath(uri);
                     int idx = path.lastIndexOf(".");
                     String type = path.substring(idx);
                     String name = Utils.getUserID() + type;
@@ -504,7 +525,6 @@ public class FormPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 submit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //TODO: submit form here
                         ((LoadFormActivity) context).submit();
                     }
                 });
