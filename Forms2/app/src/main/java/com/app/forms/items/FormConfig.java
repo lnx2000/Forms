@@ -18,6 +18,7 @@ public class FormConfig implements Cloneable {
 
     public FormConfig() {
         allowEdit = true;
+        loginToSubmit = true;
     }
 
     public boolean isAllowEdit() {

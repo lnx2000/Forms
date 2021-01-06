@@ -24,6 +24,7 @@ public class Constants {
     public static final SimpleDateFormat timeFormatter = new SimpleDateFormat("hh:mm a", Locale.getDefault());
     public static final SimpleDateFormat dateFormatter = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
     public static final SimpleDateFormat parseDateTime = new SimpleDateFormat("dd MMM yyyyhh:mm a", Locale.getDefault());
+    public static final SimpleDateFormat parseSDateTime = new SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault());
     public static final String githubUrl = "https://github.com/lnx2000";
     public static final String linkedinUrl = "https://www.linkedin.com/in/omkar-amilkanthwar-994809186/";
     public static final String emailID = "omkar.amilkanthwar210@gmail.com";

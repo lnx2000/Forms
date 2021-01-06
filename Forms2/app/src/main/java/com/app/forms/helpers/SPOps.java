@@ -88,6 +88,8 @@ public class SPOps {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        formItem.getConfig().setPublish(true);
+        formItem.getConfig().setUnPublish(true);
         formItem.setEnabled(enabled);
         Gson gson = new Gson();
         jsonForm = gson.toJson(formItem);

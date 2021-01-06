@@ -9,7 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -47,7 +47,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class
+MainActivity extends AppCompatActivity {
     public static ArrayList<FormItem> data;
 
 
@@ -111,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 addvis = true;
                 btnAdd.setImageResource(R.drawable.ic_baseline_add_24);
                 bottomNavigation.setSelectedItemId(R.id.home);
-                //homeFragment = new HomeFragment();
+                homeFragment = new HomeFragment();
                 openFragment(homeFragment);
             }
         });
@@ -176,13 +177,14 @@ public class MainActivity extends AppCompatActivity {
             return false;
 
         }
+        data.get(position).getConfig().setPublish(true);
+        data.get(position).getConfig().setUnPublish(true);
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent p_i = new Intent(MainActivity.this, AlarmIntentPublishReceiver.class);
         p_i.putExtra("enable", true);
         p_i.putExtra("form", data.get(position).getUID());
         PendingIntent pi = PendingIntent.getBroadcast(MainActivity.this, data.get(position).getUID(), p_i, 0);
         am.set(AlarmManager.RTC_WAKEUP, publishDate.getTime(), pi);
-        Toast.makeText(this, "publish alarm set!", Toast.LENGTH_SHORT).show();
         SPOps.updatePrefs(data.get(position).getUID(), true, this);
 
         Intent u_i = new Intent(MainActivity.this, AlarmIntentUnPublishReceiver.class);
@@ -191,7 +193,15 @@ public class MainActivity extends AppCompatActivity {
         u_i.putExtra("name", data.get(position).getName());
         PendingIntent ui = PendingIntent.getBroadcast(MainActivity.this, data.get(position).getUID(), u_i, 0);
         am.set(AlarmManager.RTC_WAKEUP, unPublishDate.getTime(), ui);
-        Toast.makeText(this, "unpublish alarm set!", Toast.LENGTH_SHORT).show();
+
+        Snackbar sb = Snackbar.make(fl,
+                "Alarm set!\nPublish Date: " + Constants.parseSDateTime.format(publishDate) + "\nUnpublish Date: " + Constants.parseSDateTime.format(unPublishDate),
+                BaseTransientBottomBar.LENGTH_SHORT).setAnchorView(btnAdd);
+        sb.getView().setBackgroundColor(Color.WHITE);
+        sb.setTextColor(Color.BLACK);
+        ((TextView) sb.getView().findViewById(R.id.snackbar_text)).setMaxLines(3);
+        sb.show();
+
 
         return true;
 

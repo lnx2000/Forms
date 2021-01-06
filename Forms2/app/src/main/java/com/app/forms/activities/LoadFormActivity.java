@@ -84,7 +84,9 @@ public class LoadFormActivity extends AppCompatActivity {
         ref = firebaseFirestore.collection("Forms").document("" + formID);
 
         //retrive();
-        formretrive();
+        if (Utils.isUserLoggedIn())
+            formretrive();
+        else login();
 
     }
 
@@ -141,9 +143,8 @@ public class LoadFormActivity extends AppCompatActivity {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) {
-                    map = documentSnapshot.getData();
+                    LoadFormActivity.this.map = documentSnapshot.getData();
                     progressBar.setVisibility(View.GONE);
-
                     if ((boolean) map.get("loginToSubmit") && !Utils.isUserLoggedIn()) {
                         Snackbar.make(cl, "You need to login first", BaseTransientBottomBar.LENGTH_INDEFINITE)
                                 .setAction("LOGIN", new View.OnClickListener() {
@@ -229,15 +230,15 @@ public class LoadFormActivity extends AppCompatActivity {
     private void firebaseAuthWithGoogle(String idToken) {
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        ;
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        if (((boolean) map.get("loginToSubmit") || !(boolean) map.get("allowEdit"))) {
+                        /*if (((boolean) LoadFormActivity.this.map.get("loginToSubmit") || !(boolean) LoadFormActivity.this.map.get("allowEdit"))) {
                             //user is already logged in
                             retrive();
-                        }
+                        }*/
+                        formretrive();
                     } else {
                         Toast.makeText(this, "Authentication Failed", Toast.LENGTH_SHORT).show();
                     }
@@ -376,19 +377,20 @@ public class LoadFormActivity extends AppCompatActivity {
 
     private void uploadResponse() {
         Gson gson = new Gson();
-        if ((boolean) map.get("allowEdit"))
-            documentName = Utils.generateSUID(28);
-        else documentName = Utils.getUserID();
+        if ((boolean) map.get("loginToSubmit"))
+            documentName = Utils.getUserID();
+        else documentName = Utils.generateSUID(28);
         DocumentReference ref = firebaseFirestore.collection("Forms").
                 document("" + formID).
                 collection("Responses")
                 .document(documentName);
-        Map<String, String> map = new HashMap<>();
-        map.put("email", response.getEmail());
-        map.put("response", gson.toJson(response.getResponses()));
+        Map<String, String> _map = new HashMap<>();
+        if ((boolean) map.get("recordEmail"))
+            _map.put("email", response.getEmail());
+        _map.put("response", gson.toJson(response.getResponses()));
 
 
-        ref.set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+        ref.set(_map).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Intent i = new Intent(LoadFormActivity.this, AfterDo.class);

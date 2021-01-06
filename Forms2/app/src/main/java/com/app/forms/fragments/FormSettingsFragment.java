@@ -25,7 +25,7 @@ import java.util.Calendar;
 
 public class FormSettingsFragment extends Fragment implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
-    SwitchMaterial publish, unpublish, logintosubmit, showcount, recordemail, shuffle, sendResponse, allowedit;
+    SwitchMaterial publish, unpublish, showcount, recordemail, shuffle, sendResponse, allowedit;
     ImageView chosepublishdate, chosepublishtime, choseunpublishdate, choseunpublishtime;
     TextView publishdate, publishtime, unpublishdate, unpublishtime;
     FormConfig configs;
@@ -65,7 +65,6 @@ public class FormSettingsFragment extends Fragment implements CompoundButton.OnC
         recordemaillayout = v.findViewById(R.id.recordemaillayout);
 
 
-        logintosubmit = v.findViewById(R.id.logintosubmit);
         showcount = v.findViewById(R.id.showcount);
         recordemail = v.findViewById(R.id.recordemail);
         shuffle = v.findViewById(R.id.shuffle);
@@ -80,7 +79,6 @@ public class FormSettingsFragment extends Fragment implements CompoundButton.OnC
 
         publish.setOnCheckedChangeListener(this);
         unpublish.setOnCheckedChangeListener(this);
-        logintosubmit.setOnCheckedChangeListener(this);
         showcount.setOnCheckedChangeListener(this);
         recordemail.setOnCheckedChangeListener(this);
         shuffle.setOnCheckedChangeListener(this);
@@ -93,7 +91,7 @@ public class FormSettingsFragment extends Fragment implements CompoundButton.OnC
     }
 
     private void updateUI() {
-        logintosubmit.setChecked(configs.isLoginToSubmit());
+        /*logintosubmit.setChecked(configs.isLoginToSubmit());
         if (configs.isLoginToSubmit()) {
             alloweditlayout.setAlpha(1.0f);
             recordemaillayout.setAlpha(1.0f);
@@ -110,8 +108,10 @@ public class FormSettingsFragment extends Fragment implements CompoundButton.OnC
             allowedit.setEnabled(false);
             recordemail.setEnabled(false);
 
-        }
+        }*/
 
+        allowedit.setChecked(configs.isAllowEdit());
+        recordemail.setChecked(configs.isRecordEmail());
         showcount.setChecked(configs.isShowCount());
         shuffle.setChecked(configs.isShuffle());
         sendResponse.setChecked(configs.isSendResponseCopy());
@@ -252,7 +252,7 @@ public class FormSettingsFragment extends Fragment implements CompoundButton.OnC
                     choseunpublishdate.setVisibility(View.GONE);
                     choseunpublishtime.setVisibility(View.GONE);
                 }
-                break;
+                break;/*
             case R.id.logintosubmit:
                 configs.setLoginToSubmit(isChecked);
                 if (isChecked) {
@@ -275,7 +275,7 @@ public class FormSettingsFragment extends Fragment implements CompoundButton.OnC
 
 
                 }
-                break;
+                break;*/
             case R.id.showcount:
                 configs.setShowCount(isChecked);
                 break;
