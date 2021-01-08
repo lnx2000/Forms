@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -111,5 +112,15 @@ public class Utils {
         return sb.toString();
 
 
+    }
+
+    public static String[] listToArray(ArrayList<String> list) {
+        String[] array = new String[list.size()];
+
+        for (int i = 0; i < list.size(); i++) {
+            array[i] = list.get(i);
+        }
+
+        return array;
     }
 }

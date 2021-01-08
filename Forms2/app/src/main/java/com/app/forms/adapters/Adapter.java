@@ -17,6 +17,7 @@ import androidx.transition.TransitionManager;
 
 import com.app.forms.R;
 import com.app.forms.activities.MainActivity;
+import com.app.forms.activities.ShowResponses;
 import com.app.forms.constants.Constants;
 import com.app.forms.helpers.Utils;
 import com.app.forms.items.FormItem;
@@ -120,6 +121,10 @@ public class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         ((MainActivity) context).startCreateFormActivity(position, Constants.editFragment);
                         break;
                     case R.id.responses:
+
+                        Intent _i = new Intent(context, ShowResponses.class);
+                        _i.putExtra("fromID", data.get(position).getUID());
+                        context.startActivity(_i);
                         break;
                     case R.id.setting:
                         ((MainActivity) context).startCreateFormActivity(position, Constants.settingFragment);
