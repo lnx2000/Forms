@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,8 +35,8 @@ public class AppSettingFragment extends Fragment implements View.OnClickListener
     FirebaseAuth firebaseAuth;
     FirebaseAuth.AuthStateListener authStateListener;
     ImageView userprofile;
-    TextView displayname, mailid, contactus, signup;
-    MaterialCardView signupcard, contactuscard;
+    TextView displayname, mailid, contactus, signup, savedres;
+    MaterialCardView signupcard, contactuscard, savedrescard;
     ProgressDialog dialog;
 
     public AppSettingFragment() {
@@ -61,12 +62,16 @@ public class AppSettingFragment extends Fragment implements View.OnClickListener
         contactus = v.findViewById(R.id.contactus);
         signupcard = v.findViewById(R.id.signupcard);
         contactuscard = v.findViewById(R.id.contactuscard);
+        savedres = v.findViewById(R.id.savedres);
+        savedrescard = v.findViewById(R.id.savedrescard);
 
 
         signup.setOnClickListener(this);
         contactus.setOnClickListener(this);
         signupcard.setOnClickListener(this);
         contactuscard.setOnClickListener(this);
+        savedrescard.setOnClickListener(this);
+        savedres.setOnClickListener(this);
 
         updateUI();
 
@@ -157,7 +162,11 @@ public class AppSettingFragment extends Fragment implements View.OnClickListener
                 i.putExtra(Intent.EXTRA_SUBJECT, "Forms:support");
                 startActivity(Intent.createChooser(i, "Send mail"));
                 break;
-
+            case R.id.savedres:
+            case R.id.savedrescard:
+                Intent _i = new Intent(Intent.ACTION_VIEW, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivity(_i);
+                break;
         }
     }
 }
