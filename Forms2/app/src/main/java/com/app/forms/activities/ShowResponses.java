@@ -4,9 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -466,6 +468,10 @@ public class ShowResponses extends AppCompatActivity {
                     break;
                 case typerating:
                     getRatingVis(z);
+                    break;
+                case typepoll:
+                    getPollVis(z);
+                    break;
                 default:
                     break;
 
@@ -473,6 +479,41 @@ public class ShowResponses extends AppCompatActivity {
 
         }
 
+    }
+
+    private void getPollVis(int z) {
+        View vg = LayoutInflater.from(this).inflate(R.layout.poll, null);
+        ((TextView) vg.findViewById(R.id.res_tv)).setText(formItems.get(z).getTitle());
+
+        LinearLayout _ll = vg.findViewById(R.id.ll);
+        ArrayList<String> _p = ((Check) formItems.get(z)).getGroup();
+        ArrayList<Integer> _v = (ArrayList<Integer>) counts.get(z);
+        float total_votes = 0;
+        for (int __v : _v)
+            total_votes += __v;
+
+        int size = _p.size();
+
+        View v;
+        for (int i = 0; i < size; i++) {
+            Log.e("123", "" + i);
+            v = LayoutInflater.from(this).inflate(R.layout.poll_item, null);
+
+            TextView tv = ((TextView) v.findViewById(R.id.text));
+            tv.setText(_p.get(i));
+            int votes = _v.get(i);
+
+            float flw = ((votes / total_votes) * 100);
+            ((TextView) v.findViewById(R.id.text2)).setText(Math.round(flw) + "%");
+
+            LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
+            p.weight = flw;
+            v.findViewById(R.id.fl).setLayoutParams(p);
+            _ll.addView(v);
+
+        }
+
+        ll.addView(vg);
     }
 
     private void getRatingVis(int pos) {
@@ -498,7 +539,7 @@ public class ShowResponses extends AppCompatActivity {
         count.setText("" + (int) _u);
         mt.setText(String.format("%.1f", _t / _u));
         rb.setRating(_t / _u);
-        
+
         p1.setProgress(getOutOf100(rates.get(0) * 1, _t));
         p2.setProgress(getOutOf100(rates.get(1) * 2, _t));
         p3.setProgress(getOutOf100(rates.get(2) * 3, _t));
