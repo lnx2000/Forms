@@ -2,9 +2,12 @@ package com.app.forms.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
-import android.util.Log;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.app.forms.R;
 import com.app.forms.helpers.JsonDecode;
@@ -71,9 +75,12 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONException;
 
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -104,11 +111,14 @@ public class ShowResponses extends AppCompatActivity {
     MaterialCardView titilecard;
     ProgressBar progressBar;
     ShapeableImageView download;
+    ConstraintLayout constraintLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_responses);
+
+        getSupportActionBar().hide();
 
         ll = findViewById(R.id.linearLayout);
         formID = getIntent().getExtras().getInt("fromID");
@@ -117,36 +127,30 @@ public class ShowResponses extends AppCompatActivity {
         titilecard = findViewById(R.id.titlecard);
         progressBar = findViewById(R.id.cprogress);
         download = findViewById(R.id.download);
+        constraintLayout = findViewById(R.id.parent_layout);
 
         download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*ll.setDrawingCacheEnabled(true);
-                Bitmap bitmap = ll.getDrawingCache();
+                Bitmap bitmap = Bitmap.createBitmap(ll.getWidth(), ll.getHeight(), Bitmap.Config.ARGB_8888);
+                Canvas canvas = new Canvas(bitmap);
+                Paint paint = new Paint();
+                paint.setColor(Color.WHITE);
+
+                canvas.drawRect(0, 0, bitmap.getWidth(), bitmap.getHeight(), paint);
+                ll.draw(canvas);
+
+                Date date = new Date();
+
+                SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd_", Locale.getDefault());
+                MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, format.format(date) + map.get("name"), "nothing");
+
+                Snackbar sb = Snackbar.make(ll, "Responses Saved :)", BaseTransientBottomBar.LENGTH_SHORT);
+                sb.getView().setBackgroundColor(Color.WHITE);
+                sb.setTextColor(Color.BLACK);
+                sb.show();
 
 
-                String root = Environment.getExternalStorageDirectory().toString();
-                File myDir = new File(root + "/Forms/Pictures");
-                if (!myDir.exists()) {
-                    myDir.mkdirs();
-                }
-                String fname = "AP5F8eEA" + ".jpg";
-                File file = new File(myDir, fname);
-
-                if (file.exists())
-                    file.delete();
-                try {
-                    file.createNewFile();
-                    FileOutputStream out = new FileOutputStream(file);
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-                    out.flush();
-                    out.close();
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-
-                }
-                */
             }
         });
 
@@ -496,7 +500,6 @@ public class ShowResponses extends AppCompatActivity {
 
         View v;
         for (int i = 0; i < size; i++) {
-            Log.e("123", "" + i);
             v = LayoutInflater.from(this).inflate(R.layout.poll_item, null);
 
             TextView tv = ((TextView) v.findViewById(R.id.text));
