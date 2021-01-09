@@ -125,7 +125,7 @@ public class SPOps {
         SharedPreferences sp = context.getSharedPreferences("Forms", Context.MODE_PRIVATE);
 
         SharedPreferences.Editor editor = sp.edit();
-        editor.remove("" + formID);
+        editor.remove("" + formID).apply();
 
         Gson gson = new Gson();
         String jsonUids = sp.getString("UIDs", "");
