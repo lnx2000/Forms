@@ -7,13 +7,13 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -145,6 +145,29 @@ public class FormPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             if (data.get(position).isMandatory())
                 ((showTextHolder) holder).title.setText(formatTitle(title));
             else ((showTextHolder) holder).title.setText(title);
+
+            int type = 1;
+            boolean multiline = false;
+            switch (Constants.textTypes[((com.app.forms.items.Text) data.get(position)).getTextTypeChoice()]) {
+                case "Text":
+                    multiline = false;
+                    type = InputType.TYPE_CLASS_TEXT;
+                    break;
+                case "Number":
+                    multiline = false;
+                    type = InputType.TYPE_CLASS_NUMBER;
+                    break;
+                case "Long":
+                    multiline = true;
+                    type = InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_CLASS_TEXT;
+                    break;
+                case "Masked":
+                    multiline = false;
+                    type = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD;
+                    break;
+            }
+            ((showTextHolder) holder).answer.setInputType(type);
+            ((showTextHolder) holder).answer.setSingleLine(!multiline);
 
             if (count) { //show_count
 

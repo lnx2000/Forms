@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.app.forms.R;
@@ -22,6 +23,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.AuthCredential;
@@ -99,7 +101,9 @@ public class AppSettingFragment extends Fragment implements View.OnClickListener
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
+                Toast.makeText(getContext(), "result " + e.getMessage() + e.toString(), Toast.LENGTH_SHORT).show();
             }
+
         }
     }
 
@@ -114,6 +118,12 @@ public class AppSettingFragment extends Fragment implements View.OnClickListener
                         Toast.makeText(getContext(), "Authentication Failed", Toast.LENGTH_SHORT).show();
                     }
 
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), "failed" + e.getMessage() + e.toString(), Toast.LENGTH_SHORT).show();
+                    }
                 });
     }
 

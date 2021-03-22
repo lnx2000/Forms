@@ -188,7 +188,7 @@ public class ShowResponses extends AppCompatActivity {
 
         pieDataSet.setColors(color);
         pieDataSet.setValueTextColor(Color.WHITE);
-        pieDataSet.setValueTextSize(10f);
+        pieDataSet.setValueTextSize(12f);
         pieDataSet.setSliceSpace(5);
 
 
@@ -202,6 +202,7 @@ public class ShowResponses extends AppCompatActivity {
 
         pieChart.setData(pieData);
         pieChart.getDescription().setEnabled(false);
+        pieChart.setCenterTextSize(15f);
         pieChart.setCenterText("Responses: " + sum);
         pieChart.setUsePercentValues(true);
         pieChart.animateXY(1000, 1000);
@@ -209,6 +210,7 @@ public class ShowResponses extends AppCompatActivity {
         pieChart.getLegend().setTextColor(Color.BLACK);
         pieChart.setHoleColor(Color.WHITE);
         pieChart.invalidate();
+        pieChart.setEntryLabelTextSize(0f);
 
         ((TextView) v.findViewById(R.id.res_tv)).setText(formItems.get(pos).getTitle());
         ll.addView(v);

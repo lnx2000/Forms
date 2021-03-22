@@ -16,6 +16,7 @@
         android:padding="10dp"
         android:textColor="@color/secondaryTextColor"
         android:textAlignment="center"
-        android:textSize="18dp" />
+        android:textSize="18dp"
+        android:scrollHorizontally="true"/>
 
 </com.google.android.material.card.MaterialCardView>

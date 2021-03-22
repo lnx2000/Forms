@@ -7,4 +7,4 @@
     android:background="@drawable/simple_border"
     android:padding="10dp"
     android:paddingVertical="10dp"
-    android:textSize="18dp"/>
+    android:textSize="18dp" />
